@@ -58,6 +58,7 @@ target_include_directories(RecompiledFuncs PRIVATE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/ultramodern/include
     ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/librecomp/include
+    ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/N64Recomp/include
 )
 
 file(GLOB FUNC_C_SOURCES ${CMAKE_SOURCE_DIR}/RecompiledFuncs/*.c)
@@ -79,6 +80,7 @@ target_include_directories(PatchesLib PRIVATE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/ultramodern/include
     ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/librecomp/include
+    ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/N64Recomp/include
 )
 
 target_sources(PatchesLib PRIVATE
@@ -97,12 +99,8 @@ if(NOT DEFINED PATCHES_LD)
     set(PATCHES_LD ld.lld)
 endif()
 
-if(NOT DEFINED PATCHES_OBJCOPY)
-    set(PATCHES_OBJCOPY llvm-objcopy)
-endif()
-
 add_custom_target(PatchesBin
-    COMMAND ${CMAKE_COMMAND} -E env CC=${PATCHES_C_COMPILER} LD=${PATCHES_LD} OBJCOPY=${PATCHES_OBJCOPY} make
+    COMMAND ${CMAKE_COMMAND} -E env CC=${PATCHES_C_COMPILER} LD=${PATCHES_LD} make
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/patches
     BYPRODUCTS ${CMAKE_SOURCE_DIR}/patches/patches.elf
 )
@@ -167,6 +165,7 @@ set (SOURCES
 
 target_include_directories(Zelda64Recompiled PRIVATE
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/lib/N64ModernRuntime/N64Recomp/include
     ${CMAKE_SOURCE_DIR}/lib/concurrentqueue
     ${CMAKE_SOURCE_DIR}/lib/GamepadMotionHelpers
     ${CMAKE_SOURCE_DIR}/lib/RmlUi/Include
