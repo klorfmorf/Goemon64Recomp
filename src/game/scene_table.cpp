@@ -3,7 +3,7 @@
 #include <string>
 #include "zelda_debug.h"
 
-std::vector<zelda64::AreaWarps> zelda64::game_warps {
+std::vector<goemon64::AreaWarps> goemon64::game_warps {
     { "Clock Town", {
         {
             0, "Mayor's Residence", {

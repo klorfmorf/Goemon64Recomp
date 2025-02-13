@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-namespace zelda64 {
+namespace goemon64 {
     struct SceneWarps {
         int index;
         std::string name;

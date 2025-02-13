@@ -192,7 +192,7 @@ ultramodern::renderer::SetupResult map_setup_result(RT64::Application::SetupResu
     std::exit(EXIT_FAILURE);
 }
 
-zelda64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::renderer::WindowHandle window_handle, bool debug) {
+goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::renderer::WindowHandle window_handle, bool debug) {
     static unsigned char dummy_rom_header[0x40];
     recompui::set_render_hooks();
 
@@ -300,9 +300,9 @@ zelda64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::rendere
     high_precision_fb_enabled = app->shaderLibrary->usesHDR;
 }
 
-zelda64::renderer::RT64Context::~RT64Context() = default;
+goemon64::renderer::RT64Context::~RT64Context() = default;
 
-void zelda64::renderer::RT64Context::send_dl(const OSTask* task) {
+void goemon64::renderer::RT64Context::send_dl(const OSTask* task) {
     bool packs_disabled = false;
     TexturePackAction cur_action;
     while (texture_pack_action_queue.try_dequeue(cur_action)) {
@@ -334,19 +334,19 @@ void zelda64::renderer::RT64Context::send_dl(const OSTask* task) {
     app->processDisplayLists(app->core.RDRAM, task->t.data_ptr & 0x3FFFFFF, 0, true);
 }
 
-void zelda64::renderer::RT64Context::update_screen(uint32_t vi_origin) {
+void goemon64::renderer::RT64Context::update_screen(uint32_t vi_origin) {
     VI_ORIGIN_REG = vi_origin;
 
     app->updateScreen();
 }
 
-void zelda64::renderer::RT64Context::shutdown() {
+void goemon64::renderer::RT64Context::shutdown() {
     if (app != nullptr) {
         app->end();
     }
 }
 
-bool zelda64::renderer::RT64Context::update_config(const ultramodern::renderer::GraphicsConfig& old_config, const ultramodern::renderer::GraphicsConfig& new_config) {
+bool goemon64::renderer::RT64Context::update_config(const ultramodern::renderer::GraphicsConfig& old_config, const ultramodern::renderer::GraphicsConfig& new_config) {
     if (old_config == new_config) {
         return false;
     }
@@ -365,18 +365,18 @@ bool zelda64::renderer::RT64Context::update_config(const ultramodern::renderer::
     return true;
 }
 
-void zelda64::renderer::RT64Context::enable_instant_present() {
+void goemon64::renderer::RT64Context::enable_instant_present() {
     // Enable the present early presentation mode for minimal latency.
     app->enhancementConfig.presentation.mode = RT64::EnhancementConfiguration::Presentation::Mode::PresentEarly;
 
     app->updateEnhancementConfig();
 }
 
-uint32_t zelda64::renderer::RT64Context::get_display_framerate() const {
+uint32_t goemon64::renderer::RT64Context::get_display_framerate() const {
     return app->presentQueue->ext.sharedResources->swapChainRate;
 }
 
-float zelda64::renderer::RT64Context::get_resolution_scale() const {
+float goemon64::renderer::RT64Context::get_resolution_scale() const {
     constexpr int ReferenceHeight = 240;
     switch (app->userConfig.resolution) {
         case RT64::UserConfiguration::Resolution::WindowIntegerScale:
@@ -394,26 +394,26 @@ float zelda64::renderer::RT64Context::get_resolution_scale() const {
     }
 }
 
-RT64::UserConfiguration::Antialiasing zelda64::renderer::RT64MaxMSAA() {
+RT64::UserConfiguration::Antialiasing goemon64::renderer::RT64MaxMSAA() {
     return device_max_msaa;
 }
 
-std::unique_ptr<ultramodern::renderer::RendererContext> zelda64::renderer::create_render_context(uint8_t* rdram, ultramodern::renderer::WindowHandle window_handle, bool developer_mode) {
-    return std::make_unique<zelda64::renderer::RT64Context>(rdram, window_handle, developer_mode);
+std::unique_ptr<ultramodern::renderer::RendererContext> goemon64::renderer::create_render_context(uint8_t* rdram, ultramodern::renderer::WindowHandle window_handle, bool developer_mode) {
+    return std::make_unique<goemon64::renderer::RT64Context>(rdram, window_handle, developer_mode);
 }
 
-bool zelda64::renderer::RT64SamplePositionsSupported() {
+bool goemon64::renderer::RT64SamplePositionsSupported() {
     return sample_positions_supported;
 }
 
-bool zelda64::renderer::RT64HighPrecisionFBEnabled() {
+bool goemon64::renderer::RT64HighPrecisionFBEnabled() {
     return high_precision_fb_enabled;
 }
 
-void zelda64::renderer::enable_texture_pack(const recomp::mods::ModHandle& mod) {
+void goemon64::renderer::enable_texture_pack(const recomp::mods::ModHandle& mod) {
     texture_pack_action_queue.enqueue(TexturePackEnableAction{mod.manifest.mod_root_path});
 }
 
-void zelda64::renderer::disable_texture_pack(const recomp::mods::ModHandle& mod) {
+void goemon64::renderer::disable_texture_pack(const recomp::mods::ModHandle& mod) {
     texture_pack_action_queue.enqueue(TexturePackDisableAction{mod.manifest.mod_root_path});
 }

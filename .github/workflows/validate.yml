@@ -82,31 +82,31 @@ jobs:
 
           cp -v /usr/local/lib/libdxcompiler.so ./lib/rt64/src/contrib/dxc/lib/x64/libdxcompiler.so
           cp -v /usr/local/bin/dxc ./lib/rt64/src/contrib/dxc/bin/x64/dxc
-      - name: Build ZeldaRecomp
+      - name: Build GoemonRecomp
         run: |-
           # enable ccache
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER=clang++-17 -DCMAKE_C_COMPILER=clang-17 -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build -DPATCHES_C_COMPILER=clang-17  -DPATCHES_LD=ld.lld-17 -DPATCHES_OBJCOPY=llvm-objcopy-17
-          cmake --build cmake-build --config ${{ matrix.type }} --target Zelda64Recompiled -j $(nproc)
+          cmake --build cmake-build --config ${{ matrix.type }} --target Goemon64Recompiled -j $(nproc)
       - name: Prepare Archive
         run: |
-          mv cmake-build/Zelda64Recompiled Zelda64Recompiled
+          mv cmake-build/Goemon64Recompiled Goemon64Recompiled
           rm -rf assets/scss
-          tar -czf Zelda64Recompiled.tar.gz Zelda64Recompiled assets/ gamecontrollerdb.txt
-      - name: Archive Zelda64Recomp
+          tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ gamecontrollerdb.txt
+      - name: Archive Goemon64Recomp
         uses: actions/upload-artifact@v3
         with:
-          name: Zelda64Recompiled-${{ runner.os }}-X64-${{ matrix.type }}
-          path: Zelda64Recompiled.tar.gz
+          name: Goemon64Recompiled-${{ runner.os }}-X64-${{ matrix.type }}
+          path: Goemon64Recompiled.tar.gz
       - name: Build AppImage
         run: |-
           ./.github/linux/appimage.sh 
-      - name: Zelda64Recomp AppImage
+      - name: Goemon64Recomp AppImage
         uses: actions/upload-artifact@v3
         with:
-          name: Zelda64Recompiled-AppImage-X64-${{ matrix.type }}
-          path: Zelda64Recompiled-*.AppImage
+          name: Goemon64Recompiled-AppImage-X64-${{ matrix.type }}
+          path: Goemon64Recompiled-*.AppImage
   build-linux-arm64:
     runs-on: ${{ format('blaze/compute/{0}', matrix.os) }}
     strategy:
@@ -171,30 +171,30 @@ jobs:
           ./N64Recomp us.rev1.toml
           ./RSPRecomp aspMain.us.rev1.toml
           ./RSPRecomp njpgdspMain.us.rev1.toml
-      - name: Build ZeldaRecomp
+      - name: Build GoemonRecomp
         run: |-
           # enable ccache
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER=clang++-15 -DCMAKE_C_COMPILER=clang-15 -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build
-          cmake --build cmake-build --config ${{ matrix.type }} --target Zelda64Recompiled -j $(nproc)
+          cmake --build cmake-build --config ${{ matrix.type }} --target Goemon64Recompiled -j $(nproc)
       - name: Prepare Archive
         run: |
-          mv cmake-build/Zelda64Recompiled Zelda64Recompiled
+          mv cmake-build/Goemon64Recompiled Goemon64Recompiled
           rm -rf assets/scss
-          tar -czf Zelda64Recompiled.tar.gz Zelda64Recompiled assets/ gamecontrollerdb.txt
-      - name: Archive Zelda64Recomp
+          tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ gamecontrollerdb.txt
+      - name: Archive Goemon64Recomp
         uses: actions/upload-artifact@v4
         with:
-          name: Zelda64Recompiled-${{ runner.os }}-ARM64-${{ matrix.type }}
-          path: Zelda64Recompiled.tar.gz
+          name: Goemon64Recompiled-${{ runner.os }}-ARM64-${{ matrix.type }}
+          path: Goemon64Recompiled.tar.gz
       - name: Prepare AppImage
         run: ./.github/linux/appimage.sh 
-      - name: Zelda64Recomp AppImage
+      - name: Goemon64Recomp AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: Zelda64Recompiled-AppImage-ARM64-${{ matrix.type }}
-          path: Zelda64Recompiled-*.AppImage
+          name: Goemon64Recompiled-AppImage-ARM64-${{ matrix.type }}
+          path: Goemon64Recompiled-*.AppImage
   build-windows:
     runs-on: windows-latest
     strategy:
@@ -245,7 +245,7 @@ jobs:
           ./N64Recomp.exe us.rev1.toml
           ./RSPRecomp.exe aspMain.us.rev1.toml
           ./RSPRecomp.exe njpgdspMain.us.rev1.toml
-      - name: Build ZeldaRecomp
+      - name: Build GoemonRecomp
         run: |-
           # enable ccache
           set $env:PATH="$env:USERPROFILE/.cargo/bin;$env:PATH"
@@ -255,23 +255,23 @@ jobs:
           $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -ne 'C:\Program Files\LLVM\bin' }) -join ';'
 
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_C_COMPILER=clang-cl -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build -DCMAKE_CXX_FLAGS="-Xclang -fexceptions -Xclang -fcxx-exceptions"
-          cmake --build cmake-build --config ${{ matrix.type }} --target Zelda64Recompiled -j $cpuCores
+          cmake --build cmake-build --config ${{ matrix.type }} --target Goemon64Recompiled -j $cpuCores
         env:
           SDL2_VERSION: ${{ inputs.SDL2_VERSION }}
       - name: Prepare Archive
         run: |
-          Move-Item -Path "cmake-build/Zelda64Recompiled.exe" -Destination "Zelda64Recompiled.exe"
+          Move-Item -Path "cmake-build/Goemon64Recompiled.exe" -Destination "Goemon64Recompiled.exe"
           Move-Item -Path "cmake-build/dxcompiler.dll" -Destination "dxcompiler.dll"
           Move-Item -Path "cmake-build/dxil.dll" -Destination "dxil.dll"
           Move-Item -Path "cmake-build/SDL2.dll" -Destination "SDL2.dll"
-          Move-Item -Path "cmake-build/Zelda64Recompiled.pdb" -Destination "Zelda64Recompiled.pdb"
+          Move-Item -Path "cmake-build/Goemon64Recompiled.pdb" -Destination "Goemon64Recompiled.pdb"
           Remove-Item -Path "assets/scss" -Recurse -Force
-      - name: Archive Zelda64Recomp
+      - name: Archive Goemon64Recomp
         uses: actions/upload-artifact@v4
         with:
-          name: Zelda64Recompiled-${{ runner.os }}-${{ matrix.type }}
+          name: Goemon64Recompiled-${{ runner.os }}-${{ matrix.type }}
           path: |
-            Zelda64Recompiled.exe
+            Goemon64Recompiled.exe
             dxcompiler.dll
             dxil.dll
             SDL2.dll
@@ -280,6 +280,6 @@ jobs:
       - name: Archive Debug Files
         uses: actions/upload-artifact@v4
         with:
-          name: Zelda64Recompiled-PDB-${{ matrix.type }}
+          name: Goemon64Recompiled-PDB-${{ matrix.type }}
           path: |
-            Zelda64Recompiled.pdb
+            Goemon64Recompiled.pdb

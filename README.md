@@ -1,5 +1,5 @@
-# Zelda 64: Recompiled
-Zelda 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** Majora's Mask (and soon Ocarina of Time) into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
+# Goemon 64: Recompiled
+Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** Majora's Mask (and soon Ocarina of Time) into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
 
 ### [Check out the latest release here](https://github.com/Mr-Wiseguy/Zelda64Recomp/releases/latest).
 
@@ -94,7 +94,7 @@ Saving and loading files, going from place to place, and pausing all happen in t
 #### Linux and Steam Deck Support
 A Linux binary is available for playing on most up-to-date distros, including on the Steam Deck.
 
-To play on Steam Deck, extract the Linux build onto your deck. Then, in desktop mode, right click the Zelda64Recompiled executable file and select "Add to Steam". From there, you can return to Gaming mode and configure the controls as needed. See the [Steam Deck gyro aim FAQ section](#how-do-i-set-up-gyro-aiming-on-steam-deck) for more detailed instructions.
+To play on Steam Deck, extract the Linux build onto your deck. Then, in desktop mode, right click the Goemon64Recompiled executable file and select "Add to Steam". From there, you can return to Gaming mode and configure the controls as needed. See the [Steam Deck gyro aim FAQ section](#how-do-i-set-up-gyro-aiming-on-steam-deck) for more detailed instructions.
 
 ## Planned Features
 * Ocarina of Time support
@@ -120,8 +120,8 @@ This project provides mouse aiming as a way to allow using gyro on Steam Deck, a
 You'll probably also want to change the default behavior so that you don't need to be touching the right stick to allow gyro input. To do so, click on the Gear icon to the right of "Gyro Behavior" and ensure that "Gyro Activation Buttons" is set to "None Selected (Gyro Always On)." If this isn't the case, then select that option and then press "Select None" in the following menu.
 
 #### Where is the savefile stored?
-- Windows: `%LOCALAPPDATA%\Zelda64Recompiled\saves`
-- Linux: `~/.config/Zelda64Recompiled/saves`
+- Windows: `%LOCALAPPDATA%\Goemon64Recompiled\saves`
+- Linux: `~/.config/Goemon64Recompiled/saves`
 
 #### How do I choose a different ROM?
 **You don't.** This project is **only** a port of Majora's Mask (and Ocarina of Time in the future), and it will only accept one specific ROM: the US version of the N64 release of Majora's Mask. ROMs in formats other than .z64 will be automatically converted, as long as it is the correct ROM. **It is not an emulator and it cannot run any arbitrary ROM.** 

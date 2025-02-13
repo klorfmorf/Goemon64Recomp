@@ -122,7 +122,7 @@ ultramodern::renderer::WindowHandle create_window(ultramodern::gfx_callbacks_t::
     flags |= SDL_WINDOW_VULKAN;
 #endif
 
-    window = SDL_CreateWindow("Zelda 64: Recompiled", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1600, 960,  flags);
+    window = SDL_CreateWindow("Goemon 64: Recompiled", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1600, 960,  flags);
 #if defined(__linux__)
     SetImageAsIcon("icons/512.png",window);
     if (ultramodern::renderer::get_graphics_config().wm_option == ultramodern::renderer::WindowMode::Fullscreen) { // TODO: Remove once RT64 gets native fullscreen support on Linux
@@ -192,7 +192,7 @@ void queue_samples(int16_t* audio_data, size_t sample_count) {
 
     // Convert the audio from 16-bit values to floats and swap the audio channels into the
     // swap buffer to correct for the address xor caused by endianness handling.
-    float cur_main_volume = zelda64::get_main_volume() / 100.0f; // Get the current main volume, normalized to 0.0-1.0.
+    float cur_main_volume = goemon64::get_main_volume() / 100.0f; // Get the current main volume, normalized to 0.0-1.0.
     for (size_t i = 0; i < sample_count; i += input_channels) {
         swap_buffer[i + 0 + duplicated_input_frames * input_channels] = audio_data[i + 1] * (0.5f / 32768.0f) * cur_main_volume;
         swap_buffer[i + 1 + duplicated_input_frames * input_channels] = audio_data[i + 0] * (0.5f / 32768.0f) * cur_main_volume;
@@ -325,11 +325,11 @@ gpr get_entrypoint_address();
 // array of supported GameEntry objects
 std::vector<recomp::GameEntry> supported_games = {
     {
-        .rom_hash = 0x380FC5D167CE89BAULL,
-        .internal_name = "ZELDA MAJORA'S MASK",
-        .game_id = u8"mm.n64.us.1.0",
-        .mod_game_id = "mm",
-        .save_type = recomp::SaveType::Flashram,
+        .rom_hash = 0x2F7C148CF30DB95BULL,
+        .internal_name = "MYSTICAL NINJA",
+        .game_id = u8"mnsg.us",
+        .mod_game_id = "mnsg",
+        .save_type = recomp::SaveType::AllowAll,
         .is_enabled = true,
         .entrypoint_address = get_entrypoint_address(),
         .entrypoint = recomp_entrypoint,
@@ -337,7 +337,7 @@ std::vector<recomp::GameEntry> supported_games = {
 };
 
 // TODO: move somewhere else
-namespace zelda64 {
+namespace goemon64 {
     std::string get_game_thread_name(const OSThread* t) {
         std::string name = "[Game] ";
 
@@ -505,12 +505,12 @@ void release_preload(PreloadContext& context) {
 
 void enable_texture_pack(recomp::mods::ModContext& context, const recomp::mods::ModHandle& mod) {
     (void)context;
-    zelda64::renderer::enable_texture_pack(mod);
+    goemon64::renderer::enable_texture_pack(mod);
 }
 
 void disable_texture_pack(recomp::mods::ModContext& context, const recomp::mods::ModHandle& mod) {
     (void)context;
-    zelda64::renderer::disable_texture_pack(mod);
+    goemon64::renderer::disable_texture_pack(mod);
 }
 
 int main(int argc, char** argv) {
@@ -563,23 +563,23 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Failed to load controller mappings: %s\n", SDL_GetError());
     }
 
-    recomp::register_config_path(zelda64::get_app_folder_path());
+    recomp::register_config_path(goemon64::get_app_folder_path());
 
     // Register supported games and patches
     for (const auto& game : supported_games) {
         recomp::register_game(game);
     }
 
-    zelda64::register_overlays();
-    zelda64::register_patches();
-    zelda64::load_config();
+    goemon64::register_overlays();
+    goemon64::register_patches();
+    goemon64::load_config();
 
     recomp::rsp::callbacks_t rsp_callbacks{
         .get_rsp_microcode = get_rsp_microcode,
     };
 
     ultramodern::renderer::callbacks_t renderer_callbacks{
-        .create_render_context = zelda64::renderer::create_render_context,
+        .create_render_context = goemon64::renderer::create_render_context,
     };
 
     ultramodern::gfx_callbacks_t gfx_callbacks{
@@ -611,7 +611,7 @@ int main(int argc, char** argv) {
     };
 
     ultramodern::threads::callbacks_t threads_callbacks{
-        .get_game_thread_name = zelda64::get_game_thread_name,
+        .get_game_thread_name = goemon64::get_game_thread_name,
     };
 
     // Register the texture pack content type with rt64.json as its content file.

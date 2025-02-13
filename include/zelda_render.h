@@ -12,7 +12,7 @@ namespace RT64 {
     struct Application;
 }
 
-namespace zelda64 {
+namespace goemon64 {
     namespace renderer {
         class RT64Context final : public ultramodern::renderer::RendererContext {
         public:

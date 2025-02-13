@@ -6,9 +6,9 @@
 #include "ultramodern/config.hpp"
 #include "recomp_input.h"
 
-namespace zelda64 {
-    constexpr std::u8string_view program_id = u8"Zelda64Recompiled";
-    constexpr std::string_view program_name = "Zelda 64: Recompiled";
+namespace goemon64 {
+    constexpr std::u8string_view program_id = u8"Goemon64Recompiled";
+    constexpr std::string_view program_name = "Goemon 64: Recompiled";
 
     // TODO: Move loading configs to the runtime once we have a way to allow per-project customization.
     void load_config();
@@ -30,9 +30,9 @@ namespace zelda64 {
         OptionCount
     };
 
-    NLOHMANN_JSON_SERIALIZE_ENUM(zelda64::AutosaveMode, {
-        {zelda64::AutosaveMode::On, "On"},
-        {zelda64::AutosaveMode::Off, "Off"}
+    NLOHMANN_JSON_SERIALIZE_ENUM(goemon64::AutosaveMode, {
+        {goemon64::AutosaveMode::On, "On"},
+        {goemon64::AutosaveMode::Off, "Off"}
     });
 
     enum class TargetingMode {
@@ -41,9 +41,9 @@ namespace zelda64 {
         OptionCount
     };
 
-    NLOHMANN_JSON_SERIALIZE_ENUM(zelda64::TargetingMode, {
-        {zelda64::TargetingMode::Switch, "Switch"},
-        {zelda64::TargetingMode::Hold, "Hold"}
+    NLOHMANN_JSON_SERIALIZE_ENUM(goemon64::TargetingMode, {
+        {goemon64::TargetingMode::Switch, "Switch"},
+        {goemon64::TargetingMode::Hold, "Hold"}
     });
 
     TargetingMode get_targeting_mode();
@@ -57,11 +57,11 @@ namespace zelda64 {
         OptionCount
     };
 
-    NLOHMANN_JSON_SERIALIZE_ENUM(zelda64::CameraInvertMode, {
-        {zelda64::CameraInvertMode::InvertNone, "InvertNone"},
-        {zelda64::CameraInvertMode::InvertX, "InvertX"},
-        {zelda64::CameraInvertMode::InvertY, "InvertY"},
-        {zelda64::CameraInvertMode::InvertBoth, "InvertBoth"}
+    NLOHMANN_JSON_SERIALIZE_ENUM(goemon64::CameraInvertMode, {
+        {goemon64::CameraInvertMode::InvertNone, "InvertNone"},
+        {goemon64::CameraInvertMode::InvertX, "InvertX"},
+        {goemon64::CameraInvertMode::InvertY, "InvertY"},
+        {goemon64::CameraInvertMode::InvertBoth, "InvertBoth"}
     });
 
     CameraInvertMode get_camera_invert_mode();
@@ -76,9 +76,9 @@ namespace zelda64 {
 		OptionCount
     };
 
-    NLOHMANN_JSON_SERIALIZE_ENUM(zelda64::AnalogCamMode, {
-        {zelda64::AnalogCamMode::On, "On"},
-        {zelda64::AnalogCamMode::Off, "Off"}
+    NLOHMANN_JSON_SERIALIZE_ENUM(goemon64::AnalogCamMode, {
+        {goemon64::AnalogCamMode::On, "On"},
+        {goemon64::AnalogCamMode::Off, "Off"}
     });
 
     AutosaveMode get_autosave_mode();

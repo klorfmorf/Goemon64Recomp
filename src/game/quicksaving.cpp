@@ -14,11 +14,11 @@ enum class QuicksaveAction {
 
 std::atomic<QuicksaveAction> cur_quicksave_action = QuicksaveAction::None;
 
-void zelda64::quicksave_save() {
+void goemon64::quicksave_save() {
     cur_quicksave_action.store(QuicksaveAction::Save);
 }
 
-void zelda64::quicksave_load() {
+void goemon64::quicksave_load() {
     cur_quicksave_action.store(QuicksaveAction::Load);
 }
 

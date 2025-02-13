@@ -1506,6 +1506,6 @@ recompui::Menu recompui::get_current_menu() {
 }
 
 void recompui::message_box(const char* msg) {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, zelda64::program_name.data(), msg, nullptr);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, goemon64::program_name.data(), msg, nullptr);
     printf("[ERROR] %s\n", msg);
 }

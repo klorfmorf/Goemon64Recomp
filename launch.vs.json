@@ -5,8 +5,8 @@
     {
       "type": "default",
       "project": "CMakeLists.txt",
-      "projectTarget": "Zelda64Recompiled.exe",
-      "name": "Zelda64Recompiled.exe",
+      "projectTarget": "Goemon64Recompiled.exe",
+      "name": "Goemon64Recompiled.exe",
       "currentDir": "${workspaceRoot}"
     }
   ]

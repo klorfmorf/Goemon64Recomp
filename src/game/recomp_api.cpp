@@ -76,15 +76,15 @@ extern "C" void recomp_get_aspect_ratio(uint8_t* rdram, recomp_context* ctx) {
 }
 
 extern "C" void recomp_get_targeting_mode(uint8_t* rdram, recomp_context* ctx) {
-    _return(ctx, static_cast<int>(zelda64::get_targeting_mode()));
+    _return(ctx, static_cast<int>(goemon64::get_targeting_mode()));
 }
 
 extern "C" void recomp_get_bgm_volume(uint8_t* rdram, recomp_context* ctx) {
-    _return(ctx, zelda64::get_bgm_volume() / 100.0f);
+    _return(ctx, goemon64::get_bgm_volume() / 100.0f);
 }
 
 extern "C" void recomp_get_low_health_beeps_enabled(uint8_t* rdram, recomp_context* ctx) {
-    _return(ctx, static_cast<u32>(zelda64::get_low_health_beeps_enabled()));
+    _return(ctx, static_cast<u32>(goemon64::get_low_health_beeps_enabled()));
 }
 
 extern "C" void recomp_time_us(uint8_t* rdram, recomp_context* ctx) {
@@ -92,7 +92,7 @@ extern "C" void recomp_time_us(uint8_t* rdram, recomp_context* ctx) {
 }
 
 extern "C" void recomp_autosave_enabled(uint8_t* rdram, recomp_context* ctx) {
-    _return(ctx, static_cast<s32>(zelda64::get_autosave_mode() == zelda64::AutosaveMode::On));
+    _return(ctx, static_cast<s32>(goemon64::get_autosave_mode() == goemon64::AutosaveMode::On));
 }
 
 extern "C" void recomp_load_overlays(uint8_t * rdram, recomp_context * ctx) {
@@ -104,7 +104,7 @@ extern "C" void recomp_load_overlays(uint8_t * rdram, recomp_context * ctx) {
 }
 
 extern "C" void recomp_high_precision_fb_enabled(uint8_t * rdram, recomp_context * ctx) {
-    _return(ctx, static_cast<s32>(zelda64::renderer::RT64HighPrecisionFBEnabled()));
+    _return(ctx, static_cast<s32>(goemon64::renderer::RT64HighPrecisionFBEnabled()));
 }
 
 extern "C" void recomp_get_resolution_scale(uint8_t* rdram, recomp_context* ctx) {
@@ -115,24 +115,24 @@ extern "C" void recomp_get_inverted_axes(uint8_t* rdram, recomp_context* ctx) {
     s32* x_out = _arg<0, s32*>(rdram, ctx);
     s32* y_out = _arg<1, s32*>(rdram, ctx);
 
-    zelda64::CameraInvertMode mode = zelda64::get_camera_invert_mode();
+    goemon64::CameraInvertMode mode = goemon64::get_camera_invert_mode();
 
-    *x_out = (mode == zelda64::CameraInvertMode::InvertX || mode == zelda64::CameraInvertMode::InvertBoth);
-    *y_out = (mode == zelda64::CameraInvertMode::InvertY || mode == zelda64::CameraInvertMode::InvertBoth);
+    *x_out = (mode == goemon64::CameraInvertMode::InvertX || mode == goemon64::CameraInvertMode::InvertBoth);
+    *y_out = (mode == goemon64::CameraInvertMode::InvertY || mode == goemon64::CameraInvertMode::InvertBoth);
 }
 
 extern "C" void recomp_get_analog_inverted_axes(uint8_t* rdram, recomp_context* ctx) {
     s32* x_out = _arg<0, s32*>(rdram, ctx);
     s32* y_out = _arg<1, s32*>(rdram, ctx);
 
-    zelda64::CameraInvertMode mode = zelda64::get_analog_camera_invert_mode();
+    goemon64::CameraInvertMode mode = goemon64::get_analog_camera_invert_mode();
 
-    *x_out = (mode == zelda64::CameraInvertMode::InvertX || mode == zelda64::CameraInvertMode::InvertBoth);
-    *y_out = (mode == zelda64::CameraInvertMode::InvertY || mode == zelda64::CameraInvertMode::InvertBoth);
+    *x_out = (mode == goemon64::CameraInvertMode::InvertX || mode == goemon64::CameraInvertMode::InvertBoth);
+    *y_out = (mode == goemon64::CameraInvertMode::InvertY || mode == goemon64::CameraInvertMode::InvertBoth);
 }
 
 extern "C" void recomp_analog_cam_enabled(uint8_t* rdram, recomp_context* ctx) {
-    _return<s32>(ctx, zelda64::get_analog_cam_mode() == zelda64::AnalogCamMode::On);
+    _return<s32>(ctx, goemon64::get_analog_cam_mode() == goemon64::AnalogCamMode::On);
 }
 
 extern "C" void recomp_get_camera_inputs(uint8_t* rdram, recomp_context* ctx) {
