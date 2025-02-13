@@ -1,5 +1,5 @@
 # Goemon 64: Recompiled
-Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** Mystical Ninja Starring Goemon (and soon Goemon's Great Adventure) into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
+Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** "Mystical Ninja Starring Goemon" (and soon "Goemon's Great Adventure") into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
 
 ### [Check out the latest release here](https://github.com/klorfmorf/Goemon64Recomp/releases/latest).
 
@@ -95,7 +95,7 @@ You'll probably also want to change the default behavior so that you don't need 
 - Linux: `~/.config/Goemon64Recompiled/saves`
 
 #### How do I choose a different ROM?
-**You don't.** This project is **only** a port of Majora's Mask (and Ocarina of Time in the future), and it will only accept one specific ROM: the US version of the N64 release of Majora's Mask. ROMs in formats other than .z64 will be automatically converted, as long as it is the correct ROM. **It is not an emulator and it cannot run any arbitrary ROM.** 
+**You don't.** This project is **only** a port of the US version of "Mystical Ninja Starring Goemon". The expected format is .z64, though ROMs in formats will be automatically converted, as long as it is the correct ROM. **It is not an emulator and it cannot run any arbitrary ROM.** 
 
 If you want to play a modded ROM or in another language, note that support for modding and other languages will be added to the project itself in the future and will not rely on you supplying a different ROM. 
 
