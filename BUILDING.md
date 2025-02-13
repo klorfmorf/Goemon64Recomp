@@ -57,14 +57,14 @@ Copy `tlb_and_controller_pak_support.patch` to the root of the `lib/N64ModernRun
 ```bash
 cp tlb_and_controller_pak_support.patch lib/N64ModernRuntime
 cd lib/N64ModernRuntime
-patch -p1 < tlb_and_controller_pak_support.patch
+git apply tlb_and_controller_pak_support.patch
 ```
 
 After that, copy `split_rectangles.patch` to the root of the `lib/rt64` directory and apply the patch:
 ```bash
 cp split_rectangles.patch lib/rt64
 cd lib/rt64
-patch -p1 < split_rectangles.patch
+git apply split_rectangles.patch
 ```
 
 ## 6. Building the Project
