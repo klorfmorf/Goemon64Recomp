@@ -1,5 +1,5 @@
 #include "recomp_ui.h"
-#include "zelda_config.h"
+#include "goemon_config.h"
 #include "librecomp/game.hpp"
 #include "ultramodern/ultramodern.hpp"
 #include "RmlUi/Core.h"

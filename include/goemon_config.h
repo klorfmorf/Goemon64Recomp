@@ -1,5 +1,5 @@
-#ifndef __ZELDA_CONFIG_H__
-#define __ZELDA_CONFIG_H__
+#ifndef __GOEMON_CONFIG_H__
+#define __GOEMON_CONFIG_H__
 
 #include <filesystem>
 #include <string_view>

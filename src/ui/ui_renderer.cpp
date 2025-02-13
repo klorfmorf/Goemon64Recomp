@@ -14,7 +14,7 @@
 #include "recomp_ui.h"
 #include "recomp_input.h"
 #include "librecomp/game.hpp"
-#include "zelda_config.h"
+#include "goemon_config.h"
 #include "ui_rml_hacks.hpp"
 
 #include "concurrentqueue.h"

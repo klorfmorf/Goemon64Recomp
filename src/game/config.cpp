@@ -1,7 +1,7 @@
-#include "zelda_config.h"
+#include "goemon_config.h"
 #include "recomp_input.h"
-#include "zelda_sound.h"
-#include "zelda_render.h"
+#include "goemon_sound.h"
+#include "goemon_render.h"
 #include "ultramodern/config.hpp"
 #include "librecomp/files.hpp"
 #include <filesystem>

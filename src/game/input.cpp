@@ -4,7 +4,7 @@
 #include "ultramodern/ultramodern.hpp"
 #include "recomp.h"
 #include "recomp_input.h"
-#include "zelda_config.h"
+#include "goemon_config.h"
 #include "recomp_ui.h"
 #include "SDL.h"
 #include "promptfont.h"

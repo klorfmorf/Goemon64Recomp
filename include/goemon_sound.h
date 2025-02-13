@@ -1,5 +1,5 @@
-#ifndef __ZELDA_SOUND_H__
-#define __ZELDA_SOUND_H__
+#ifndef __GOEMON_SOUND_H__
+#define __GOEMON_SOUND_H__
 
 namespace goemon64 {
     void reset_sound_settings();

@@ -9,7 +9,7 @@
 #include "ultramodern/ultramodern.hpp"
 #include "ultramodern/config.hpp"
 
-#include "zelda_render.h"
+#include "goemon_render.h"
 #include "recomp_ui.h"
 #include "concurrentqueue.h"
 

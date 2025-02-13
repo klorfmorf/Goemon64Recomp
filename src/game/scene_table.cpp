@@ -1,7 +1,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "zelda_debug.h"
+#include "goemon_debug.h"
 
 std::vector<goemon64::AreaWarps> goemon64::game_warps {
     { "Clock Town", {
