@@ -36,14 +36,11 @@ choco install make
 ```
 
 ## 3. Decompressing the target ROM
-You will need to decompress the NTSC-U N64 Majora's Mask ROM (sha1: d6133ace5afaa0882cf214cf88daba39e266c078) before running the recompiler.
+You will need to decompress the NTSC-U Mystical Ninja Starring Goemon ROM (sha1: df8083a54296b8c151917c5333e1c85f014a2a66) before running the recompiler.
 
-There are a few tools that can do it:
-* This python script from the Majora's Mask decompilation project: https://github.com/zeldaret/mm/blob/main/tools/buildtools/decompress_baserom.py
-* https://github.com/z64tools/z64decompress
+Follow the build instructions for the [Mystical Ninja Starring Goemon Decompilation Project](https://github.com/klorfmorf/mnsg) in order to generate a decompressed ROM.
 
-Regardless of which method you use, copy the decompressed ROM to the root of the Goemon64Recomp repository with this filename:
-- `mm.us.rev1.rom_uncompressed.z64`
+Copy the decompressed ROM with the name `baserom.us.decompressed.z64` from the root of the decompilation project to the root of the Goemon64Recomp repository and rename it to `mnsg.us.decompressed.z64`.
 
 ## 4. Generating the C code
 
@@ -51,12 +48,26 @@ Now that you have the required files, you must build [N64Recomp](https://github.
 
 After that, go back to the repository root, and run the following commands:
 ```bash
-./N64Recomp us.rev1.toml
-./RSPRecomp aspMain.us.rev1.toml
-./RSPRecomp njpgdspMain.us.rev1.toml
+./N64Recomp mnsg.us.toml
+./RSPRecomp aspMain.us.toml
 ```
 
-## 5. Building the Project
+## 5. Apply Patches
+Copy `tlb_and_controller_pak_support.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
+```bash
+cp tlb_and_controller_pak_support.patch lib/N64ModernRuntime
+cd lib/N64ModernRuntime
+patch -p1 < tlb_and_controller_pak_support.patch
+```
+
+After that, copy `split_rectangles.patch` to the root of the `lib/rt64` directory and apply the patch:
+```bash
+cp split_rectangles.patch lib/rt64
+cd lib/rt64
+patch -p1 < split_rectangles.patch
+```
+
+## 6. Building the Project
 
 Finally, you can build the project! :rocket:
 
@@ -69,9 +80,10 @@ cmake -S . -B build-cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang 
 cmake --build build-cmake --target Goemon64Recompiled -j$(nproc) --config Release # or Debug
 ```
 
-## 6. Success
+## 7. Success
 
 Voilà! You should now have a `Goemon64Recompiled` executable in the build directory! If you used Visual Studio this will be `out/build/x64-[Configuration]` and if you used the provided CMake commands then this will be `build-cmake`. You will need to run the executable out of the root folder of this project or copy the assets folder to the build folder to run it.
 
 > [!IMPORTANT]  
-> In the game itself, you should be using a standard ROM, not the decompressed one.
+> ~~In the game itself, you should be using a standard ROM, not the decompressed one.~~
+> You must use the decompressed ROM in the game too. This is only temporary.
