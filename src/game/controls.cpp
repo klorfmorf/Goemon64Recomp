@@ -79,6 +79,12 @@ bool recomp::get_n64_input(int controller_num, uint16_t* buttons_out, float* x_o
     uint16_t cur_buttons = 0;
     float cur_x = 0.0f;
     float cur_y = 0.0f;
+
+    // Taken from here: https://github.com/ares-emulator/ares/blob/6c8265577cec85392875760f913c70f4e193044e/ares/n64/controller/gamepad/gamepad.cpp#L232
+    constexpr double cardinal_max = 85.0;
+    constexpr double diagonal_max = 69.0;
+    constexpr double inner_deadzone = 7.0;
+    double outer_deadzone_radius_max = 2.0 / sqrt(2.0) * (diagonal_max / cardinal_max * (cardinal_max - inner_deadzone) + inner_deadzone);
     
     if (controller_num != 0) {
         return false;
@@ -105,7 +111,61 @@ bool recomp::get_n64_input(int controller_num, uint16_t* buttons_out, float* x_o
                 - recomp::get_input_analog(keyboard_input_mappings[(size_t)GameInput::X_AXIS_NEG]) + joystick_x;
 
         cur_y = recomp::get_input_analog(keyboard_input_mappings[(size_t)GameInput::Y_AXIS_POS])
-                - recomp::get_input_analog(keyboard_input_mappings[(size_t)GameInput::Y_AXIS_NEG]) + joystick_y;
+            - recomp::get_input_analog(keyboard_input_mappings[(size_t)GameInput::Y_AXIS_NEG]) + joystick_y;
+
+        cur_x *= outer_deadzone_radius_max;
+        cur_y *= outer_deadzone_radius_max;
+
+        double length = sqrt(cur_x * cur_x + cur_y * cur_y);
+        if (length <= outer_deadzone_radius_max) {
+            double length_absolute_x = abs(cur_x);
+            double length_absolute_y = abs(cur_y);
+
+            if (length_absolute_x <= inner_deadzone) {
+                length_absolute_x = 0.0;
+            }
+            else {
+                length_absolute_x = (length_absolute_x - inner_deadzone) * cardinal_max / (cardinal_max - inner_deadzone) / length_absolute_x;
+            }
+
+            cur_x *= length_absolute_x;
+
+            if (length_absolute_y <= inner_deadzone) {
+                length_absolute_y = 0.0;
+            }
+            else {
+                length_absolute_y = (length_absolute_y - inner_deadzone) * cardinal_max / (cardinal_max - inner_deadzone) / length_absolute_y;
+            }
+
+            cur_y *= length_absolute_y;
+        }
+        else {
+            length = outer_deadzone_radius_max / length;
+            cur_x *= length;
+            cur_y *= length;
+        }
+
+        if (cur_x != 0.0 && cur_y != 0.0) {
+            double slope = cur_y / cur_x;
+            double edge_x = copysign(cardinal_max / (abs(slope) + (cardinal_max - diagonal_max) / diagonal_max), cur_x);
+            double edge_y = copysign(MIN(abs(edge_x * slope), cardinal_max / (1.0 / abs(slope) + (cardinal_max - diagonal_max) / diagonal_max)), cur_y);
+
+            edge_x = edge_y / slope;
+            length = sqrt(cur_x * cur_x + cur_y * cur_y);
+
+            double distance_to_edge = sqrt(edge_x * edge_x + edge_y * edge_y);
+
+            if (length > distance_to_edge) {
+                cur_x = edge_x;
+                cur_y = edge_y;
+            }
+        }
+
+        cur_x = copysign(abs(cur_x) + 1e-09, cur_x);
+        cur_y = copysign(abs(cur_y) + 1e-09, cur_y);
+
+        cur_x /= 127.0f;
+        cur_y /= 127.0f;
     }
 
     *buttons_out = cur_buttons;

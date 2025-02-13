@@ -481,19 +481,25 @@ struct DebugContext {
 	bool debug_enabled = false;
 
 	DebugContext() {
+		//! REMOVED
+		/*
 		for (const auto& area : zelda64::game_warps) {
 			area_names.emplace_back(area.name);
 		}
 		update_warp_names();
+		*/
 	}
 
 	void update_warp_names() {
+		//! REMOVED
+		/*
 		scene_names.clear();
 		for (const auto& scene : zelda64::game_warps[area_index].scenes) {
 			scene_names.emplace_back(scene.name);
 		}
 		
 		entrance_names = zelda64::game_warps[area_index].scenes[scene_index].entrances;
+		*/
 	}
 };
 
@@ -591,12 +597,14 @@ public:
 
 		recompui::register_event(listener, "do_warp",
 			[](const std::string& param, Rml::Event& event) {
-                zelda64::do_warp(debug_context.area_index, debug_context.scene_index, debug_context.entrance_index);
+				//! REMOVED
+                //zelda64::do_warp(debug_context.area_index, debug_context.scene_index, debug_context.entrance_index);
 			});
 
 		recompui::register_event(listener, "set_time",
 			[](const std::string& param, Rml::Event& event) {
-                zelda64::set_time(debug_context.set_time_day, debug_context.set_time_hour, debug_context.set_time_minute);
+				//! REMOVED
+                //zelda64::set_time(debug_context.set_time_day, debug_context.set_time_hour, debug_context.set_time_minute);
 			});
 	}
 

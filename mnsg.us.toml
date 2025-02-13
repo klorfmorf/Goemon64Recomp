@@ -1,0 +1,24 @@
+# Config file for Mystical Ninja Starring Goemon (USA) Recompilation.
+
+[input]
+entrypoint = 0x80000400
+output_func_path = "RecompiledFuncs"
+symbols_file_path = "Goemon64RecompSyms/mnsg.us.syms.toml"
+rom_file_path = "mnsg.us.decompressed.z64"
+recomp_include = "#include \"goemon_recomp.h\""
+
+[patches]
+stubs = [
+
+]
+
+ignored = [
+]
+
+# When osAiGetLength returns a number that exceeds the target amount of samples per frame, the calculation (target samples per frame - osAiGetLength()) will result in a negative number.
+# When the clamping takes place to prevent a number of bytes that is too small, it doesn't take into account the negative number that resulted from the calculation.
+# Not doing this results in a negative number being given to osAiSetNextBuffer causing a massive memory leak and crash (because a signed negative number is being read as unsigned).
+[[patches.instruction]]
+func = "func_80038210_38E10"
+vram = 0x80038290
+value = 0x00E3082A # sltu $at, $a3, $v1 -> slt $at, $a3, $v1

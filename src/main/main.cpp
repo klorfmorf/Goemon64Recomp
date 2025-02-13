@@ -302,7 +302,7 @@ void reset_audio(uint32_t output_freq) {
     update_audio_converter();
 }
 
-extern RspUcodeFunc njpgdspMain;
+// extern RspUcodeFunc njpgdspMain;
 extern RspUcodeFunc aspMain;
 
 RspUcodeFunc* get_rsp_microcode(const OSTask* task) {
@@ -310,8 +310,8 @@ RspUcodeFunc* get_rsp_microcode(const OSTask* task) {
     case M_AUDTASK:
         return aspMain;
 
-    case M_NJPEGTASK:
-        return njpgdspMain;
+    // case M_NJPEGTASK:
+        // return njpgdspMain;
 
     default:
         fprintf(stderr, "Unknown task: %" PRIu32 "\n", task->t.type);
@@ -325,7 +325,7 @@ gpr get_entrypoint_address();
 // array of supported GameEntry objects
 std::vector<recomp::GameEntry> supported_games = {
     {
-        .rom_hash = 0xEF18B4A9E2386169ULL,
+        .rom_hash = 0x380FC5D167CE89BAULL,
         .internal_name = "ZELDA MAJORA'S MASK",
         .game_id = u8"mm.n64.us.1.0",
         .mod_game_id = "mm",
@@ -362,14 +362,14 @@ namespace zelda64 {
                 name += "IDLE";
                 break;
 
-            case 2:
+            case 3:
                 switch (t->priority) {
-                    case 5:
-                        name += "SLOWLY";
+                    case 10:
+                        name += "MAIN";
                         break;
 
-                    case 127:
-                        name += "FAULT";
+                    case 12:
+                        name += "AUDIO";
                         break;
 
                     default:
@@ -378,36 +378,12 @@ namespace zelda64 {
                 }
                 break;
 
-            case 3:
-                name += "MAIN";
-                break;
-
             case 4:
-                name += "GRAPH";
+                name += "GAME";
                 break;
 
             case 5:
                 name += "SCHED";
-                break;
-
-            case 7:
-                name += "PADMGR";
-                break;
-
-            case 10:
-                name += "AUDIOMGR";
-                break;
-
-            case 13:
-                name += "FLASHROM";
-                break;
-
-            case 18:
-                name += "DMAMGR";
-                break;
-
-            case 19:
-                name += "IRQMGR";
                 break;
 
             default:
