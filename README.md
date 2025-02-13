@@ -13,10 +13,7 @@ Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.co
   * [Easy-to-Use Menus](#easy-to-use-menus)
   * [High Framerate Support](#high-framerate-support)
   * [Widescreen and Ultrawide Support](#widescreen-and-ultrawide-support)
-  * [Dual Analog Camera](#dual-analog-camera)
-  * [Gyro Aim](#gyro-aim)
   * [Additional Control Options](#additional-control-options)
-  * [Autosaving](#autosaving)
   * [Low Input Lag](#low-input-lag)
   * [Instant Load Times](#instant-load-times)
   * [Linux and Steam Deck Support](#linux-and-steam-deck-support)
@@ -57,19 +54,8 @@ Any aspect ratio is supported, with most effects modded to work correctly in wid
 
 **Note**: Some animation quirks can be seen at the edges of the screen in certain cutscenes when using very wide aspect ratios.
 
-#### Dual Analog Camera
-Play with a dual analog control layout like later entries in the series! When this option is enabled, the right stick will control the camera. You can still have the C-Buttons mapped to the right stick if you so wish, so long as you also map them to other buttons on the controller. The right stick C-button inputs will be "silenced", except when you take out the ocarina, so you can still play the ocarina with the right stick.
-
-#### Gyro Aim
-When playing with a supported controller, first-person items such as the bow can be aimed with your controller's gyro sensor. This includes (but is not limited to) controllers such as the Dualshock 4, Dualsense, Switch Pro, and most third party Switch controllers (such as the 8BitDo Pro 2 in Switch mode).
-
-**Note**: Gamepad mappers such as BetterJoy or DS4Windows may intercept gyro data and prevent the game from receiving it. Most controllers are natively supported, so turning gamepad mappers off is recommended if you want to use gyro.
-
 #### Additional Control Options
-Customize your experience by setting your stick deadzone to your liking, as well as adjusting the X and Y axis inversion for both aiming and the optional dual analog camera.
-
-#### Autosaving
-Never worry about losing progress if your power goes out thanks to autosaving! The autosave system is designed to respect Majora's Mask's original save system and maintain the intention of owl saves by triggering automatically and replacing the previous autosave or owl save. However, if you'd still rather play with the untouched save system, simply turn off autosaving in the ingame menu.
+Customize your experience by setting your stick deadzone to your liking.
 
 #### Low Input Lag
 This project has been optimized to have as little input lag as possible, making the game feel more responsive than ever!
@@ -83,12 +69,11 @@ A Linux binary is available for playing on most up-to-date distros, including on
 To play on Steam Deck, extract the Linux build onto your deck. Then, in desktop mode, right click the Goemon64Recompiled executable file and select "Add to Steam". From there, you can return to Gaming mode and configure the controls as needed. See the [Steam Deck gyro aim FAQ section](#how-do-i-set-up-gyro-aiming-on-steam-deck) for more detailed instructions.
 
 ## Planned Features
-* Ocarina of Time support
+* Goemon's Great Adventure support
 * Mod support and Randomizer
 * Texture Packs
 * Model Replacements
 * Ray Tracing (via RT64)
-* Multi-language support with support for loading custom translations
 
 ## FAQ
 
