@@ -1,5 +1,5 @@
 # Goemon 64: Recompiled
-Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** Majora's Mask (and soon Ocarina of Time) into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
+Goemon 64: Recompiled is a project that uses [N64: Recompiled](https://github.com/Mr-Wiseguy/N64Recomp) to **statically recompile** Mystical Ninja Starring Goemon (and soon Goemon's Great Adventure) into a native port with many new features and enhancements. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide some of these enhancements.
 
 ### [Check out the latest release here](https://github.com/klorfmorf/Goemon64Recomp/releases/latest).
 
