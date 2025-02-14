@@ -14,9 +14,6 @@ on:
         type: string
         required: false
         default: '4e6f4e52989aca69739880b40b9f988357f15d10ca03284377b81f1502463ff5'
-    secrets:
-      ZRE_REPO_WITH_PAT:
-        required: true
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -48,10 +45,6 @@ jobs:
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           key: ${{ matrix.os }}-z64re-ccache-${{ matrix.type }}-x64-${{ inputs.N64RECOMP_COMMIT }}
-      - name: Prepare Build
-        run: |-
-          git clone ${{ secrets.ZRE_REPO_WITH_PAT }}
-          unzip zre/files.zip > /dev/null 2>&1
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
@@ -143,11 +136,6 @@ jobs:
           sudo make install
           sudo cp -av /usr/local/lib/libSDL* /lib/aarch64-linux-gnu/
           echo ::endgroup::
-      - name: Prepare Build
-        run: |-
-          git clone ${{ secrets.ZRE_REPO_WITH_PAT }}
-          ./zre/process.sh
-          cp ./zre/mm_shader_cache.bin ./shadercache/
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
@@ -217,11 +205,6 @@ jobs:
           Remove-Item -Path "C:\ProgramData\Chocolatey\bin\ccache.exe" -Force -ErrorAction SilentlyContinue
       - name: Configure Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
-      - name: Prepare Build
-        run: |-
-          git clone ${{ secrets.ZRE_REPO_WITH_PAT }}
-          ./zre/process.ps1
-          cp ./zre/mm_shader_cache.bin ./shadercache/
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
