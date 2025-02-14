@@ -55,9 +55,13 @@ jobs:
       - name: Apply Patches
         run: |
           cp ./tlb_and_controller_pak_support.patch ./lib/N64ModernRuntime
-          git apply ./lib/N64ModernRuntime/tlb_and_controller_pak_support.patch
+          cd ./lib/N64ModernRuntime
+          git apply ./tlb_and_controller_pak_support.patch
+          cd ../..
           cp ./split_rectangles.patch ./lib/rt64
-          git apply ./lib/rt64/split_rectangles.patch
+          cd ./lib/rt64
+          git apply ./split_rectangles.patch
+          cd ../..
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
@@ -136,9 +140,13 @@ jobs:
       - name: Apply Patches
         run: |
           cp ./tlb_and_controller_pak_support.patch ./lib/N64ModernRuntime
-          git apply ./lib/N64ModernRuntime/tlb_and_controller_pak_support.patch
+          cd ./lib/N64ModernRuntime
+          git apply ./tlb_and_controller_pak_support.patch
+          cd ../..
           cp ./split_rectangles.patch ./lib/rt64
-          git apply ./lib/rt64/split_rectangles.patch
+          cd ./lib/rt64
+          git apply ./split_rectangles.patch
+          cd ../..
       - name: Install Linux Dependencies
         run: |
           sudo apt-get update
@@ -233,9 +241,13 @@ jobs:
       - name: Apply Patches
         run: |
           Copy-Item -Path .\tlb_and_controller_pak_support.patch -Destination .\lib\N64ModernRuntime
-          git apply .\lib\N64ModernRuntime\tlb_and_controller_pak_support.patch
+          cd .\lib\N64ModernRuntime
+          git apply .\tlb_and_controller_pak_support.patch
+          cd ..\..
           Copy-Item -Path .\split_rectangles.patch -Destination .\lib\rt64
-          git apply .\lib\rt64\split_rectangles.patch
+          cd .\lib\rt64
+          git apply .\split_rectangles.patch
+          cd ..\..
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
