@@ -156,9 +156,8 @@ jobs:
           cp cmake-build/RSPRecomp ..
       - name: Run N64Recomp & RSPRecomp
         run: |
-          ./N64Recomp us.rev1.toml
-          ./RSPRecomp aspMain.us.rev1.toml
-          ./RSPRecomp njpgdspMain.us.rev1.toml
+          ./N64Recomp mnsg.us.toml
+          ./RSPRecomp aspMain.us.toml
       - name: Build GoemonRecomp
         run: |-
           # enable ccache
