@@ -14,6 +14,9 @@ on:
         type: string
         required: false
         default: '4e6f4e52989aca69739880b40b9f988357f15d10ca03284377b81f1502463ff5'
+    secrets:
+      G64RS_REPO_WITH_PAT:
+        required: true
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -45,6 +48,10 @@ jobs:
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           key: ${{ matrix.os }}-z64re-ccache-${{ matrix.type }}-x64-${{ inputs.N64RECOMP_COMMIT }}
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          cp ./Goemon64RecompSecrets/* ./
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
@@ -116,6 +123,10 @@ jobs:
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           key: ${{ matrix.os }}-z64re-ccache-${{ matrix.type }}-arm64-${{ inputs.N64RECOMP_COMMIT }}
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          cp ./Goemon64RecompSecrets/* ./
       - name: Install Linux Dependencies
         run: |
           sudo apt-get update
@@ -203,6 +214,10 @@ jobs:
           Remove-Item -Path "C:\ProgramData\Chocolatey\bin\ccache.exe" -Force -ErrorAction SilentlyContinue
       - name: Configure Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          Copy-Item -Path .\Goemon64RecompSecrets\* -Destination .\ -Recurse
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
