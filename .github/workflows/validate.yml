@@ -23,13 +23,6 @@ concurrency:
 jobs:
   build-linux:
     runs-on: 	ubuntu-24.04
-    container:
-      image: dcvz/n64recomp:ubuntu-18.04
-      volumes:
-        # create a volume that we'll use as the new source for the node binary
-        # https://github.com/actions/checkout/issues/1809
-        - /nodeoverride:/nodeoverride:rw,rshared
-        - /nodeoverride:/__e/node20:ro,rshared
     strategy:
       matrix:
         type: [ Debug, Release ]
@@ -103,7 +96,7 @@ jobs:
           rm -rf assets/scss
           tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ gamecontrollerdb.txt
       - name: Archive Goemon64Recomp
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Goemon64Recompiled-${{ runner.os }}-X64-${{ matrix.type }}
           path: Goemon64Recompiled.tar.gz
@@ -111,7 +104,7 @@ jobs:
         run: |-
           ./.github/linux/appimage.sh 
       - name: Goemon64Recomp AppImage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Goemon64Recompiled-AppImage-X64-${{ matrix.type }}
           path: Goemon64Recompiled-*.AppImage
