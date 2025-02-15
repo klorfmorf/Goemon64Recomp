@@ -51,13 +51,6 @@ jobs:
           cd ./lib/rt64
           git apply ./split_rectangles.patch
           cd ../..
-      - name: Hotpatch DXC into RT64's contrib
-        run: |
-          # check if dxc was updated before we replace it, to detect changes
-          echo ${{ inputs.DXC_CHECKSUM }} ./lib/rt64/src/contrib/dxc/bin/x64/dxc | sha256sum --status -c -
-
-          cp -v ./lib/dxc/lib/libdxcompiler.so ./lib/rt64/src/contrib/dxc/lib/x64/libdxcompiler.so
-          cp -v ./lib/dxc/bin/dxc ./lib/rt64/src/contrib/dxc/bin/x64/dxc
       - name: Install Linux Dependencies
         run: |
           sudo apt-get update
