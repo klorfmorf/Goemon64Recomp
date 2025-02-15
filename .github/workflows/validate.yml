@@ -22,11 +22,11 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         type: [ Debug, Release ]
-    name: ubuntu-20.04 (x64, ${{ matrix.type }})
+    name: ubuntu-22.04 (x64, ${{ matrix.type }})
     steps:
       - name: Checkout
         uses: actions/checkout@v4
