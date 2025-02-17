@@ -194,3 +194,41 @@ RECOMP_PATCH void func_08002414_715384(SnowGeneratorTask* task, Object *object, 
 
     object->position.y = task->center_position.y + 130.0;
 }
+
+/* Not needed.
+RECOMP_PATCH void func_801E3158_59F068(PlayerTask *task) {
+    task->unknown_d4 = 60;
+    task->task.unknown_30 = (task->task.unknown_30 & 0xFE) | 4;
+}
+
+RECOMP_PATCH u32 func_801D9CE8_595BF8(PlayerTask *task) {
+    Object *object;
+    s8 previous_unknown_d4;
+
+    object = (Object *)task->task.heap_element;
+
+    if (task->unknown_d4 == 0) {
+        return 0;
+    }
+
+    task->task.unknown_30 = (task->task.unknown_30 & 0xFE) | 4;
+
+    if ((*(u8 *)&D_8008CCC0_8D8C0.unknown[0x3ADB8] & 1) == 0) {
+        object->unknown_64 = 0;
+    } else {
+        object->unknown_64 = 1;
+    } 
+
+    previous_unknown_d4 = task->unknown_d4;
+
+    task->unknown_d4 -= 1;
+
+    if (previous_unknown_d4 == 0) {
+        task->unknown_d4 = 0;
+        task->task.unknown_30 = (task->task.unknown_30 & 0xFB) | 1;
+        object->unknown_64 = 0;
+    }
+
+    return 1;
+}
+*/

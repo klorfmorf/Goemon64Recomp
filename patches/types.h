@@ -303,4 +303,11 @@ struct SnowGeneratorTask {
     Vec3f center_position;
 };
 
+typedef struct SpinningSunTask SpinningSunTask;
+struct SpinningSunTask {
+    Task task;
+    u8 padding[0x5B];
+    u8 initialized; // @recomp Used for widescreen patch.
+};
+
 #endif // TYPES_H

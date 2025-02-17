@@ -1,6 +1,26 @@
 #ifndef MACROS_H
 #define MACROS_H
 
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+
+#define FILE_NONE 0
+#define FILE_MAX 1312
+#define FILE_COMP_MASK 0x80000000
+#define FILE_ADDR_MASK 0x7FFFFFFF
+
+#define TAGGING_OBJECT_SET_SKIP_INTERPOLATION(object) \
+    object->overlay_info[5].unknown_2[1] |= 0x01
+
+#define TAGGING_OBJECT_CLEAR_SKIP_INTERPOLATION(object) \
+    object->overlay_info[5].unknown_2[1] &= ~(0x01)
+
+#define TAGGING_OBJECT_IS_SKIP_INTERPOLATION(object) \
+    object->overlay_info[5].unknown_2[1] & 0x01
+
+#define TAGGING_GENERATE_ID(seed) \
+    (((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13) * 0xc2b2ae35) ^ ((((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13)) * 0xc2b2ae35) >> 16))
+
 #define gEXMatrixGroupNoInterpolation(cmd, push, proj, edit) \
     gEXMatrixGroup(cmd, G_EX_ID_IGNORE, G_EX_INTERPOLATE_SIMPLE, push, proj, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_ORDER_LINEAR, edit)
 
@@ -33,10 +53,5 @@
 
 #define gEXMatrixGroupDecomposedVertsSkipPosScale(cmd, id, push, proj, edit) \
     gEXMatrixGroupDecomposed(cmd, id, push, proj, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, edit)
-
-#define FILE_NONE      0
-#define FILE_MAX       1312
-#define FILE_COMP_MASK 0x80000000
-#define FILE_ADDR_MASK 0x7FFFFFFF
 
 #endif // MACROS_H

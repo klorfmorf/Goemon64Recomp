@@ -9,12 +9,14 @@ RECOMP_PATCH void func_800012FC_1EFC() {
     {
         D_8008CCC0_8D8C0.unknown[0x3ADD4] = 10;
     }
-
+    
     gEXEnable(D_8015C5CC_15D1CC++);
 
     if (retraces_per_game_step != 0) {
         gEXSetRefreshRate(D_8015C5CC_15D1CC++, 60 / retraces_per_game_step);
     }
+
+    gEXMatrixGroupNoInterpolation(D_8015C5CC_15D1CC++, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
 
     gSPDisplayList(D_8015C5CC_15D1CC++, &D_8006D4E0_6E0E0);
 }

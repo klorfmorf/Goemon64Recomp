@@ -1,10 +1,10 @@
 #include "patches.h"
 
-#define RNG(s) (((((s) ^ ((s) >> 16)) * 0x85ebca6b) ^ ((((s) ^ ((s) >> 16)) * 0x85ebca6b) >> 13) * 0xc2b2ae35) ^ ((((((s) ^ ((s) >> 16)) * 0x85ebca6b) ^ ((((s) ^ ((s) >> 16)) * 0x85ebca6b) >> 13)) * 0xc2b2ae35) >> 16))
-
 // @recomp
 Object *g_actor_skeleton_root_object = NULL;
+u8 g_actor_skip_interpolation = FALSE;
 Object *g_player_skeleton_root_object = NULL;
+u8 g_player_skip_interpolation = FALSE;
 
 RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     u32 a;
@@ -25,9 +25,9 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     u32 h;
     u16 *i;
 
-    // @recomp
-    u8 skip_interpolation = object->overlay_info[5].unknown_2[1] & 0x01;
-    object->overlay_info[5].unknown_2[1] &= ~(0x01);
+    // @recomp Flag that is set whenever we should skip interpolation on this frame. (The variable used for this is seemingly unused most of the time.)
+    u8 skip_interpolation = TAGGING_OBJECT_IS_SKIP_INTERPOLATION(object);
+    TAGGING_OBJECT_CLEAR_SKIP_INTERPOLATION(object);
 
     if ((object->unknown_64 & 1) == 0) {
         if (object->unknown_65 < 0) {
@@ -70,8 +70,9 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
         switch (object_type) {
         case 0x00000000:
         case 0x10000000:
-            // @recomp
+            // @recomp Used when hashing an identifier for the matrix.
             g_actor_skeleton_root_object = object;
+            g_actor_skip_interpolation = skip_interpolation;
 
             if (aptr == NULL) {
                 animated_skeleton = NULL;
@@ -238,7 +239,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             }
             
             // @recomp Fix the scissor so that RT64 can render in widescreen.
-            const f32 original_aspect_ratio = 320.0f / 240.0f;
+            const f32 original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
             if (patch_api_get_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
                 if (camera->scissor_ulx == 8) {
                     camera->scissor_ulx = 0;
@@ -273,6 +274,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             return 1;
 
         case 0x40000000:
+            // @recomp Skip interpolation if needed.
             if (!skip_interpolation) {
                 gEXMatrixGroupDecomposedVerts(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
             }
@@ -283,6 +285,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
 
             gSPPopMatrix(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
 
+            // @recomp Skip interpolation if needed.
             if (!skip_interpolation) {
                 gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
             }
@@ -308,11 +311,10 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             return 1;
 
         case 0x60000000:
-            // @recomp
+            // @recomp Used when hashing an identifier for the matrix.
             g_player_skeleton_root_object = object;
-
-            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
-
+            g_player_skip_interpolation = skip_interpolation;
+            
             if (aptr == NULL) {
                 object_type_6 = NULL;
             } else {
@@ -383,7 +385,6 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             }
 
             gSPPopMatrix(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
-            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
             return 1;
 
         default:
@@ -397,6 +398,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     return 1;
 }
 
+/* Not needed.
 RECOMP_PATCH void func_80018718_19318(Skeleton *skeleton, u32 object_type) {
     u32 display_list_vram_addr;
     u32 ptr;
@@ -458,6 +460,7 @@ RECOMP_PATCH void func_80018718_19318(Skeleton *skeleton, u32 object_type) {
         func_800196A4_1A2A4();
     }
 }
+*/
 
 RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
     u32 display_list_vram_addr;
@@ -465,8 +468,17 @@ RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
     Skeleton *masked_ptr;
 
     while (TRUE) {
-        u32 id = RNG(((u64)g_actor_skeleton_root_object) << 32 | (u32)skeleton->display_list_vram_addr);
-        gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+
+        // @recomp Tag the current limb matrix.
+        u8 skip_interpolation = g_actor_skip_interpolation;
+
+        u64 seed = ((u64)g_actor_skeleton_root_object) << 32 | (u32)skeleton->display_list_vram_addr;
+        u32 id = TAGGING_GENERATE_ID(seed);
+
+        if (!skip_interpolation) {
+            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+        }
+
         func_800192D0_19ED0(skeleton, NULL);
 
         display_list_vram_addr = skeleton->display_list_vram_addr;
@@ -506,12 +518,20 @@ RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
 
         if (((skeleton->rotation.x | skeleton->rotation.y | skeleton->rotation.z) & 0x4000) != 0) {
             func_800196A4_1A2A4();
-            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+
+            // @recomp Pop (untag) the current limb matrix.
+            if (!skip_interpolation) {
+                gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+            }
         }
 
         if (D_8016851C_16911C == 0) {
             func_800196A4_1A2A4();
-            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+
+            // @recomp Pop (untag) the current limb matrix.
+            if (!skip_interpolation) {
+                gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+            }
 
             if (skeleton->offset_right != 0) {
                 func_80018908_19508(skeleton + skeleton->offset_right);
@@ -522,7 +542,11 @@ RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
             }
 
             func_800196A4_1A2A4();
-            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+            
+            // @recomp Pop (untag) the current limb matrix.
+            if (!skip_interpolation) {
+                gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+            }
         }
 
         if (skeleton->offset_left != 0) {
@@ -551,8 +575,16 @@ RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object) {
             D_801684A0_1690A0 = object;
         }
 
-        u32 id = RNG(((u64)g_player_skeleton_root_object) << 32 | (u32)skeleton->display_list_vram_addr);
-        gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+        // @recomp Tag the current limb matrix.
+        u8 skip_interpolation = g_player_skip_interpolation;
+
+        u64 seed = ((u64)g_player_skeleton_root_object) << 32 | (u32)skeleton->display_list_vram_addr;
+        u32 id = TAGGING_GENERATE_ID(seed);
+
+        if (!skip_interpolation) {
+            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+        }
+
         func_800192D0_19ED0(skeleton, object);
 
         display_list_vram_addr = skeleton->display_list_vram_addr;
@@ -592,7 +624,11 @@ RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object) {
 
         if (((skeleton->rotation.x | skeleton->rotation.y | skeleton->rotation.z) & 0x4000) != 0) {
             func_800196A4_1A2A4();
-            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+
+            // @recomp Pop (untag) the current limb matrix.
+            if (!skip_interpolation) {
+                gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+            }
         }
 
         if (root_object != D_801684A0_1690A0) {
@@ -612,7 +648,11 @@ RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object) {
         }
 
         func_800196A4_1A2A4();
-        gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+
+        // @recomp Pop (untag) the current limb matrix.
+        if (!skip_interpolation) {
+            gEXPopMatrixGroup(D_8015C5CC_15D1CC++, G_MTX_MODELVIEW);
+        }
 
         if (skeleton->offset_left != 0) {
             object = func_8001904C_19C4C(skeleton, object);
