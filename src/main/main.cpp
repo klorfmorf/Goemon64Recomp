@@ -325,7 +325,7 @@ gpr get_entrypoint_address();
 // array of supported GameEntry objects
 std::vector<recomp::GameEntry> supported_games = {
     {
-        .rom_hash = 0x2F7C148CF30DB95BULL,
+        .rom_hash = 0x380FC5D167CE89BAULL,
         .internal_name = "MYSTICAL NINJA",
         .game_id = u8"mnsg.us",
         .mod_game_id = "mnsg",
