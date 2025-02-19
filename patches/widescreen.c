@@ -20,14 +20,15 @@ RECOMP_PATCH void func_80214530_69BF30(SpinningSunTask *task, Object *object) {
 }
 
 /*
-Object *func_800119D4_125D4(Task *task, u8 draw_layer);
-void *func_80014840_15440(void *virtual_address, u32 file_id);
-void func_80024160_24D60(RipplingBackgroundTask *task, Object *object);
-RipplingBackground *func_80024670_25270();
-void func_80035020_35C20();
-void func_801CC710_65F5C0(RipplingHikimakuTask *task, Object *object);
+extern Object *func_800119D4_125D4(Task *task, u8 draw_layer);
+extern void *func_80014840_15440(void *virtual_address, u32 file_id);
+extern void func_80024160_24D60(RipplingBackgroundTask *task, Object *object);
+extern RipplingBackground *func_80024670_25270();
+extern void func_80035020_35C20();
+extern void func_801CC710_65F5C0(RipplingHikimakuTask *task, Object *object);
 
 extern f32 D_801D42E8_667198;
+extern f32 D_801D42EC_66719C;
 extern f32 D_801D42F0_6671A0;
 extern RipplingHikimakuTask *D_801E8704_67B5B4;
 
@@ -37,40 +38,42 @@ RECOMP_PATCH void func_801CC978_65F828(RipplingHikimakuTask *task, Object *objec
 
     if (rippling_background == NULL) {
         func_80035020_35C20();
-    } else {
-        D_801E8704_67B5B4 = task;
-
-        task->rippling_background = rippling_background;
-
-        rippling_background->unknown_4 = 15;
-        rippling_background->unknown_8 = 15;
-        rippling_background->unknown_c = 2000;
-        rippling_background->unknown_10 = 2000;
-        rippling_background->unknown_30 = func_80014840_15440((void *)(0x08001D10), 1229);
-        rippling_background->unknown_38 = 5.0f;
-        rippling_background->unknown_14 = D_801D42E8_667198;
-        rippling_background->unknown_18 = D_801D42E8_667198;
-
-        child_object = func_800119D4_125D4((Task *)task, 9);
-        child_object->rotation.x = 0x100;
-        child_object->rotation.y = 0;
-        child_object->rotation.z = 0;
-        child_object->heap_element.flags = 0x03;
-        child_object->scale.x = D_801D42F0_6671A0;
-        child_object->scale.y = D_801D42F0_6671A0;
-        child_object->scale.z = D_801D42F0_6671A0;
-        child_object->position.x = 10.0f;
-        child_object->position.y = 0.0f;
-        child_object->position.z = -300.0f;
-
-        task->unknown_8a = 0;
-        task->unknown_8b = 0;
-
-        rippling_background->unknown_1c = 0;
-        rippling_background->displacement_map_function = (void (*)(Task *, Object *))func_801CC710_65F5C0;
-
-        func_8003521C_35E1C((void (*)(Task *, Object *))func_80024160_24D60);
+        return;
     }
+
+    D_801E8704_67B5B4 = task;
+
+    task->rippling_background = rippling_background;
+
+    rippling_background->unknown_4 = 15;
+    rippling_background->unknown_8 = 15;
+    rippling_background->unknown_c = 2000;
+    rippling_background->unknown_10 = 2000;
+    rippling_background->unknown_0 = 3587;
+    rippling_background->unknown_30 = func_80014840_15440((void *)(0x08001D10), 1229);
+    rippling_background->unknown_38 = 5.0f;
+    rippling_background->unknown_14 = D_801D42E8_667198;
+    rippling_background->unknown_18 = D_801D42EC_66719C;
+
+    child_object = func_800119D4_125D4((Task *)task, 9);
+    child_object->rotation.x = 0x100;
+    child_object->rotation.y = 0;
+    child_object->rotation.z = 0;
+    child_object->heap_element.flags = 3;
+    child_object->scale.x = D_801D42F0_6671A0;
+    child_object->scale.y = D_801D42F0_6671A0;
+    child_object->scale.z = D_801D42F0_6671A0;
+    child_object->position.x = 10.0f;
+    child_object->position.y = 0.0f;
+    child_object->position.z = -300.0f;
+
+    task->unknown_8a = 0;
+    // task->unknown_8b = 0;
+
+    rippling_background->unknown_1c = 0;
+    rippling_background->displacement_map_function = (void (*)(Task *, Object *))&func_801CC710_65F5C0;
+
+    func_8003521C_35E1C((void (*)(Task *, Object *))&func_80024160_24D60);
 }
 */
 

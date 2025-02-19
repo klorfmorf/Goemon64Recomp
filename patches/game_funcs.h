@@ -57,5 +57,6 @@ void func_80036308_36F08(HeapElement *heap_element);
 s32 func_802192B4_5D4784(s32 seed);
 u32 func_80023E94_24A94(u32 event_id);
 f32 func_80003E10_4A10(s32 value); // math_sin
+void func_8001136C_11F6C(Task *task); // something to do with arrows in menus
 
 #endif // GAME_FUNCS_H

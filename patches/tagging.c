@@ -232,3 +232,13 @@ RECOMP_PATCH u32 func_801D9CE8_595BF8(PlayerTask *task) {
     return 1;
 }
 */
+
+// @recomp patches the red arrow on the file select screen to skip position interpolation.
+RECOMP_PATCH void func_801CBB94_65EA44(Task *task, Object *object) {
+    object->rotation.x += 64;
+    object->rotation.x &= 0x3FF;
+
+    func_8001136C_11F6C(task);
+
+    TAGGING_OBJECT_SET_SKIP_ONLY_POSITION(object);
+}

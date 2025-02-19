@@ -349,11 +349,11 @@ struct PICDecompressor {
     s32 height;
     s32 color_depth;
     u32 decompressed_size;
-    s32 unknown_10;
+    s32 has_palette;
     u32 background_color;
     u8 *data;
     void *destination;
-    void *palette;
+    u16 *palette;
 };
 
 #endif // TYPES_H
