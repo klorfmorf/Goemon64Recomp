@@ -29,6 +29,9 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     u8 skip_interpolation = TAGGING_OBJECT_IS_SKIP_INTERPOLATION(object);
     TAGGING_OBJECT_CLEAR_SKIP_INTERPOLATION(object);
 
+    u8 interpolate_vertices = TAGGING_OBJECT_IS_INTERPOLATE_VERTICES(object);
+    TAGGING_OBJECT_CLEAR_INTERPOLATE_VERTICES(object);
+
     if ((object->unknown_64 & 1) == 0) {
         if (object->unknown_65 < 0) {
             return 0;
@@ -274,7 +277,11 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
         case 0x40000000:
             // @recomp Skip interpolation if needed.
             if (!skip_interpolation) {
-                gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                if (interpolate_vertices) {
+                    gEXMatrixGroupDecomposedVertsSkipScale(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                } else {
+                    gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                }
             }
 
             func_80016AA4_176A4();

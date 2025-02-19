@@ -9,14 +9,26 @@
 #define FILE_COMP_MASK 0x80000000
 #define FILE_ADDR_MASK 0x7FFFFFFF
 
+#define TAGGING_FLAG_SKIP_INTERPOLATION 0x01
+#define TAGGING_FLAG_INTERPOLATE_VERTICES 0x02
+
 #define TAGGING_OBJECT_SET_SKIP_INTERPOLATION(object) \
-    object->overlay_info[5].unknown_2[1] |= 0x01
+    object->overlay_info[5].unknown_2[1] |= TAGGING_FLAG_SKIP_INTERPOLATION
 
 #define TAGGING_OBJECT_CLEAR_SKIP_INTERPOLATION(object) \
-    object->overlay_info[5].unknown_2[1] &= ~(0x01)
+    object->overlay_info[5].unknown_2[1] &= ~(TAGGING_FLAG_SKIP_INTERPOLATION)
 
 #define TAGGING_OBJECT_IS_SKIP_INTERPOLATION(object) \
-    object->overlay_info[5].unknown_2[1] & 0x01
+    object->overlay_info[5].unknown_2[1] & TAGGING_FLAG_SKIP_INTERPOLATION
+
+#define TAGGING_OBJECT_SET_INTERPOLATE_VERTICES(object) \
+    object->overlay_info[5].unknown_2[1] |= TAGGING_FLAG_INTERPOLATE_VERTICES
+
+#define TAGGING_OBJECT_CLEAR_INTERPOLATE_VERTICES(object) \
+    object->overlay_info[5].unknown_2[1] &= ~(TAGGING_FLAG_INTERPOLATE_VERTICES)
+
+#define TAGGING_OBJECT_IS_INTERPOLATE_VERTICES(object) \
+    object->overlay_info[5].unknown_2[1] & TAGGING_FLAG_INTERPOLATE_VERTICES
 
 #define TAGGING_GENERATE_ID(seed) \
     (((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13) * 0xc2b2ae35) ^ ((((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13)) * 0xc2b2ae35) >> 16))
@@ -50,6 +62,9 @@
 
 #define gEXMatrixGroupDecomposedVertsOrderAuto(cmd, id, push, proj, edit) \
     gEXMatrixGroupDecomposed(cmd, id, push, proj, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_AUTO, edit)
+
+#define gEXMatrixGroupDecomposedVertsSkipScale(cmd, id, push, proj, edit) \
+    gEXMatrixGroupDecomposed(cmd, id, push, proj, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, edit)
 
 #define gEXMatrixGroupDecomposedVertsSkipPosScale(cmd, id, push, proj, edit) \
     gEXMatrixGroupDecomposed(cmd, id, push, proj, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, edit)

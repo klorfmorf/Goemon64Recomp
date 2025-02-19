@@ -310,8 +310,6 @@ struct SpinningSunTask {
     u8 initialized; // offset: 0xEF, @recomp Used to check if the widescreen patch has been initialized.
 };
 
-typedef struct RipplingBackgroundTask RipplingBackgroundTask;
-
 typedef struct RipplingBackground RipplingBackground;
 struct RipplingBackground {
     u32 unknown_0; // offset: 0x00
@@ -332,6 +330,8 @@ struct RipplingBackground {
 };
 
 typedef struct RipplingBackgroundTask RipplingBackgroundTask;
+typedef struct RipplingBackgroundTask RipplingHikimakuTask;
+typedef struct RipplingBackgroundTask RipplingKarakusaTask;
 struct RipplingBackgroundTask {
     Task header; // offset: 0x00, size: 0x5C
     u8 unknown_5c[0x2e]; // offset: 0x5C
@@ -340,9 +340,20 @@ struct RipplingBackgroundTask {
     u8 unknown_8c[0x44]; // offset: 0x8C
     RipplingBackground *rippling_background; // offset: 0xD0
     u8 unknown_d4[0x1b]; // offset: 0xD4
-    u8 initialized; // offset: 0xDF, @recomp Used to check if the widescreen patch has been initialized.
+    u8 initialized; // offset: 0xEF, @recomp Used to check if the widescreen patch has been initialized.
 };
 
-typedef struct RipplingBackgroundTask RipplingHikimakuTask;
+typedef struct PICDecompressor PICDecompressor;
+struct PICDecompressor {
+    s32 width;
+    s32 height;
+    s32 color_depth;
+    u32 decompressed_size;
+    s32 unknown_10;
+    u32 background_color;
+    u8 *data;
+    void *destination;
+    void *palette;
+};
 
 #endif // TYPES_H
