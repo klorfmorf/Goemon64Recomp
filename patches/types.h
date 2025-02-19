@@ -208,7 +208,7 @@ struct Task {
 
 typedef struct DummyTask DummyTask;
 struct DummyTask {
-    Task task;
+    Task header;
     u8 padding[0x94];
 };
 
@@ -216,13 +216,13 @@ typedef struct PlayerTask PlayerTask;
 
 typedef struct UnknownPlayerTask UnknownPlayerTask;
 struct UnknownPlayerTask {
-    Task task;
+    Task header;
     PlayerTask *player_task;
 };
 
 typedef struct PlayerTask PlayerTask;
 struct PlayerTask {
-    Task task;
+    Task header;
     Player *player;
     u8 character_id;
     s8 unknown_61;
@@ -274,7 +274,7 @@ struct PlayerTask {
 
 typedef struct ActorTask ActorTask;
 struct ActorTask {
-    Task task; // offset: 0x00, size: 0x5C
+    Task header; // offset: 0x00, size: 0x5C
     u16 actor_id; // offset: 0x5C
     u16 model_id; // offset: 0x5E
     u8 pad[0x80]; // offset: 0x60, size: 0x80
@@ -283,18 +283,18 @@ struct ActorTask {
 
 typedef struct ProjectileTask ProjectileTask;
 struct ProjectileTask {
-    Task task; // offset: 0x00, size: 0x5C
+    Task header; // offset: 0x00, size: 0x5C
     PlayerTask *player_task; // offset: 0x5C
     s8 unknown_60; // offset: 0x60
     s8 unknown_61; // offset: 0x61
     u16 unknown_62; // offset: 0x62
     u8 unknown_63; // offset: 0x63
-    u8 pad[0x38]; // offset: 0x64
-    f32 unknown_9C; // offset: 0x9C
-    f32 unknown_A0; // offset: 0xA0
-    f32 unknown_A4; // offset: 0xA4
-    u16 unknown_A8; // offset: 0xA8
-    u16 unknown_AA; // offset: 0xAA
+    u8 unknown_64[0x38]; // offset: 0x64
+    f32 unknown_9c; // offset: 0x9C
+    f32 unknown_a0; // offset: 0xA0
+    f32 unknown_a4; // offset: 0xA4
+    u16 unknown_a8; // offset: 0xA8
+    u16 unknown_aa; // offset: 0xAA
 };
 
 typedef struct SnowGeneratorTask SnowGeneratorTask;
@@ -305,9 +305,44 @@ struct SnowGeneratorTask {
 
 typedef struct SpinningSunTask SpinningSunTask;
 struct SpinningSunTask {
-    Task task;
-    u8 padding[0x5B];
-    u8 initialized; // @recomp Used for widescreen patch.
+    Task header; // offset: 0x00, size: 0x5C
+    u8 unknown_5c[0x93]; // offset: 0x5C
+    u8 initialized; // offset: 0xEF, @recomp Used to check if the widescreen patch has been initialized.
 };
+
+typedef struct RipplingBackgroundTask RipplingBackgroundTask;
+
+typedef struct RipplingBackground RipplingBackground;
+struct RipplingBackground {
+    u32 unknown_0; // offset: 0x00
+    s32 unknown_4; // offset: 0x04
+    s32 unknown_8; // offset: 0x08
+    s32 unknown_c; // offset: 0x0C
+    s32 unknown_10; // offset: 0x10
+    f32 unknown_14; // offset: 0x14
+    f32 unknown_18; // offset: 0x18
+    s32 unknown_1c; // offset: 0x1C
+    void (*displacement_map_function)(Task *, Object *); // offset: 0x20
+    u8 unknown_24[0xC]; // offset: 0x24
+    void *unknown_30; // offset: 0x30
+    s32 unknown_34; // offset: 0x34
+    f32 unknown_38; // offset: 0x38
+    u8 unknown_3c[0x1C]; // offset: 0x3C
+    f32 *unknown_58; // offset: 0x58
+};
+
+typedef struct RipplingBackgroundTask RipplingBackgroundTask;
+struct RipplingBackgroundTask {
+    Task header; // offset: 0x00, size: 0x5C
+    u8 unknown_5c[0x2e]; // offset: 0x5C
+    u8 unknown_8a; // offset: 0x8A
+    u8 unknown_8b; // offset: 0x8B
+    u8 unknown_8c[0x44]; // offset: 0x8C
+    RipplingBackground *rippling_background; // offset: 0xD0
+    u8 unknown_d4[0x1b]; // offset: 0xD4
+    u8 initialized; // offset: 0xDF, @recomp Used to check if the widescreen patch has been initialized.
+};
+
+typedef struct RipplingBackgroundTask RipplingHikimakuTask;
 
 #endif // TYPES_H

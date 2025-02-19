@@ -42,6 +42,7 @@ extern void *D_8020D220_5C9130[2]; // g_player_graphics_buffers
 extern u8 D_8020D260_5C9170[2];
 extern u8 D_8020C860_5C8770[0x1C0];
 extern u8 D_801FC640_5B8550[0x20];
-extern u32 D_8015C5DC_15D1DC; // g_current_player_character_id 
+extern u32 D_8015C5DC_15D1DC; // g_current_player_character_id
+extern f64 D_801D42E0_667190; // g_rippling_hikimaku_coefficient
 
 #endif // GAME_VARS_H

@@ -47,7 +47,7 @@ void func_801D9B78_595A88(Object *object);
 void func_801DC9C8_5988D8(PlayerTask* task, u8 character_id);
 void func_801DCA64_598974(PlayerTask* task, u32 something, u8 *something_else);
 Task *func_80034E08_35A08(Task *task, void (*func)(Task *task), u16 overlay_file_id);
-void func_8003521C_35E1C(void (*func)(Task *task));
+void func_8003521C_35E1C(void (*function)(Task *, Object *));
 Task *func_800358E8_364E8(Task *task, void (*func)(Task *task), u32 graphics_1_vram_addr, u32 graphics_2_vram_addr, f32 pos_x, f32 pos_y, f32 pos_z, s16 rot_x, s16 rot_y, s16 rot_z, f32 scale_x, f32 scale_y, f32 scale_z, u16 overlay_file_id_1, u16 overlay_file_id_2);
 void func_801E8858_5A4768(Object *object, u16 type);
 void func_801ED420_5A9330(ProjectileTask *task);
@@ -56,5 +56,6 @@ HeapElement *func_80035FDC_36BDC(HeapElement *heap_element);
 void func_80036308_36F08(HeapElement *heap_element);
 s32 func_802192B4_5D4784(s32 seed);
 u32 func_80023E94_24A94(u32 event_id);
+f32 func_80003E10_4A10(s32 value); // math_sin
 
 #endif // GAME_FUNCS_H

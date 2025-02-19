@@ -65,8 +65,6 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
         D_8016852D_16912D = (a & 1) == 0;
         D_8016852C_16912C = a & 1;
 
-        gEXMatrixGroupDecomposedSkipPosRot(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
-
         switch (object_type) {
         case 0x00000000:
         case 0x10000000:
@@ -276,7 +274,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
         case 0x40000000:
             // @recomp Skip interpolation if needed.
             if (!skip_interpolation) {
-                gEXMatrixGroupDecomposedVerts(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
             }
 
             func_80016AA4_176A4();
