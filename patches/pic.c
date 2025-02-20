@@ -301,6 +301,7 @@ void pic_fix_texture_alphas(u8 *destination, PICDecompressor *pic_decompressor) 
     } 
 }
 
+#define TEXTURE_ID_IMPACT_HUD_CURSOR_AND_GAUGE 0x8599
 #define TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN 0x859F
 #define TEXTURE_ID_IMPACT_HUD_NUMBERS_END 0x85A8
 
@@ -315,12 +316,12 @@ RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) 
         func_80014D70_15970(data, &pic_decompressor);
         func_80014DD8_159D8(data, destination, &pic_decompressor);
 
+        destination_end = destination + pic_decompressor.decompressed_size;
+
         // Don't fix alphas for Impact HUD numbers since they rely on black outlines to look good.
-        if (!(texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END)) {
+        if (!(texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END) && texture_id != TEXTURE_ID_IMPACT_HUD_CURSOR_AND_GAUGE) {
             pic_fix_texture_alphas(destination, &pic_decompressor);
         }
-
-        destination_end = destination + pic_decompressor.decompressed_size;
     } else {
         if (data_end != data) {
             memcpy(destination, data, data_end - data);
