@@ -316,7 +316,7 @@ RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) 
         func_80014DD8_159D8(data, destination, &pic_decompressor);
 
         // Don't fix alphas for Impact HUD numbers since they rely on black outlines to look good.
-        if (texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END) {
+        if (!(texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END)) {
             pic_fix_texture_alphas(destination, &pic_decompressor);
         }
 
