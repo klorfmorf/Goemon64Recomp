@@ -301,17 +301,24 @@ void pic_fix_texture_alphas(u8 *destination, PICDecompressor *pic_decompressor) 
     } 
 }
 
-RECOMP_PATCH u8 *func_800144E8_150E8(u32 file_id, u8 *data, u8 *destination) {
+#define TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN 0x859F
+#define TEXTURE_ID_IMPACT_HUD_NUMBERS_END 0x85A8
+
+RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) {
     u8 *data_end;
     u8 *destination_end;
     PICDecompressor pic_decompressor;
 
-    data_end = func_800145B4_151B4(file_id, data);
+    data_end = func_800145B4_151B4(texture_id, data);
 
     if (data[0] == 'P' && data[1] == 'I' && data[2] == 'C') {
         func_80014D70_15970(data, &pic_decompressor);
         func_80014DD8_159D8(data, destination, &pic_decompressor);
-        pic_fix_texture_alphas(destination, &pic_decompressor);
+
+        // Don't fix alphas for Impact HUD numbers since they rely on black outlines to look good.
+        if (texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END) {
+            pic_fix_texture_alphas(destination, &pic_decompressor);
+        }
 
         destination_end = destination + pic_decompressor.decompressed_size;
     } else {
