@@ -53,9 +53,9 @@ After that, go back to the repository root, and run the following commands:
 ```
 
 ## 5. Apply Patches
-Copy `tlb_and_controller_pak_support.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
+Copy `decompression_tlb_and_controller_pak_support.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
 ```bash
-cp tlb_and_controller_pak_support.patch lib/N64ModernRuntime
+cp decompression_tlb_and_controller_pak_support.patch lib/N64ModernRuntime
 cd lib/N64ModernRuntime
 git apply tlb_and_controller_pak_support.patch
 ```
