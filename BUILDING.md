@@ -53,18 +53,18 @@ After that, go back to the repository root, and run the following commands:
 ```
 
 ## 5. Apply Patches
-Copy `decompression_tlb_and_controller_pak_support.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
+Copy `N64ModernRuntime.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
 ```bash
-cp decompression_tlb_and_controller_pak_support.patch lib/N64ModernRuntime
+cp N64ModernRuntime.patch lib/N64ModernRuntime
 cd lib/N64ModernRuntime
-git apply tlb_and_controller_pak_support.patch
+git apply N64ModernRuntime.patch
 ```
 
-After that, copy `split_rectangles.patch` to the root of the `lib/rt64` directory and apply the patch:
+After that, copy `rt64.patch` to the root of the `lib/rt64` directory and apply the patch:
 ```bash
-cp split_rectangles.patch lib/rt64
+cp rt64.patch lib/rt64
 cd lib/rt64
-git apply split_rectangles.patch
+git apply rt64.patch
 ```
 
 ## 6. Building the Project

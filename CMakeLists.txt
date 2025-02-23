@@ -152,6 +152,8 @@ set (SOURCES
     # ${CMAKE_SOURCE_DIR}/src/game/recomp_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/patch_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/unknown_symbols.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/tlb.cpp
+
 
     ${CMAKE_SOURCE_DIR}/src/ui/ui_renderer.cpp
     ${CMAKE_SOURCE_DIR}/src/ui/ui_launcher.cpp
