@@ -5,8 +5,8 @@
 
 typedef struct FileSegment FileSegment;
 struct FileSegment {
-    u32 vram_start;
-    u32 vram_end;
+    u32 start;
+    u32 end;
 };
 
 typedef struct System System;

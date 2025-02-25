@@ -27,8 +27,8 @@ s32 func_80036798_37398(Object *object);
 void func_800042AC_4EAC(s16 entry, const char* string, s16 x, s16 y); // text_labels_add_ascii_entry
 void func_800042F4_4EF4(s16 entry, u32 number, s16 x, s16 y); // text_labels_add_hexadecimal_entry
 u8 *func_80001C00_2800(u32 file_id, u8 *buf_start); // file_load
-u32 func_80001DF4_29F4(u32 file_id); // file_is_code_ovl
-u32 func_80001EB0_2AB0(u32 file_id, u32 vram_addr); // file_map_tlb_ovl
+u32 func_80001DF4_29F4(u32 file_id); // file_is_code_overlay
+u32 func_80001EB0_2AB0(u32 file_id, u32 addr); // file_map_tlb_overlay
 void func_80001640_2240(u32 rom_addr, void *vram_addr, u32 size); // memory_dma_transfer_rom_to_ram
 u8 *func_80005394_5F94(u32 rom_addr, u8 *vram_addr, u32 size); // memory_decompress
 void func_800012FC_1EFC(); // main_initialize_display_lists

@@ -20,8 +20,8 @@ RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) {
         next_file_id = file_id;
         file_rom_addr = D_800573D8_57FD8[cur_file_id] & FILE_ADDR_MASK;
         file_size = (D_800573D8_57FD8[next_file_id] & FILE_ADDR_MASK) - file_rom_addr;
-        vram_start = D_80054ACC_556CC[cur_file_id].vram_start;
-        vram_end = D_80054ACC_556CC[cur_file_id].vram_end;
+        vram_start = D_80054ACC_556CC[cur_file_id].start;
+        vram_end = D_80054ACC_556CC[cur_file_id].end;
 
         buf_end = buf_start + ((s32)vram_end - (s32)vram_start);
 
@@ -58,3 +58,32 @@ RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) {
     return buf_end;
 }
 
+// @recomp Patched to always map the overlay, regardless of if it was mapped already or not.
+RECOMP_PATCH u32 func_80001EB0_2AB0(u32 file_id, u32 addr) {
+    u32 page_index;
+    u32 kuseg_addr;
+    u32 page_count;
+
+    page_index = 0;
+
+    if (func_80001DF4_29F4(file_id) != 0) {
+        if (file_id != 0) {
+            kuseg_addr = D_80054ACC_556CC[file_id - 1].start;
+            page_count = (D_80054ACC_556CC[file_id - 1].end - D_80054ACC_556CC[file_id - 1].start) >> 13;
+        } else {
+            kuseg_addr = 0x07000000;
+            page_count = 31;
+        }
+
+        addr &= 0x3FFFFFFF;
+        
+        while (page_index <= page_count) {
+            osMapTLB_recomp(page_index, OS_PM_4K, (void *)kuseg_addr, addr, addr + 0x1000, -1);
+            page_index++;
+            kuseg_addr += 0x2000;
+            addr += 0x2000;
+        } 
+    }
+
+    return 0;
+}

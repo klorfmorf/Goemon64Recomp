@@ -112,7 +112,7 @@ RECOMP_PATCH void func_8000A5C4_B1C4(Object *object) {
     object->heap_element.next = previous_next_element;
 
     // @recomp Skip interpolation on this frame since the object was reset and thus probably transformed a lot.
-    object->overlay_info[5].unknown_2[1] |= 0x01;
+    TAGGING_OBJECT_SET_SKIP_INTERPOLATION(object);
 }
 
 RECOMP_PATCH void func_08002414_715384(SnowGeneratorTask* task, Object *object, u32 type) {
@@ -121,7 +121,7 @@ RECOMP_PATCH void func_08002414_715384(SnowGeneratorTask* task, Object *object, 
 
     // @recomp Skip interpolation every time this function is called.
     if (object != NULL) {
-        object->overlay_info[5].unknown_2[1] |= 0x01;
+        TAGGING_OBJECT_SET_SKIP_INTERPOLATION(object);
     }
 
     switch (type) {
@@ -233,7 +233,7 @@ RECOMP_PATCH u32 func_801D9CE8_595BF8(PlayerTask *task) {
 }
 */
 
-// @recomp patches the red arrow on the file select screen to skip position interpolation.
+// @recomp Patches the red arrow on the file select screen to skip position interpolation.
 RECOMP_PATCH void func_801CBB94_65EA44(Task *task, Object *object) {
     object->rotation.x += 64;
     object->rotation.x &= 0x3FF;

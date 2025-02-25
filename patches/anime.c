@@ -71,6 +71,8 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
         D_8016852D_16912D = (a & 1) == 0;
         D_8016852C_16912C = a & 1;
 
+        gEXMatrixGroupDecomposedSkipAll(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
+
         switch (object_type) {
         case 0x00000000:
         case 0x10000000:
@@ -281,12 +283,12 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             // @recomp Skip interpolation if needed.
             if (!skip_interpolation) {
                 if (interpolate_vertices) {
-                    gEXMatrixGroupDecomposedVerts(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                    gEXMatrixGroupDecomposedVerts(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
                 } else {
                     if (skip_only_position) {
-                        gEXMatrixGroupDecomposedSkipPos(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                        gEXMatrixGroupDecomposedSkipPos(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
                     } else {
-                        gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+                        gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
                     }
                 }
             }
@@ -488,7 +490,7 @@ RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
         u32 id = TAGGING_GENERATE_ID(seed);
 
         if (!skip_interpolation) {
-            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
         }
 
         func_800192D0_19ED0(skeleton, NULL);
@@ -594,7 +596,7 @@ RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object) {
         u32 id = TAGGING_GENERATE_ID(seed);
 
         if (!skip_interpolation) {
-            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, 0, G_EX_EDIT_ALLOW);
+            gEXMatrixGroupDecomposedNormal(D_8015C5CC_15D1CC++, id, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
         }
 
         func_800192D0_19ED0(skeleton, object);

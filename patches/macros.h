@@ -41,7 +41,7 @@
     object->overlay_info[5].unknown_2[1] & TAGGING_FLAG_INTERPOLATE_VERTICES
 
 #define TAGGING_GENERATE_ID(seed) \
-    (((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13) * 0xc2b2ae35) ^ ((((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) ^ ((((seed) ^ ((seed) >> 16)) * 0x85ebca6b) >> 13)) * 0xc2b2ae35) >> 16))
+    (((((seed) ^ ((seed) >> 16)) * 0x85EBCA6B) ^ ((((seed) ^ ((seed) >> 16)) * 0x85EBCA6B) >> 13) * 0xC2B2AE35) ^ ((((((seed) ^ ((seed) >> 16)) * 0x85EBCA6B) ^ ((((seed) ^ ((seed) >> 16)) * 0x85EBCA6B) >> 13)) * 0xC2B2AE35) >> 16))
 
 #define gEXMatrixGroupNoInterpolation(cmd, push, proj, edit) \
     gEXMatrixGroup(cmd, G_EX_ID_IGNORE, G_EX_INTERPOLATE_SIMPLE, push, proj, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_ORDER_LINEAR, edit)
