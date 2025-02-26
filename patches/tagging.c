@@ -1,17 +1,5 @@
 #include "patches.h"
 
-static inline void* memcpy(void* s1, const void* s2, size_t n) {
-    char* su1 = (char*)s1;
-    const char* su2 = (const char*)s2;
-    while (n > 0) {
-        *su1 = *su2;
-        su1++;
-        su2++;
-        n--;
-    }
-    return (void*)s1;
-}
-
 /* Not needed?
 RECOMP_PATCH void func_801E99CC_5A58DC(ProjectileTask* task, Object *object, s32 type) {
     Object *current_object;

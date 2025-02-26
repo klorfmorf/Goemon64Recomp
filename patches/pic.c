@@ -1,5 +1,7 @@
 #include "patches.h"
 
+#if 0
+
 u32 func_800161F0_16DF0(s32 row, s32 column);
 void func_800162F4_16EF4(s32 row, s32 column);
 
@@ -305,10 +307,15 @@ void pic_fix_texture_alphas(u8 *destination, PICDecompressor *pic_decompressor) 
 #define TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN 0x859F
 #define TEXTURE_ID_IMPACT_HUD_NUMBERS_END 0x85A8
 
+u16 g_pic_texture_ignore_list[] = {
+    0x8599, 0x859F, 0x85A0, 0x85A1, 0x85A2, 0x85A3, 0x85A4, 0x85A5, 0x85A6, 0x85A7, 0x85A8
+};
+
 RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) {
     u8 *data_end;
     u8 *destination_end;
     PICDecompressor pic_decompressor;
+    s32 i;
 
     data_end = func_800145B4_151B4(texture_id, data);
 
@@ -319,9 +326,13 @@ RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) 
         destination_end = destination + pic_decompressor.decompressed_size;
 
         // Don't fix alphas for Impact HUD numbers since they rely on black outlines to look good.
-        if (!(texture_id >= TEXTURE_ID_IMPACT_HUD_NUMBERS_BEGIN && texture_id <= TEXTURE_ID_IMPACT_HUD_NUMBERS_END) && texture_id != TEXTURE_ID_IMPACT_HUD_CURSOR_AND_GAUGE) {
-            pic_fix_texture_alphas(destination, &pic_decompressor);
+        for (i = 0; i < sizeof(g_pic_texture_ignore_list) / sizeof(g_pic_texture_ignore_list[0]); i++) {
+            if (texture_id == g_pic_texture_ignore_list[i]) {
+                return destination_end;
+            }
         }
+
+        pic_fix_texture_alphas(destination, &pic_decompressor);
     } else {
         if (data_end != data) {
             memcpy(destination, data, data_end - data);
@@ -331,3 +342,5 @@ RECOMP_PATCH u8 *func_800144E8_150E8(u32 texture_id, u8 *data, u8 *destination) 
 
     return destination_end;
 }
+
+#endif // 0

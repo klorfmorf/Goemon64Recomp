@@ -7,12 +7,12 @@
 #include <fenv.h>
 #include <assert.h>
 
-extern int32_t* section_addresses;
+#define TLB_ENTRY_COUNT    32
 
-#define TLB_ENTRY_COUNT 32
-#define KUSEG_START_ADDR 0x00000000
-#define KUSEG_ADDR_END   0x7FFFFFFF
-#define MAX_TLB_PAGE_SIZE_MASK 0xFFFFFF
+#define KUSEG_END_ADDR     0x7FFFFFFF
+
+#define SEGMENT_SIZE_MASK  0x1FFFFFFF 
+#define TLB_PAGE_SIZE_MASK 0xFFFFFF
 
 typedef struct TLBEntry TLBEntry;
 struct TLBEntry {
@@ -23,6 +23,7 @@ struct TLBEntry {
     uint64_t kseg0_end_addr;
 };
 
+extern int32_t* section_addresses;
 extern TLBEntry tlb_entries[TLB_ENTRY_COUNT];
 
 // Compiler definition to disable inter-procedural optimization, allowing multiple functions to be in a single file without breaking interposition.
@@ -111,129 +112,126 @@ typedef uint64_t gpr;
     ((gpr)(int32_t)((a) - (b)))
 
 static inline int32_t* MEM_W(uint8_t* rdram, gpr addr) {
-    if (addr <= KUSEG_ADDR_END) {
+    int32_t* addr_ptr = (int32_t*)(rdram + (addr & SEGMENT_SIZE_MASK));
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                return (int32_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + (addr & MAX_TLB_PAGE_SIZE_MASK));
+                addr_ptr = (int32_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + (addr & TLB_PAGE_SIZE_MASK));
             }
         }
-
-        assert(0);
     }
 
-    return (int32_t*)(rdram + (addr - 0xFFFFFFFF80000000));
+    return addr_ptr;
 }
 
 static inline int16_t* MEM_H(uint8_t* rdram, gpr addr) {
-    if (addr <= KUSEG_ADDR_END) {
+    int16_t* addr_ptr = (int16_t*)(rdram + ((addr ^ 2) & SEGMENT_SIZE_MASK));
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                return (int16_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + ((addr ^ 2) & MAX_TLB_PAGE_SIZE_MASK));
+                addr_ptr = (int16_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + ((addr ^ 2) & TLB_PAGE_SIZE_MASK));
             }
         }
-
-        assert(0);
     }
 
-    return (int16_t*)(rdram + ((addr ^ 2) - 0xFFFFFFFF80000000));
+    return addr_ptr;
 }
 
 static inline int8_t* MEM_B(uint8_t* rdram, gpr addr) {
-    if (addr <= KUSEG_ADDR_END) {
+    int8_t* addr_ptr = (int8_t*)(rdram + ((addr ^ 3) & SEGMENT_SIZE_MASK));
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                return (int8_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + ((addr ^ 3) & MAX_TLB_PAGE_SIZE_MASK));
+                addr_ptr = (int8_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + ((addr ^ 3) & TLB_PAGE_SIZE_MASK));
             }
         }
-
-        assert(0);
     }
 
-    return (int8_t*)(rdram + ((addr ^ 3) - 0xFFFFFFFF80000000));
+    return addr_ptr;
 }
 
 static inline uint16_t* MEM_HU(uint8_t* rdram, gpr addr) {
-    if (addr <= KUSEG_ADDR_END) {
+    uint16_t* addr_ptr = (uint16_t*)(rdram + ((addr ^ 2) & SEGMENT_SIZE_MASK));
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                return (uint16_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + ((addr ^ 2) & MAX_TLB_PAGE_SIZE_MASK));
+                addr_ptr = (uint16_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + ((addr ^ 2) & TLB_PAGE_SIZE_MASK));
             }
         }
-
-        assert(0);
     }
 
-    return (uint16_t*)(rdram + ((addr ^ 2) - 0xFFFFFFFF80000000));
+    return addr_ptr;
 }
 
 static inline uint8_t* MEM_BU(uint8_t* rdram, gpr addr) {
-    if (addr <= KUSEG_ADDR_END) {
+    uint8_t* addr_ptr = (uint8_t*)(rdram + ((addr ^ 3) & SEGMENT_SIZE_MASK));
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                return (uint8_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + ((addr ^ 3) & MAX_TLB_PAGE_SIZE_MASK));
+                addr_ptr = (uint8_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + ((addr ^ 3) & TLB_PAGE_SIZE_MASK));
             }
         }
-        assert(0);
     }
 
-    return (uint8_t*)(rdram + ((addr ^ 3) - 0xFFFFFFFF80000000));
+    return addr_ptr;
 }
 
 static inline void SD(uint8_t* rdram, gpr addr, gpr val) {
     gpr addr_lo = addr + 4;
     gpr addr_hi = addr + 0;
 
-    if (addr <= KUSEG_ADDR_END) {
+    *(uint32_t*)(rdram + (addr_lo & SEGMENT_SIZE_MASK)) = (uint32_t)(val >> 0);
+
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                *(uint32_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + (addr_lo & MAX_TLB_PAGE_SIZE_MASK)) = (uint32_t)(val >> 0);
+                *(uint32_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + (addr_lo & TLB_PAGE_SIZE_MASK)) = (uint32_t)(val >> 0);
             }
         }
-
-        assert(0);
     }
 
-    *(uint32_t*)(rdram + (addr_lo - 0xFFFFFFFF80000000)) = (uint32_t)(val >> 0);
+    *(uint32_t*)(rdram + (addr_hi & SEGMENT_SIZE_MASK)) = (uint32_t)(val >> 32);
 
-    if (addr <= KUSEG_ADDR_END) {
+    if (addr <= KUSEG_END_ADDR) {
         for (size_t i = 0; i < TLB_ENTRY_COUNT; i++) {
             if (!tlb_entries[i].valid) {
                 continue;
             }
 
             if (addr >= tlb_entries[i].kuseg_start_addr && addr <= tlb_entries[i].kuseg_end_addr) {
-                *(uint32_t*)(rdram + (tlb_entries[i].kseg0_start_addr - 0xFFFFFFFF80000000) + (addr_hi & MAX_TLB_PAGE_SIZE_MASK)) = (uint32_t)(val >> 32);
+                *(uint32_t*)(rdram + (tlb_entries[i].kseg0_start_addr & SEGMENT_SIZE_MASK) + (addr_hi & TLB_PAGE_SIZE_MASK)) = (uint32_t)(val >> 32);
             }
         }
-
-        assert(0);
     }
-
-    *(uint32_t*)(rdram + (addr_hi - 0xFFFFFFFF80000000)) = (uint32_t)(val >> 32);
 }
 
 #define MEM_W(offset, reg) \

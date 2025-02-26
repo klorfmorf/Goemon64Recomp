@@ -3,8 +3,11 @@
 // @recomp
 Object *g_actor_skeleton_root_object = NULL;
 u8 g_actor_skip_interpolation = FALSE;
+
 Object *g_player_skeleton_root_object = NULL;
 u8 g_player_skip_interpolation = FALSE;
+
+Camera g_widescreen_camera;
 
 RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     u32 a;
@@ -227,6 +230,30 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
             return 1;
 
         case 0x20000000:
+            // @recomp Fix the scissor so that RT64 can render in widescreen.
+            const f32 original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
+            if (patch_api_get_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
+                memcpy(&g_widescreen_camera, (Camera *)aptr, sizeof(Camera));
+
+                if (g_widescreen_camera.scissor_ulx == 8) {
+                    g_widescreen_camera.scissor_ulx = 0;
+                }
+
+                if (g_widescreen_camera.scissor_uly == 16) {
+                    g_widescreen_camera.scissor_uly = 0;
+                }
+
+                if (g_widescreen_camera.scissor_lrx == 312) {
+                    g_widescreen_camera.scissor_lrx = 320;
+                }
+
+                if (g_widescreen_camera.scissor_lry == 224) {
+                    g_widescreen_camera.scissor_lry = 240;
+                }
+
+                aptr = (u32 *)&g_widescreen_camera;
+            }
+
             func_8001E380_1EF80(&D_801684B0_1690B0, D_801684A0_1690A0);
             func_80017D8C_1898C((Camera *)aptr, &D_801684B0_1690B0);
 
@@ -244,18 +271,6 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
                 }
             }
             
-            // @recomp Fix the scissor so that RT64 can render in widescreen.
-            const f32 original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
-            if (patch_api_get_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
-                if (camera->scissor_ulx == 8) {
-                    camera->scissor_ulx = 0;
-                }
-
-                if (camera->scissor_lrx == 312) {
-                    camera->scissor_lrx = 320;
-                }
-            }
-
             D_801684F0_1690F0 = aptr;
             func_8001B6D4_1C2D4(camera);
             return 1;
