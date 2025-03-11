@@ -27,6 +27,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
     AnimatedSkeleton *object_type_6;
     u32 h;
     u16 *i;
+    const f32 original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
 
     // @recomp Flag that is set whenever we should skip interpolation on this frame. (The variable used for this is seemingly unused most of the time.)
     u8 skip_interpolation = TAGGING_OBJECT_IS_SKIP_INTERPOLATION(object);
@@ -126,7 +127,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
                 }
             }
 
-            skeletons = &animated_skeleton->skeletons;
+            skeletons = &animated_skeleton->skeletons[0];
 
             b = (animated_skeleton_flags >> 0x1C) & 0x7;
 
@@ -231,7 +232,6 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
 
         case 0x20000000:
             // @recomp Fix the scissor so that RT64 can render in widescreen.
-            const f32 original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
             if (patch_api_get_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
                 memcpy(&g_widescreen_camera, (Camera *)aptr, sizeof(Camera));
 
