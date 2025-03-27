@@ -251,6 +251,8 @@ goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::render
     auto& cur_config = ultramodern::renderer::get_graphics_config();
     set_application_user_config(app.get(), cur_config);
     app->userConfig.developerMode = debug;
+    // Don't upscale texture rectangles.
+    app->userConfig.upscale2D = RT64::UserConfiguration::Upscale2D::Original;
     // Force gbi depth branches to prevent LODs from kicking in.
     app->enhancementConfig.f3dex.forceBranch = true;
     // Scale LODs based on the output resolution.
