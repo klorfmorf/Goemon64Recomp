@@ -108,7 +108,7 @@ If you want to play a modded ROM or in another language, note that support for m
 Building is not required to play this project, as prebuilt binaries (which do not contain game assets) can be found in the [Releases](https://github.com/klorfmorf/Goemon64Recomp/releases) section. Instructions on how to build this project can be found in the [BUILDING.md](BUILDING.md) file.
 
 ## Libraries Used and Projects Referenced
-* [Zelda64Recomp](https://github.com/Zelda64Recomp/Zelda64Recomp) for the base upon which this project is built on.
+* [Zelda64Recomp](https://github.com/Zelda64Recomp/Zelda64Recomp) for the base upon which this project is built on
 * [RT64](https://github.com/rt64/rt64) for the project's rendering engine
 * [RmlUi](https://github.com/mikke89/RmlUi) for building the menus and launcher
 * [lunasvg](https://github.com/sammycage/lunasvg) for SVG rendering, used by RmlUi
@@ -116,5 +116,7 @@ Building is not required to play this project, as prebuilt binaries (which do no
 * [moodycamel::ConcurrentQueue](https://github.com/cameron314/concurrentqueue) for semaphores and fast, lock-free MPMC queues
 * [Gamepad Motion Helpers](https://github.com/JibbSmart/GamepadMotionHelpers) for sensor fusion and calibration algorithms to implement gyro aiming
 * [Ares emulator](https://github.com/ares-emulator/ares) for RSP vector instruction reference implementations, used in RSP recompilation
+
+Special thanks to [Jingleboy of Goemon International](https://goemoninternational.com) for drawing the icon/background graphic of Goemon's head!
 
 Special thanks to [thecozies](https://github.com/thecozies) for designing and helping implement the launcher and config menus!
