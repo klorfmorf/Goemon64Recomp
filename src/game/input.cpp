@@ -42,6 +42,10 @@ static struct {
     bool rumble_active;
 } InputState;
 
+static struct {
+    std::list<std::filesystem::path> files_dropped;
+} DropState;
+
 std::atomic<recomp::InputDevice> scanning_device = recomp::InputDevice::COUNT;
 std::atomic<recomp::InputField> scanned_input;
 
@@ -103,7 +107,7 @@ bool sdl_event_filter(void* userdata, SDL_Event* event) {
             SDL_KeyboardEvent* keyevent = &event->key;
 
             // Skip repeated events when not in the menu
-            if (recompui::get_current_menu() == recompui::Menu::None &&
+            if (!recompui::is_context_capturing_input() &&
                 event->key.repeat) {
                 break;
             }
@@ -154,10 +158,6 @@ bool sdl_event_filter(void* userdata, SDL_Event* event) {
         if (!ultramodern::is_game_started()) {
             ultramodern::quit();
             return true;
-        }
-
-        if (recompui::get_current_menu() != recompui::Menu::Config) {
-            recompui::set_current_menu(recompui::Menu::Config);
         }
 
         goemon64::open_quit_game_prompt();
@@ -275,6 +275,22 @@ bool sdl_event_filter(void* userdata, SDL_Event* event) {
             InputState.pending_mouse_delta[0] += motion_event->xrel;
             InputState.pending_mouse_delta[1] += motion_event->yrel;
         }
+        queue_if_enabled(event);
+        break;
+    case SDL_EventType::SDL_DROPBEGIN:
+        DropState.files_dropped.clear();
+        break;
+    case SDL_EventType::SDL_DROPFILE:
+        DropState.files_dropped.emplace_back(std::filesystem::path(std::u8string_view((const char8_t *)(event->drop.file))));
+        SDL_free(event->drop.file);
+        break;
+    case SDL_EventType::SDL_DROPCOMPLETE:
+        recompui::drop_files(DropState.files_dropped);
+        break;
+    case SDL_EventType::SDL_CONTROLLERBUTTONUP:
+        // Always queue button up events to avoid missing them during binding.
+        recompui::queue_event(*event);
+        break;
     default:
         queue_if_enabled(event);
         break;
@@ -284,6 +300,7 @@ bool sdl_event_filter(void* userdata, SDL_Event* event) {
 
 void recomp::handle_events() {
     SDL_Event cur_event;
+    static bool started = false;
     static bool exited = false;
     while (SDL_PollEvent(&cur_event) && !exited) {
         exited = sdl_event_filter(nullptr, &cur_event);
@@ -299,6 +316,11 @@ void recomp::handle_events() {
 
         SDL_ShowCursor(cursor_visible ? SDL_ENABLE : SDL_DISABLE);
         SDL_SetRelativeMouseMode(cursor_locked ? SDL_TRUE : SDL_FALSE);
+    }
+
+    if (!started && ultramodern::is_game_started()) {
+        started = true;
+        recompui::process_game_started();
     }
 }
 
@@ -711,8 +733,8 @@ void recomp::set_right_analog_suppressed(bool suppressed) {
 }
 
 bool recomp::game_input_disabled() {
-    // Disable input if any menu is open.
-    return recompui::get_current_menu() != recompui::Menu::None;
+    // Disable input if any menu that blocks input is open.
+    return recompui::is_context_capturing_input();
 }
 
 bool recomp::all_input_disabled() {
