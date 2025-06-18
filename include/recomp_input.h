@@ -18,26 +18,26 @@ namespace recomp {
     // First parameter is the enum name, second parameter is the bit field for the input (or 0 if there is no associated one), third is the readable name.
     // TODO refactor this to allow projects to rename these, or get rid of the readable name and leave that up to individual projects to map.
     #define DEFINE_N64_BUTTON_INPUTS() \
-        DEFINE_INPUT(A, 0x8000, "A Button") \
-        DEFINE_INPUT(B, 0x4000, "B Button") \
-        DEFINE_INPUT(Z, 0x2000, "Z Trigger") \
+        DEFINE_INPUT(A, 0x8000, "Action") \
+        DEFINE_INPUT(B, 0x4000, "Attack/Cancel") \
+        DEFINE_INPUT(Z, 0x2000, "Target") \
         DEFINE_INPUT(START, 0x1000, "Start") \
-        DEFINE_INPUT(L, 0x0020, "Left Shoulder") \
-        DEFINE_INPUT(R, 0x0010, "Right Shoulder") \
-        DEFINE_INPUT(C_UP, 0x0008, "C-Up") \
-        DEFINE_INPUT(C_LEFT, 0x0002, "C-Left") \
-        DEFINE_INPUT(C_DOWN, 0x0004, "C-Down") \
-        DEFINE_INPUT(C_RIGHT, 0x0001, "C-Right") \
-        DEFINE_INPUT(DPAD_UP, 0x0800, "D-Pad Up") \
-        DEFINE_INPUT(DPAD_RIGHT, 0x0100, "D-Pad Right") \
-        DEFINE_INPUT(DPAD_DOWN, 0x0400, "D-Pad Down") \
-        DEFINE_INPUT(DPAD_LEFT, 0x0200, "D-Pad Left")
+        DEFINE_INPUT(L, 0x0020, "Toggle map") \
+        DEFINE_INPUT(R, 0x0010, "Shield") \
+        DEFINE_INPUT(C_UP, 0x0008, "Look/Fairy") \
+        DEFINE_INPUT(C_LEFT, 0x0002, "Item 1") \
+        DEFINE_INPUT(C_DOWN, 0x0004, "Item 2") \
+        DEFINE_INPUT(C_RIGHT, 0x0001, "Item 3") \
+        DEFINE_INPUT(DPAD_UP, 0x0800, "Special Item 1") \
+        DEFINE_INPUT(DPAD_RIGHT, 0x0100, "Special Item 2") \
+        DEFINE_INPUT(DPAD_DOWN, 0x0400, "Special Item 3") \
+        DEFINE_INPUT(DPAD_LEFT, 0x0200, "Special Item 4")
 
     #define DEFINE_N64_AXIS_INPUTS() \
-        DEFINE_INPUT(Y_AXIS_POS, 0, "Stick Up") \
-        DEFINE_INPUT(Y_AXIS_NEG, 0, "Stick Down") \
-        DEFINE_INPUT(X_AXIS_NEG, 0, "Stick Left") \
-        DEFINE_INPUT(X_AXIS_POS, 0, "Stick Right") \
+        DEFINE_INPUT(Y_AXIS_POS, 0, "Up") \
+        DEFINE_INPUT(Y_AXIS_NEG, 0, "Down") \
+        DEFINE_INPUT(X_AXIS_NEG, 0, "Left") \
+        DEFINE_INPUT(X_AXIS_POS, 0, "Right") \
 
     #define DEFINE_RECOMP_UI_INPUTS() \
         DEFINE_INPUT(TOGGLE_MENU, 0, "Toggle Menu") \

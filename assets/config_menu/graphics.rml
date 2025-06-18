@@ -228,7 +228,6 @@
                             <div class="config-option__details" data-if="!sample_positions_supported">Not available (missing sample positions support)</div>
                         </div>
                     </div>
-
                 </div>
                 <div class="config__wrapper">
                     <p data-if="cur_config_index == 0">
