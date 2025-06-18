@@ -20,7 +20,7 @@ chmod a+x linuxdeploy*
 mkdir -p AppDir/usr/bin
 cp Goemon64Recompiled AppDir/usr/bin/
 cp -r assets/ AppDir/usr/bin/
-cp gamecontrollerdb.txt AppDir/usr/bin/
+cp recompcontrollerdb.txt AppDir/usr/bin/
 cp icons/512.png AppDir/Goemon64Recompiled.png
 cp .github/linux/Goemon64Recompiled.desktop AppDir/
 
