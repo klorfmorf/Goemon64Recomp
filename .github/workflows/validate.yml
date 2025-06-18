@@ -41,16 +41,6 @@ jobs:
         run: |-
           git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
           cp ./Goemon64RecompSecrets/* ./
-      - name: Apply Patches
-        run: |
-          cp ./N64ModernRuntime.patch ./lib/N64ModernRuntime
-          cd ./lib/N64ModernRuntime
-          git apply ./N64ModernRuntime.patch
-          cd ../..
-          cp ./rt64.patch ./lib/rt64
-          cd ./lib/rt64
-          git apply ./rt64.patch
-          cd ../..
       - name: Install Linux Dependencies
         run: |
           sudo apt-get update
@@ -135,16 +125,6 @@ jobs:
         run: |-
           git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
           Copy-Item -Path .\Goemon64RecompSecrets\* -Destination .\ -Recurse
-      - name: Apply Patches
-        run: |
-          Copy-Item -Path .\N64ModernRuntime.patch -Destination .\lib\N64ModernRuntime
-          cd .\lib\N64ModernRuntime
-          git apply .\N64ModernRuntime.patch
-          cd ..\..
-          Copy-Item -Path .\rt64.patch -Destination .\lib\rt64
-          cd .\lib\rt64
-          git apply .\rt64.patch
-          cd ..\..
       - name: Build N64Recomp & RSPRecomp
         run: |
           git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource

@@ -52,22 +52,7 @@ After that, go back to the repository root, and run the following commands:
 ./RSPRecomp aspMain.us.toml
 ```
 
-## 5. Apply Patches
-Copy `N64ModernRuntime.patch` to the root of the `lib/N64ModernRuntime` directory and apply the patch:
-```bash
-cp N64ModernRuntime.patch lib/N64ModernRuntime
-cd lib/N64ModernRuntime
-git apply N64ModernRuntime.patch
-```
-
-After that, copy `rt64.patch` to the root of the `lib/rt64` directory and apply the patch:
-```bash
-cp rt64.patch lib/rt64
-cd lib/rt64
-git apply rt64.patch
-```
-
-## 6. Building the Project
+## 5. Building the Project
 
 Finally, you can build the project! :rocket:
 
@@ -80,7 +65,7 @@ cmake -S . -B build-cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang 
 cmake --build build-cmake --target Goemon64Recompiled -j$(nproc) --config Release # or Debug
 ```
 
-## 7. Success
+## 6. Success
 
 Voilà! You should now have a `Goemon64Recompiled` executable in the build directory! If you used Visual Studio this will be `out/build/x64-[Configuration]` and if you used the provided CMake commands then this will be `build-cmake`. You will need to run the executable out of the root folder of this project or copy the assets folder to the build folder to run it.
 
