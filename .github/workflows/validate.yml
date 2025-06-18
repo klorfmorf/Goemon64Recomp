@@ -78,7 +78,7 @@ jobs:
         run: |
           mv cmake-build/Goemon64Recompiled Goemon64Recompiled
           rm -rf assets/scss
-          tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ gamecontrollerdb.txt
+          tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ recompcontrollerdb.txt
       - name: Archive Goemon64Recomp
         uses: actions/upload-artifact@v4
         with:
@@ -178,7 +178,7 @@ jobs:
             dxil.dll
             SDL2.dll
             assets/
-            gamecontrollerdb.txt
+            recompcontrollerdb.txt
       - name: Archive Debug Files
         uses: actions/upload-artifact@v4
         with:

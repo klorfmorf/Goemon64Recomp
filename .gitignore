@@ -2,6 +2,7 @@
 .vscode/settings.json
 .vscode/c_cpp_properties.json
 .vscode/launch.json
+.vscode/tasks.json
 
 # Input elf and rom files
 *.elf
@@ -12,7 +13,7 @@ RecompiledFuncs/
 RecompiledPatches/
 
 # Linux build output
-build/
+build*/
 *.o
 
 # Windows build output
@@ -44,7 +45,6 @@ bld/
 [Ll]og/
 [Ll]ogs/
 out/
-cmake-build/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -61,5 +61,8 @@ N64Recomp
 RSPRecomp
 .DS_Store
 
-# Controller mappings file
-gamecontrollerdb.txt
+# Cmake build directory
+.cache
+.idea
+build-*
+cmake-build-*
