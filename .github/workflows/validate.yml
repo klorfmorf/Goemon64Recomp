@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         type: [ Debug, Release ]
-    name: ubuntu-24.04 (x64, ${{ matrix.type }})
+    name: ubuntu-24.04 (x64, ${{ matrix.type }}, Native, AppImage)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -92,12 +92,144 @@ jobs:
         with:
           name: Goemon64Recompiled-AppImage-X64-${{ matrix.type }}
           path: Goemon64Recompiled-*.AppImage
+  build-linux-arm64:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        type: [ Debug, Release ]
+        os: [ ubuntu-22.04 ]
+    name: ${{ matrix.os }} (arm64, ${{ matrix.type }}, Native, AppImage)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          submodules: recursive
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ matrix.os }}-g64r-ccache-${{ matrix.type }}-arm64-${{ inputs.N64RECOMP_COMMIT }}
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libsdl2-dev libgtk-3-dev lld llvm clang-15 libfuse2 g++-11 gcc-11
+          
+          # Install SDL2
+          echo ::group::install SDL2
+
+          # Enable ccache
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+
+          wget https://github.com/libsdl-org/SDL/releases/download/release-${{ inputs.SDL2_VERSION }}/SDL2-${{ inputs.SDL2_VERSION }}.tar.gz
+          tar -xzf SDL2-${{ inputs.SDL2_VERSION }}.tar.gz
+          cd SDL2-${{ inputs.SDL2_VERSION }}
+          ./configure
+          make -j 10
+          sudo make install
+          sudo cp -av /usr/local/lib/libSDL* /lib/aarch64-linux-gnu/
+          echo ::endgroup::
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          cp ./Goemon64RecompSecrets/* ./
+      - name: Build N64Recomp & RSPRecomp
+        run: |
+          git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
+          cd N64RecompSource
+          git checkout ${{ inputs.N64RECOMP_COMMIT }}
+          git submodule update --init --recursive
+          
+          # enable ccache
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          
+          # Build N64Recomp & RSPRecomp
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER=g++-11 -DCMAKE_C_COMPILER=gcc-11 -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build
+          cmake --build cmake-build --config Release --target N64RecompCLI -j $(nproc)
+          cmake --build cmake-build --config Release --target RSPRecomp -j $(nproc)
+          
+          # Copy N64Recomp & RSPRecomp to root directory
+          cp cmake-build/N64Recomp ..
+          cp cmake-build/RSPRecomp ..
+      - name: Run N64Recomp & RSPRecomp
+        run: |
+          ./N64Recomp mnsg.us.toml
+          ./RSPRecomp aspMain.us.toml
+      - name: Build GoemonRecomp
+        run: |-
+          # enable ccache
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER=clang++-15 -DCMAKE_C_COMPILER=clang-15 -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build
+          cmake --build cmake-build --config ${{ matrix.type }} --target Goemon64Recompiled -j $(nproc)
+      - name: Prepare Archive
+        run: |
+          mv cmake-build/Goemon64Recompiled Goemon64Recompiled
+          rm -rf assets/scss
+          tar -czf Goemon64Recompiled.tar.gz Goemon64Recompiled assets/ recompcontrollerdb.txt
+      - name: Archive Goemon64Recomp
+        uses: actions/upload-artifact@v4
+        with:
+          name: Goemon64Recompiled-${{ runner.os }}-ARM64-${{ matrix.type }}
+          path: Goemon64Recompiled.tar.gz
+      - name: Prepare AppImage
+        run: ./.github/linux/appimage.sh 
+      - name: Goemon64Recomp AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: Goemon64Recompiled-AppImage-ARM64-${{ matrix.type }}
+          path: Goemon64Recompiled-*.AppImage
+  build-linux-flatpak:
+    runs-on: ubuntu-latest
+    env:
+      FLATPAK_ID: io.github.goemon64recomp.goemon64recomp
+      FREEDESKTOP_VERSION: 23.08
+      LLVM_VERSION: 18
+    strategy:
+      matrix:
+        type: [ Debug, Release ]
+        os: [ ubuntu-latest ]
+    name: ${{ matrix.os }} (x64, ${{ matrix.type }}, Flatpak)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          submodules: recursive
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ matrix.os }}-g64r-ccache-${{ matrix.type }}-x64-${{ inputs.N64RECOMP_COMMIT }}
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak-builder ccache lld
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          cp ./Goemon64RecompSecrets/* ./
+      - name: Prepare Flatpak
+        run: |
+          flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak --user install -y flathub org.freedesktop.Sdk//${{ env.FREEDESKTOP_VERSION }}
+          flatpak --user install -y flathub org.freedesktop.Sdk.Extension.llvm${{ env.LLVM_VERSION }}//${{ env.FREEDESKTOP_VERSION }}
+      - name: Build GoemonRecomp
+        run: |-
+          export CCACHE_DIR=/tmp/ccache
+          git config --global protocol.file.allow always
+          make -C patches CC=clang LD=ld.lld
+          flatpak-builder --user --force-clean --install-deps-from=flathub --repo=repo --ccache builddir ./flatpak/${{ env.FLATPAK_ID }}.json
+          flatpak build-bundle repo ./${{ env.FLATPAK_ID }}.flatpak ${{ env.FLATPAK_ID }} --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Goemon64Recompiled-Flatpak-X64-${{ matrix.type }}
+          path: ./${{ env.FLATPAK_ID }}.flatpak
   build-windows:
-    runs-on: windows-2022
+    runs-on: windows-latest
     strategy:
       matrix:
         type: [ Debug, RelWithDebInfo ]
-    name: windows-2022 (${{ matrix.type }})
+    name: windows (${{ matrix.type }})
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -112,7 +244,7 @@ jobs:
         run: |
           choco install ninja
           Remove-Item -Path "C:\ProgramData\Chocolatey\bin\ccache.exe" -Force -ErrorAction SilentlyContinue
-      - name: Download Portable LLVM
+      - name: Download portable LLVM
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.3/LLVM-19.1.3-Windows-X64.tar.xz" -OutFile "LLVM.tar.xz"
@@ -185,3 +317,72 @@ jobs:
           name: Goemon64Recompiled-PDB-${{ matrix.type }}
           path: |
             Goemon64Recompiled.pdb
+  build-macos:
+    runs-on: macos-14
+    strategy:
+      matrix:
+        type: [ Debug, Release ]
+    name: macos (x64, arm64, ${{ matrix.type }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          submodules: recursive
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ runner.os }}-g64r-ccache-${{ matrix.type }}
+      - name: Homebrew Setup
+        run: |
+          brew install ninja
+          brew uninstall --ignore-dependencies libpng freetype
+      - name: MacPorts Setup
+        uses: melusina-org/setup-macports@v1
+        id: 'macports'
+        with:
+          parameters: '.github/macos/macports.yaml'
+      - name: Prepare Build
+        run: |-
+          git clone ${{ secrets.G64RS_REPO_WITH_PAT }}
+          cp ./Goemon64RecompSecrets/* ./
+      - name: Build N64Recomp & RSPRecomp
+        run: |
+          git clone https://github.com/Mr-Wiseguy/N64Recomp.git --recurse-submodules N64RecompSource
+          cd N64RecompSource
+          git checkout ${{ inputs.N64RECOMP_COMMIT }}
+          git submodule update --init --recursive
+          
+          # enable ccache
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          
+          # Build N64Recomp & RSPRecomp
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build
+          cmake --build cmake-build --config Release --target N64Recomp -j $(sysctl -n hw.ncpu)
+          cmake --build cmake-build --config Release --target RSPRecomp -j $(sysctl -n hw.ncpu)
+          
+          # Copy N64Recomp & RSPRecomp to root directory
+          cp cmake-build/N64Recomp ..
+          cp cmake-build/RSPRecomp ..
+      - name: Run N64Recomp & RSPRecomp
+        run: |
+          ./N64Recomp mnsg.us.toml
+          ./RSPRecomp aspMain.us.toml
+      - name: Build GoemonRecomp
+        run: |-
+          # enable ccache
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build \
+          -DPATCHES_LD=/opt/local/bin/ld.lld-mp-18 -DCMAKE_AR=/opt/local/bin/llvm-ar-mp-18 -DPATCHES_C_COMPILER=/opt/local/bin/clang-mp-18 \
+          -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+          cmake --build cmake-build --config ${{ matrix.type }} --target Goemon64Recompiled -j $(sysctl -n hw.ncpu)
+      - name: Prepare Archive
+        run: |
+          mv cmake-build/Goemon64Recompiled.app Goemon64Recompiled.app
+          zip -r -y Goemon64Recompiled.zip Goemon64Recompiled.app
+      - name: Archive Goemon64Recomp
+        uses: actions/upload-artifact@v4
+        with:
+          name: Goemon64Recompiled-${{ runner.os }}-${{ matrix.type }}
+          path: Goemon64Recompiled.zip
