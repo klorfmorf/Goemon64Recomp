@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Goemon 64: Recompiled
+Exec=/app/bin/Goemon64Recompiled
+Type=Application
+Icon=io.github.klorfmorf.goemon64recomp
+Categories=Game;
+Comment=Static recompilation of Mystical Ninja Starring Goemon (and soon Goemon's Great Adventure) for PC.
+MimeType=x-scheme-handler/goemon64recomp
