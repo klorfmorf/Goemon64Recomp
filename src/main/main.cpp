@@ -376,14 +376,14 @@ namespace goemon64 {
                 name += "IDLE";
                 break;
 
-            case 2:
+            case 3:
                 switch (t->priority) {
-                    case 5:
-                        name += "SLOWLY";
+                    case 10:
+                        name += "MAIN";
                         break;
 
-                    case 127:
-                        name += "FAULT";
+                    case 12:
+                        name += "AUDIO";
                         break;
 
                     default:
@@ -392,36 +392,20 @@ namespace goemon64 {
                 }
                 break;
 
-            case 3:
-                name += "MAIN";
-                break;
-
             case 4:
-                name += "GRAPH";
-                break;
+                switch (t->priority) {
+                    case 9:
+                        name += "GAME";
+                        break;
 
-            case 5:
-                name += "SCHED";
-                break;
+                    case 13:
+                        name += "SCHED";
+                        break;
 
-            case 7:
-                name += "PADMGR";
-                break;
-
-            case 10:
-                name += "AUDIOMGR";
-                break;
-
-            case 13:
-                name += "FLASHROM";
-                break;
-
-            case 18:
-                name += "DMAMGR";
-                break;
-
-            case 19:
-                name += "IRQMGR";
+                    default:
+                        name += std::to_string(t->id);
+                        break;
+                }
                 break;
 
             default:
