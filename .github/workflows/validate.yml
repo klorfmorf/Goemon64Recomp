@@ -181,7 +181,7 @@ jobs:
   build-linux-flatpak:
     runs-on: ubuntu-latest
     env:
-      FLATPAK_ID: io.github.goemon64recomp.goemon64recomp
+      FLATPAK_ID: io.github.klorfmorf.goemon64recomp
       FREEDESKTOP_VERSION: 23.08
       LLVM_VERSION: 18
     strategy:
