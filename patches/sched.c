@@ -1,3 +1,5 @@
+#include "patches.h"
+
 /*====================================================================
  * 
  * Copyright 1995, Silicon Graphics, Inc.
@@ -15,50 +17,11 @@
  * DOD or NASA FAR Supplement. Unpublished - rights reserved under the
  * Copyright Laws of the United States.
  *====================================================================*/
-
-// @recomp
-#define osCreateMesgQueue osCreateMesgQueue_recomp
-#define osCreateThread osCreateThread_recomp
-#define osCreateViManager osCreateViManager_recomp
-#define osDpSetNextBuffer osDpSetNextBuffer_recomp
-#define osGetTime osGetTime_recomp
-#define osRecvMesg osRecvMesg_recomp
-#define osSendMesg osSendMesg_recomp
-#define osSetEventMesg osSetEventMesg_recomp
-#define osSetIntMask osSetIntMask_recomp
-#define osSpTaskLoad osSpTaskLoad_recomp
-#define osSpTaskStartGo osSpTaskStartGo_recomp
-#define osSpTaskYield osSpTaskYield_recomp
-#define osSpTaskYielded osSpTaskYielded_recomp
-#define osStartThread osStartThread_recomp
-#define osViBlack osViBlack_recomp
-#define osViGetCurrentFramebuffer osViGetCurrentFramebuffer_recomp
-#define osViGetNextFramebuffer osViGetNextFramebuffer_recomp
-#define osViSetEvent osViSetEvent_recomp
-#define osViSetMode osViSetMode_recomp
-#define osViSwapBuffer osViSwapBuffer_recomp
-#define osWritebackDCacheAll osWritebackDCacheAll_recomp
-
 #include <ultralog.h>
 #include <assert.h>
 #include "sched.h"
 
-#include "patches.h"
-
 // @recomp
-/*
-#define __scAppendList
-#define __scExec
-#define __scHandleGraphicsTask
-#define __scHandleRDP
-#define __scHandleRSP
-#define __scHandleRetrace
-#define __scMain
-#define __scSchedule
-#define __scTaskComplete
-#define __scTaskReady
-#define __scYield
-*/
 #define osCreateScheduler func_80006DF0_79F0
 #define osScAddClient func_80006F3C_7B3C
 #define osScRemoveClient func_80006F8C_7B8C
