@@ -97,7 +97,7 @@ jobs:
     strategy:
       matrix:
         type: [ Debug, Release ]
-        os: [ ubuntu-24.04-arm ]
+        os: [ ubuntu-22.04-arm ]
     name: ${{ matrix.os }} (arm64, ${{ matrix.type }}, Native, AppImage)
     steps:
       - name: Checkout
