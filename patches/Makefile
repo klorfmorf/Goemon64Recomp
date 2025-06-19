@@ -6,7 +6,7 @@ LD      ?= ld.lld
 CFLAGS   := -target mips -mips2 -mabi=32 -O2 -G0 -mno-abicalls -mno-odd-spreg -mno-check-zero-division \
 			-fomit-frame-pointer -ffast-math -fno-unsafe-math-optimizations -fno-builtin-memset \
 			-Wall -Wextra -Wno-incompatible-library-redeclaration -Wno-unused-parameter -Wno-unknown-pragmas -Wno-unused-variable -Wno-missing-braces -Wno-unsupported-floating-point-opt
-CPPFLAGS := -nostdinc -D_LANGUAGE_C -DMIPS -I libultra -I../lib/rt64/include
+CPPFLAGS := -nostdinc -D_LANGUAGE_C -DMIPS -DNDEBUG -I libultra -I libultra/PR -I../lib/rt64/include
 LDFLAGS  := -nostdlib -T patches.ld -T syms.ld -Map patches.map --unresolved-symbols=ignore-all --emit-relocs
 
 C_SRCS := $(wildcard *.c)
