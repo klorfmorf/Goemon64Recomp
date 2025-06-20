@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - dev
+      - actions
   pull_request:
     types: [opened, synchronize]
 jobs:

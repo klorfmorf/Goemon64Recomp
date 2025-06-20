@@ -2,6 +2,7 @@
 #include "recomp_input.h"
 #include "goemon_sound.h"
 #include "goemon_render.h"
+#include "goemon_support.h"
 #include "ultramodern/config.hpp"
 #include "librecomp/files.hpp"
 #include <filesystem>
