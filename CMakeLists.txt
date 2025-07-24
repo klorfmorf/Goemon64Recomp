@@ -27,6 +27,7 @@ endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     option(RECOMP_FLATPAK "Configure the build for Flatpak compatibility." OFF)
+    option(LINUX_USE_WAYLAND "Use Wayland instead of legacy X11 on GNU/Linux" OFF)
 endif()
 
 # Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP in CMake 3.24:
@@ -309,9 +310,14 @@ endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     find_package(SDL2 REQUIRED)
-    find_package(X11 REQUIRED)
+    if (NOT LINUX_USE_WAYLAND)
+        find_package(X11 REQUIRED)
+    endif()
 
     add_compile_definitions("RT64_SDL_WINDOW_VULKAN")
+    if(LINUX_USE_WAYLAND)
+        add_compile_definitions("LINUX_USE_WAYLAND")
+    endif()
 
     # Generate icon_bytes.c from the app icon PNG.
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icon_bytes.c ${CMAKE_CURRENT_BINARY_DIR}/icon_bytes.h
@@ -325,13 +331,15 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
     target_include_directories(Goemon64Recompiled PRIVATE ${SDL2_INCLUDE_DIRS})
 
-    message(STATUS "X11_FOUND = ${X11_FOUND}")
-    message(STATUS "X11_Xrandr_FOUND = ${X11_Xrandr_FOUND}")
-    message(STATUS "X11_INCLUDE_DIR = ${X11_INCLUDE_DIR}")
-    message(STATUS "X11_LIBRARIES = ${X11_LIBRARIES}")
+    if (NOT LINUX_USE_WAYLAND)
+        message(STATUS "X11_FOUND = ${X11_FOUND}")
+        message(STATUS "X11_Xrandr_FOUND = ${X11_Xrandr_FOUND}")
+	message(STATUS "X11_INCLUDE_DIR = ${X11_INCLUDE_DIR}")
+	message(STATUS "X11_LIBRARIES = ${X11_LIBRARIES}")
 
-    target_include_directories(Goemon64Recompiled PRIVATE ${X11_INCLUDE_DIR} ${X11_Xrandr_INCLUDE_PATH})
-    target_link_libraries(Goemon64Recompiled PRIVATE ${X11_LIBRARIES} ${X11_Xrandr_LIB})
+        target_include_directories(Goemon64Recompiled PRIVATE ${X11_INCLUDE_DIR} ${X11_Xrandr_INCLUDE_PATH})
+        target_link_libraries(Goemon64Recompiled PRIVATE ${X11_LIBRARIES} ${X11_Xrandr_LIB})
+    endif()
 
     find_package(Freetype REQUIRED)
 
