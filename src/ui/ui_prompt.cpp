@@ -205,7 +205,7 @@ void style_button(recompui::Button* button, recompui::ButtonVariant variant) {
     focus_style->set_border_color(hover_border_color);
     focus_style->set_background_color(hover_background_color);
 
-    recompui::Color disabled_color { 255, 255, 255, 0.6f * 255 };
+    recompui::Color disabled_color { 255, 255, 255, static_cast<uint8_t>(0.6f * 255) };
     recompui::Style* disabled_style = button->get_disabled_style();
     disabled_style->set_color(disabled_color);
 }

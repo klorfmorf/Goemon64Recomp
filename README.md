@@ -29,7 +29,7 @@ A GPU supporting Direct3D 12.0 (Shader Model 6) or Vulkan 1.2 is required to run
 * Radeon HD 7750 (the one from 2012, not to be confused with the RX 7000 series) and newer
 * Intel HD 510 (Skylake)
 
-A CPU supporting the AVX instruction set is also required (Intel Core 2000 series or AMD Bulldozer and newer).
+A CPU supporting the SSE4.1 instruction set is also required (Intel Core 2 Penryn series or AMD Bulldozer and newer).
 
 If you have issues with crashes on startup, make sure your graphics drivers are fully up to date. 
 

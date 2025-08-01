@@ -18,6 +18,13 @@
 #else
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_syswm.h"
+// Undefine x11 macros that get included by SDL_syswm.h.
+#undef None
+#undef Status
+#undef LockMask
+#undef ControlMask
+#undef Success
+#undef Always
 #endif
 
 #include "recomp_ui.h"
@@ -558,6 +565,22 @@ int main(int argc, char** argv) {
     }
 
 #ifdef _WIN32
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], "--show-console") == 0)
+        {
+            if (GetConsoleWindow() == nullptr)
+            {
+                AllocConsole();
+                freopen("CONIN$", "r", stdin);
+                freopen("CONOUT$", "w", stderr);
+                freopen("CONOUT$", "w", stdout);
+            }
+
+            break;
+        }
+    }
+
     // Set up console output to accept UTF-8 on windows
     SetConsoleOutputCP(CP_UTF8);
 
