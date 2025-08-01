@@ -12,7 +12,7 @@
 	url = https://github.com/sammycage/lunasvg
 [submodule "lib/N64ModernRuntime"]
 	path = lib/N64ModernRuntime
-	url = https://github.com/N64Recomp/N64ModernRuntime.git
+	url = https://github.com/klorfmorf/N64ModernRuntime.git
 [submodule "Goemon64RecompSyms"]
 	path = Goemon64RecompSyms
 	url = https://github.com/klorfmorf/Goemon64RecompSyms
