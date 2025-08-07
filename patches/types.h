@@ -9,11 +9,6 @@ struct FileSegment {
     u32 end;
 };
 
-typedef struct System System;
-struct System {
-    u8 unknown[0xCF908];
-};
-
 typedef struct Vec2f Vec2f;
 struct Vec2f {
     f32 x;

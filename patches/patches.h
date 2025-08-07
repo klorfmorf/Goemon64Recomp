@@ -34,10 +34,10 @@
 #include "patch_api_funcs.h"
 
 #include "types.h"
+#include "structs.h"
 #include "macros.h"
-
-#include "game_funcs.h"
-#include "game_vars.h"
+#include "functions.h"
+#include "variables.h"
 
 static inline void* memcpy(void* s1, const void* s2, size_t n) {
     char* su1 = (char*)s1;

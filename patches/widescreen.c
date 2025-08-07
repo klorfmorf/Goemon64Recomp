@@ -105,7 +105,7 @@ RECOMP_PATCH void func_801CC710_65F5C0(RipplingHikimakuTask *task, Object *objec
 
     for (row = 0; row < grid_height; row++) {
         for (column = 0; column < grid_width; column++) {
-            game_loops_ran = *(u16 *)(&D_8015C5C8_15D1C8->unknown[0x3ADCE]);
+            game_loops_ran = D_8015C5C8_15D1C8->game_loops_count;
 
             phase_1 = (game_loops_ran * D_801D42E0_667190 * 2.0) + (column * 5.0) + (rippling_background->unknown_8 - row) * 5.0 + 5.0;
             wave_x = func_80003E10_4A10((s32)(phase_1 * 9.0) & 0x3FF);
@@ -145,7 +145,7 @@ RECOMP_PATCH void func_80213AC8_672A78(RipplingKarakusaTask *task, Object *objec
 
     for (row = 0; row < grid_height; row++) {
         for (column = 0; column < grid_width; column++) {
-            game_loops_ran = *(u16 *)(&D_8015C5C8_15D1C8->unknown[0x3ADCE]);
+            game_loops_ran = D_8015C5C8_15D1C8->game_loops_count;
 
             phase_1 = (game_loops_ran * D_80217938_6768E8 * 2.0) + (column * 5.0) + (rippling_background->unknown_8 - row) * 5.0 + 5.0;
             wave_x = func_80003E10_4A10((s32)(phase_1 * 9.0) & 0x3FF);

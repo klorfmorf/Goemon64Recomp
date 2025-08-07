@@ -3,6 +3,7 @@
 [input]
 entrypoint = 0x80000400
 output_func_path = "RecompiledFuncs"
+# elf_path = "mnsg.us.elf"
 symbols_file_path = "Goemon64RecompSyms/mnsg.us.syms.toml"
 rom_file_path = "mnsg.us.decompressed.z64"
 recomp_include = "#include \"goemon_recomp.h\""
