@@ -163,6 +163,7 @@ set (SOURCES
     ${CMAKE_SOURCE_DIR}/src/game/recomp_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/recomp_actor_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/recomp_data_api.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/rom_decompression.cpp
     ${CMAKE_SOURCE_DIR}/src/game/tlb.cpp
     ${CMAKE_SOURCE_DIR}/src/game/unknown_symbols.cpp
 
@@ -222,7 +223,7 @@ target_include_directories(Goemon64Recompiled PRIVATE
     ${CMAKE_SOURCE_DIR}/lib/rt64/src/render
     ${CMAKE_SOURCE_DIR}/lib/freetype-windows-binaries/include
     ${CMAKE_SOURCE_DIR}/lib/rt64/src/contrib/nativefiledialog-extended/src/include
-    ${CMAKE_SOURCE_DIR}/lib/slot_map/slot_map
+    ${CMAKE_SOURCE_DIR}/lib/SlotMap
     ${CMAKE_BINARY_DIR}/shaders
     ${CMAKE_CURRENT_BINARY_DIR}
 )

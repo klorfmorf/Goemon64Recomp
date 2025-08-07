@@ -21,6 +21,3 @@
 [submodule "lib/mnsg"]
 	path = lib/mnsg
 	url = https://github.com/klorfmorf/mnsg
-[submodule "lib/slot_map"]
-	path = lib/slot_map
-	url = https://github.com/SergeyMakeev/slot_map.git
