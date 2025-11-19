@@ -292,7 +292,7 @@ if (WIN32)
     )
 
     target_sources(Goemon64Recompiled PRIVATE ${CMAKE_SOURCE_DIR}/icons/app.rc)
-    target_link_libraries(Goemon64Recompiled PRIVATE SDL2)
+    target_link_libraries(Goemon64Recompiled PRIVATE SDL2 Winmm.lib)
 endif()
 
 if (APPLE)

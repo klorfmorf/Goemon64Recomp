@@ -43,7 +43,7 @@ public:
         std::lock_guard lock{mutex};
         map.clear();
     }
-    
+
     bool erase_first(ValueType& out) {
         std::lock_guard lock{mutex};
         auto it = map.begin();
@@ -137,7 +137,7 @@ public:
         std::lock_guard lock{mutex};
         map.clear();
     }
-    
+
     bool erase_first(ValueType& out) {
         std::lock_guard lock{mutex};
         auto it = map.items().begin();
@@ -205,7 +205,7 @@ void recomputil_destroy_u32_value_hashmap(uint8_t* rdram, recomp_context* ctx) {
 void recomputil_u32_value_hashmap_contains(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     U32ValueMap* map;
     if (!u32_value_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -231,7 +231,7 @@ void recomputil_u32_value_hashmap_get(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
     PTR(uint32_t) val_out = _arg<2, PTR(uint32_t)>(rdram, ctx);
-    
+
     U32ValueMap* map;
     if (!u32_value_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -276,7 +276,7 @@ void recomputil_u32_value_hashmap_size(uint8_t* rdram, recomp_context* ctx) {
 
 void recomputil_create_u32_memory_hashmap(uint8_t* rdram, recomp_context* ctx) {
     uint32_t element_size = _arg<0, uint32_t>(rdram, ctx);
-    
+
     // Create the map.
     uint32_t map_key = u32_memory_hashmaps.create();
 
@@ -311,7 +311,7 @@ void recomputil_destroy_u32_memory_hashmap(uint8_t* rdram, recomp_context* ctx) 
 void recomputil_u32_memory_hashmap_contains(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     U32MemoryMap* map;
     if (!u32_memory_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -328,7 +328,7 @@ void recomputil_u32_memory_hashmap_create(uint8_t* rdram, recomp_context* ctx) {
     if (!u32_memory_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
     }
-    
+
     // Check if the map contains the key already to prevent inserting it twice.
     PTR(void) dummy;
     if (map->first.get(key, dummy)) {
@@ -353,7 +353,7 @@ void recomputil_u32_memory_hashmap_create(uint8_t* rdram, recomp_context* ctx) {
 void recomputil_u32_memory_hashmap_get(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     U32MemoryMap* map;
     if (!u32_memory_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -378,7 +378,7 @@ void recomputil_u32_memory_hashmap_erase(uint8_t* rdram, recomp_context* ctx) {
     if (!u32_memory_hashmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
     }
-    
+
     // Free the memory for this key if the key exists.
     PTR(void) addr;
     bool has_value = map->first.get(key, addr);
@@ -419,7 +419,7 @@ void recomputil_destroy_u32_hashset(uint8_t* rdram, recomp_context* ctx) {
 void recomputil_u32_hashset_contains(uint8_t* rdram, recomp_context* ctx) {
     uint32_t setkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     U32HashSet* set;
     if (!u32_hashsets.get(setkey, &set)) {
         HANDLE_INVALID_ERROR();
@@ -448,7 +448,7 @@ void recomputil_u32_hashset_erase(uint8_t* rdram, recomp_context* ctx) {
     if (!u32_hashsets.get(setkey, &set)) {
         HANDLE_INVALID_ERROR();
     }
-    
+
     _return(ctx, set->erase(key));
 }
 
@@ -481,7 +481,7 @@ void recomputil_destroy_u32_slotmap(uint8_t* rdram, recomp_context* ctx) {
 void recomputil_u32_slotmap_contains(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     U32Slotmap* map;
     if (!u32_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -506,7 +506,7 @@ void recomputil_u32_slotmap_get(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
     PTR(uint32_t) val_out = _arg<2, PTR(uint32_t)>(rdram, ctx);
-    
+
     U32Slotmap* map;
     if (!u32_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -547,11 +547,11 @@ void recomputil_u32_slotmap_erase(uint8_t* rdram, recomp_context* ctx) {
     if (!u32_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
     }
-    
+
     if (!map->erase(key)) {
         _return(ctx, 0);
     }
-    
+
     _return(ctx, 1);
 }
 
@@ -570,7 +570,7 @@ void recomputil_u32_slotmap_size(uint8_t* rdram, recomp_context* ctx) {
 
 void recomputil_create_memory_slotmap(uint8_t* rdram, recomp_context* ctx) {
     uint32_t element_size = _arg<0, uint32_t>(rdram, ctx);
-    
+
     // Create the map.
     uint32_t map_key = memory_slotmaps.create();
 
@@ -605,7 +605,7 @@ void recomputil_destroy_memory_slotmap(uint8_t* rdram, recomp_context* ctx) {
 void recomputil_memory_slotmap_contains(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
-    
+
     MemorySlotmap* map;
     if (!memory_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -648,7 +648,7 @@ void recomputil_memory_slotmap_get(uint8_t* rdram, recomp_context* ctx) {
     uint32_t mapkey = _arg<0, uint32_t>(rdram, ctx);
     uint32_t key = _arg<1, uint32_t>(rdram, ctx);
     PTR(uint32_t) val_out = _arg<2, PTR(uint32_t)>(rdram, ctx);
-    
+
     MemorySlotmap* map;
     if (!memory_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
@@ -669,7 +669,7 @@ void recomputil_memory_slotmap_erase(uint8_t* rdram, recomp_context* ctx) {
     if (!memory_slotmaps.get(mapkey, &map)) {
         HANDLE_INVALID_ERROR();
     }
-    
+
     // Free the memory for this key if the key exists.
     PTR(void)* addr;
     bool has_value = map->first.get(key, &addr);
@@ -702,7 +702,7 @@ void recomputil::register_data_api_exports() {
     REGISTER_FUNC(recomputil_u32_value_hashmap_get);
     REGISTER_FUNC(recomputil_u32_value_hashmap_erase);
     REGISTER_FUNC(recomputil_u32_value_hashmap_size);
-    
+
     REGISTER_FUNC(recomputil_create_u32_memory_hashmap);
     REGISTER_FUNC(recomputil_destroy_u32_memory_hashmap);
     REGISTER_FUNC(recomputil_u32_memory_hashmap_contains);
@@ -710,7 +710,7 @@ void recomputil::register_data_api_exports() {
     REGISTER_FUNC(recomputil_u32_memory_hashmap_get);
     REGISTER_FUNC(recomputil_u32_memory_hashmap_erase);
     REGISTER_FUNC(recomputil_u32_memory_hashmap_size);
-    
+
     REGISTER_FUNC(recomputil_create_u32_hashset);
     REGISTER_FUNC(recomputil_destroy_u32_hashset);
     REGISTER_FUNC(recomputil_u32_hashset_contains);
