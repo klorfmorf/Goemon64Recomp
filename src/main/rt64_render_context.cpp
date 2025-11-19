@@ -56,27 +56,12 @@ unsigned int DPC_BUFBUSY_REG = 0;
 unsigned int DPC_PIPEBUSY_REG = 0;
 unsigned int DPC_TMEM_REG = 0;
 
-unsigned int VI_STATUS_REG = 0;
-unsigned int VI_ORIGIN_REG = 0;
-unsigned int VI_WIDTH_REG = 0;
-unsigned int VI_INTR_REG = 0;
-unsigned int VI_V_CURRENT_LINE_REG = 0;
-unsigned int VI_TIMING_REG = 0;
-unsigned int VI_V_SYNC_REG = 0;
-unsigned int VI_H_SYNC_REG = 0;
-unsigned int VI_LEAP_REG = 0;
-unsigned int VI_H_START_REG = 0;
-unsigned int VI_V_START_REG = 0;
-unsigned int VI_V_BURST_REG = 0;
-unsigned int VI_X_SCALE_REG = 0;
-unsigned int VI_Y_SCALE_REG = 0;
-
 void dummy_check_interrupts() {}
 
-RT64::UserConfiguration::Antialiasing compute_max_supported_aa(RT64::RenderSampleCounts bits) {
-    if (bits & RT64::RenderSampleCount::Bits::COUNT_2) {
-        if (bits & RT64::RenderSampleCount::Bits::COUNT_4) {
-            if (bits & RT64::RenderSampleCount::Bits::COUNT_8) {
+RT64::UserConfiguration::Antialiasing compute_max_supported_aa(plume::RenderSampleCounts bits) {
+    if (bits & plume::RenderSampleCount::Bits::COUNT_2) {
+        if (bits & plume::RenderSampleCount::Bits::COUNT_4) {
+            if (bits & plume::RenderSampleCount::Bits::COUNT_8) {
                 return RT64::UserConfiguration::Antialiasing::MSAA8X;
             }
             return RT64::UserConfiguration::Antialiasing::MSAA4X;
@@ -88,89 +73,89 @@ RT64::UserConfiguration::Antialiasing compute_max_supported_aa(RT64::RenderSampl
 
 RT64::UserConfiguration::AspectRatio to_rt64(ultramodern::renderer::AspectRatio option) {
     switch (option) {
-        case ultramodern::renderer::AspectRatio::Original:
-            return RT64::UserConfiguration::AspectRatio::Original;
-        case ultramodern::renderer::AspectRatio::Expand:
-            return RT64::UserConfiguration::AspectRatio::Expand;
-        case ultramodern::renderer::AspectRatio::Manual:
-            return RT64::UserConfiguration::AspectRatio::Manual;
-        case ultramodern::renderer::AspectRatio::OptionCount:
-            return RT64::UserConfiguration::AspectRatio::OptionCount;
+    case ultramodern::renderer::AspectRatio::Original:
+        return RT64::UserConfiguration::AspectRatio::Original;
+    case ultramodern::renderer::AspectRatio::Expand:
+        return RT64::UserConfiguration::AspectRatio::Expand;
+    case ultramodern::renderer::AspectRatio::Manual:
+        return RT64::UserConfiguration::AspectRatio::Manual;
+    case ultramodern::renderer::AspectRatio::OptionCount:
+        return RT64::UserConfiguration::AspectRatio::OptionCount;
     }
 }
 
 RT64::UserConfiguration::Antialiasing to_rt64(ultramodern::renderer::Antialiasing option) {
     switch (option) {
-        case ultramodern::renderer::Antialiasing::None:
-            return RT64::UserConfiguration::Antialiasing::None;
-        case ultramodern::renderer::Antialiasing::MSAA2X:
-            return RT64::UserConfiguration::Antialiasing::MSAA2X;
-        case ultramodern::renderer::Antialiasing::MSAA4X:
-            return RT64::UserConfiguration::Antialiasing::MSAA4X;
-        case ultramodern::renderer::Antialiasing::MSAA8X:
-            return RT64::UserConfiguration::Antialiasing::MSAA8X;
-        case ultramodern::renderer::Antialiasing::OptionCount:
-            return RT64::UserConfiguration::Antialiasing::OptionCount;
+    case ultramodern::renderer::Antialiasing::None:
+        return RT64::UserConfiguration::Antialiasing::None;
+    case ultramodern::renderer::Antialiasing::MSAA2X:
+        return RT64::UserConfiguration::Antialiasing::MSAA2X;
+    case ultramodern::renderer::Antialiasing::MSAA4X:
+        return RT64::UserConfiguration::Antialiasing::MSAA4X;
+    case ultramodern::renderer::Antialiasing::MSAA8X:
+        return RT64::UserConfiguration::Antialiasing::MSAA8X;
+    case ultramodern::renderer::Antialiasing::OptionCount:
+        return RT64::UserConfiguration::Antialiasing::OptionCount;
     }
 }
 
 RT64::UserConfiguration::RefreshRate to_rt64(ultramodern::renderer::RefreshRate option) {
     switch (option) {
-        case ultramodern::renderer::RefreshRate::Original:
-            return RT64::UserConfiguration::RefreshRate::Original;
-        case ultramodern::renderer::RefreshRate::Display:
-            return RT64::UserConfiguration::RefreshRate::Display;
-        case ultramodern::renderer::RefreshRate::Manual:
-            return RT64::UserConfiguration::RefreshRate::Manual;
-        case ultramodern::renderer::RefreshRate::OptionCount:
-            return RT64::UserConfiguration::RefreshRate::OptionCount;
+    case ultramodern::renderer::RefreshRate::Original:
+        return RT64::UserConfiguration::RefreshRate::Original;
+    case ultramodern::renderer::RefreshRate::Display:
+        return RT64::UserConfiguration::RefreshRate::Display;
+    case ultramodern::renderer::RefreshRate::Manual:
+        return RT64::UserConfiguration::RefreshRate::Manual;
+    case ultramodern::renderer::RefreshRate::OptionCount:
+        return RT64::UserConfiguration::RefreshRate::OptionCount;
     }
 }
 
 RT64::UserConfiguration::InternalColorFormat to_rt64(ultramodern::renderer::HighPrecisionFramebuffer option) {
     switch (option) {
-        case ultramodern::renderer::HighPrecisionFramebuffer::Off:
-            return RT64::UserConfiguration::InternalColorFormat::Standard;
-        case ultramodern::renderer::HighPrecisionFramebuffer::On:
-            return RT64::UserConfiguration::InternalColorFormat::High;
-        case ultramodern::renderer::HighPrecisionFramebuffer::Auto:
-            return RT64::UserConfiguration::InternalColorFormat::Automatic;
-        case ultramodern::renderer::HighPrecisionFramebuffer::OptionCount:
-            return RT64::UserConfiguration::InternalColorFormat::OptionCount;
+    case ultramodern::renderer::HighPrecisionFramebuffer::Off:
+        return RT64::UserConfiguration::InternalColorFormat::Standard;
+    case ultramodern::renderer::HighPrecisionFramebuffer::On:
+        return RT64::UserConfiguration::InternalColorFormat::High;
+    case ultramodern::renderer::HighPrecisionFramebuffer::Auto:
+        return RT64::UserConfiguration::InternalColorFormat::Automatic;
+    case ultramodern::renderer::HighPrecisionFramebuffer::OptionCount:
+        return RT64::UserConfiguration::InternalColorFormat::OptionCount;
     }
 }
 
 void set_application_user_config(RT64::Application* application, const ultramodern::renderer::GraphicsConfig& config) {
     switch (config.res_option) {
-        default:
-        case ultramodern::renderer::Resolution::Auto:
-            application->userConfig.resolution = RT64::UserConfiguration::Resolution::WindowIntegerScale;
-            application->userConfig.downsampleMultiplier = 1;
-            break;
-        case ultramodern::renderer::Resolution::Original:
-            application->userConfig.resolution = RT64::UserConfiguration::Resolution::Manual;
-            application->userConfig.resolutionMultiplier = std::max(config.ds_option, 1);
-            application->userConfig.downsampleMultiplier = std::max(config.ds_option, 1);
-            break;
-        case ultramodern::renderer::Resolution::Original2x:
-            application->userConfig.resolution = RT64::UserConfiguration::Resolution::Manual;
-            application->userConfig.resolutionMultiplier = 2.0 * std::max(config.ds_option, 1);
-            application->userConfig.downsampleMultiplier = std::max(config.ds_option, 1);
-            break;
+    default:
+    case ultramodern::renderer::Resolution::Auto:
+        application->userConfig.resolution = RT64::UserConfiguration::Resolution::WindowIntegerScale;
+        application->userConfig.downsampleMultiplier = 1;
+        break;
+    case ultramodern::renderer::Resolution::Original:
+        application->userConfig.resolution = RT64::UserConfiguration::Resolution::Manual;
+        application->userConfig.resolutionMultiplier = std::max(config.ds_option, 1);
+        application->userConfig.downsampleMultiplier = std::max(config.ds_option, 1);
+        break;
+    case ultramodern::renderer::Resolution::Original2x:
+        application->userConfig.resolution = RT64::UserConfiguration::Resolution::Manual;
+        application->userConfig.resolutionMultiplier = 2.0 * std::max(config.ds_option, 1);
+        application->userConfig.downsampleMultiplier = std::max(config.ds_option, 1);
+        break;
     }
 
     switch (config.hr_option) {
-        default:
-        case ultramodern::renderer::HUDRatioMode::Original:
-            application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Original;
-            break;
-        case ultramodern::renderer::HUDRatioMode::Clamp16x9:
-            application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Manual;
-            application->userConfig.extAspectTarget = 16.0/9.0;
-            break;
-        case ultramodern::renderer::HUDRatioMode::Full:
-            application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Expand;
-            break;
+    default:
+    case ultramodern::renderer::HUDRatioMode::Original:
+        application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Original;
+        break;
+    case ultramodern::renderer::HUDRatioMode::Clamp16x9:
+        application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Manual;
+        application->userConfig.extAspectTarget = 16.0/9.0;
+        break;
+    case ultramodern::renderer::HUDRatioMode::Full:
+        application->userConfig.extAspectRatio = RT64::UserConfiguration::AspectRatio::Expand;
+        break;
     }
 
     application->userConfig.aspectRatio = to_rt64(config.ar_option);
@@ -183,16 +168,16 @@ void set_application_user_config(RT64::Application* application, const ultramode
 
 ultramodern::renderer::SetupResult map_setup_result(RT64::Application::SetupResult rt64_result) {
     switch (rt64_result) {
-        case RT64::Application::SetupResult::Success:
-            return ultramodern::renderer::SetupResult::Success;
-        case RT64::Application::SetupResult::DynamicLibrariesNotFound:
-            return ultramodern::renderer::SetupResult::DynamicLibrariesNotFound;
-        case RT64::Application::SetupResult::InvalidGraphicsAPI:
-            return ultramodern::renderer::SetupResult::InvalidGraphicsAPI;
-        case RT64::Application::SetupResult::GraphicsAPINotFound:
-            return ultramodern::renderer::SetupResult::GraphicsAPINotFound;
-        case RT64::Application::SetupResult::GraphicsDeviceNotFound:
-            return ultramodern::renderer::SetupResult::GraphicsDeviceNotFound;
+    case RT64::Application::SetupResult::Success:
+        return ultramodern::renderer::SetupResult::Success;
+    case RT64::Application::SetupResult::DynamicLibrariesNotFound:
+        return ultramodern::renderer::SetupResult::DynamicLibrariesNotFound;
+    case RT64::Application::SetupResult::InvalidGraphicsAPI:
+        return ultramodern::renderer::SetupResult::InvalidGraphicsAPI;
+    case RT64::Application::SetupResult::GraphicsAPINotFound:
+        return ultramodern::renderer::SetupResult::GraphicsAPINotFound;
+    case RT64::Application::SetupResult::GraphicsDeviceNotFound:
+        return ultramodern::renderer::SetupResult::GraphicsDeviceNotFound;
     }
 
     fprintf(stderr, "Unhandled `RT64::Application::SetupResult` ?\n");
@@ -202,14 +187,14 @@ ultramodern::renderer::SetupResult map_setup_result(RT64::Application::SetupResu
 
 ultramodern::renderer::GraphicsApi map_graphics_api(RT64::UserConfiguration::GraphicsAPI api) {
     switch (api) {
-        case RT64::UserConfiguration::GraphicsAPI::D3D12:
-            return ultramodern::renderer::GraphicsApi::D3D12;
-        case RT64::UserConfiguration::GraphicsAPI::Vulkan:
-            return ultramodern::renderer::GraphicsApi::Vulkan;
-        case RT64::UserConfiguration::GraphicsAPI::Metal:
-            return ultramodern::renderer::GraphicsApi::Metal;
-        case RT64::UserConfiguration::GraphicsAPI::Automatic:
-            return ultramodern::renderer::GraphicsApi::Auto;
+    case RT64::UserConfiguration::GraphicsAPI::D3D12:
+        return ultramodern::renderer::GraphicsApi::D3D12;
+    case RT64::UserConfiguration::GraphicsAPI::Vulkan:
+        return ultramodern::renderer::GraphicsApi::Vulkan;
+    case RT64::UserConfiguration::GraphicsAPI::Metal:
+        return ultramodern::renderer::GraphicsApi::Metal;
+    case RT64::UserConfiguration::GraphicsAPI::Automatic:
+        return ultramodern::renderer::GraphicsApi::Auto;
     }
 
     fprintf(stderr, "Unhandled `RT64::UserConfiguration::GraphicsAPI` ?\n");
@@ -250,20 +235,22 @@ goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::render
     appCore.DPC_PIPEBUSY_REG = &DPC_PIPEBUSY_REG;
     appCore.DPC_TMEM_REG = &DPC_TMEM_REG;
 
-    appCore.VI_STATUS_REG = &VI_STATUS_REG;
-    appCore.VI_ORIGIN_REG = &VI_ORIGIN_REG;
-    appCore.VI_WIDTH_REG = &VI_WIDTH_REG;
-    appCore.VI_INTR_REG = &VI_INTR_REG;
-    appCore.VI_V_CURRENT_LINE_REG = &VI_V_CURRENT_LINE_REG;
-    appCore.VI_TIMING_REG = &VI_TIMING_REG;
-    appCore.VI_V_SYNC_REG = &VI_V_SYNC_REG;
-    appCore.VI_H_SYNC_REG = &VI_H_SYNC_REG;
-    appCore.VI_LEAP_REG = &VI_LEAP_REG;
-    appCore.VI_H_START_REG = &VI_H_START_REG;
-    appCore.VI_V_START_REG = &VI_V_START_REG;
-    appCore.VI_V_BURST_REG = &VI_V_BURST_REG;
-    appCore.VI_X_SCALE_REG = &VI_X_SCALE_REG;
-    appCore.VI_Y_SCALE_REG = &VI_Y_SCALE_REG;
+    ultramodern::renderer::ViRegs* vi_regs = ultramodern::renderer::get_vi_regs();
+
+    appCore.VI_STATUS_REG = &vi_regs->VI_STATUS_REG;
+    appCore.VI_ORIGIN_REG = &vi_regs->VI_ORIGIN_REG;
+    appCore.VI_WIDTH_REG = &vi_regs->VI_WIDTH_REG;
+    appCore.VI_INTR_REG = &vi_regs->VI_INTR_REG;
+    appCore.VI_V_CURRENT_LINE_REG = &vi_regs->VI_V_CURRENT_LINE_REG;
+    appCore.VI_TIMING_REG = &vi_regs->VI_TIMING_REG;
+    appCore.VI_V_SYNC_REG = &vi_regs->VI_V_SYNC_REG;
+    appCore.VI_H_SYNC_REG = &vi_regs->VI_H_SYNC_REG;
+    appCore.VI_LEAP_REG = &vi_regs->VI_LEAP_REG;
+    appCore.VI_H_START_REG = &vi_regs->VI_H_START_REG;
+    appCore.VI_V_START_REG = &vi_regs->VI_V_START_REG;
+    appCore.VI_V_BURST_REG = &vi_regs->VI_V_BURST_REG;
+    appCore.VI_X_SCALE_REG = &vi_regs->VI_X_SCALE_REG;
+    appCore.VI_Y_SCALE_REG = &vi_regs->VI_Y_SCALE_REG;
 
     // Set up the RT64 application configuration fields.
     RT64::ApplicationConfiguration appConfig;
@@ -284,18 +271,18 @@ goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::render
     app->enhancementConfig.textureLOD.scale = true;
     // Pick an API if the user has set an override.
     switch (cur_config.api_option) {
-        case ultramodern::renderer::GraphicsApi::D3D12:
-            app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::D3D12;
-            break;
-        case ultramodern::renderer::GraphicsApi::Vulkan:
-            app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Vulkan;
-            break;
-        case ultramodern::renderer::GraphicsApi::Metal:
-            app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Metal;
-            break;
-        case ultramodern::renderer::GraphicsApi::Auto:
-            app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Automatic;
-            break;
+    case ultramodern::renderer::GraphicsApi::D3D12:
+        app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::D3D12;
+        break;
+    case ultramodern::renderer::GraphicsApi::Vulkan:
+        app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Vulkan;
+        break;
+    case ultramodern::renderer::GraphicsApi::Metal:
+        app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Metal;
+        break;
+    case ultramodern::renderer::GraphicsApi::Auto:
+        app->userConfig.graphicsAPI = RT64::UserConfiguration::GraphicsAPI::Automatic;
+        break;
     }
 
     // Set up the RT64 application.
@@ -317,9 +304,9 @@ goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::render
     // Check if the selected device actually supports MSAA sample positions and MSAA for for the formats that will be used
     // and downgrade the configuration accordingly.
     if (app->device->getCapabilities().sampleLocations) {
-        RT64::RenderSampleCounts color_sample_counts = app->device->getSampleCountsSupported(RT64::RenderFormat::R8G8B8A8_UNORM);
-        RT64::RenderSampleCounts depth_sample_counts = app->device->getSampleCountsSupported(RT64::RenderFormat::D32_FLOAT);
-        RT64::RenderSampleCounts common_sample_counts = color_sample_counts & depth_sample_counts;
+        plume::RenderSampleCounts color_sample_counts = app->device->getSampleCountsSupported(plume::RenderFormat::R8G8B8A8_UNORM);
+        plume::RenderSampleCounts depth_sample_counts = app->device->getSampleCountsSupported(plume::RenderFormat::D32_FLOAT);
+        plume::RenderSampleCounts common_sample_counts = color_sample_counts & depth_sample_counts;
         device_max_msaa = compute_max_supported_aa(common_sample_counts);
         sample_positions_supported = true;
     }
@@ -340,9 +327,7 @@ void goemon64::renderer::RT64Context::send_dl(const OSTask* task) {
     app->processDisplayLists(app->core.RDRAM, task->t.data_ptr & 0x3FFFFFF, 0, true);
 }
 
-void goemon64::renderer::RT64Context::update_screen(uint32_t vi_origin) {
-    VI_ORIGIN_REG = vi_origin;
-
+void goemon64::renderer::RT64Context::update_screen() {
     app->updateScreen();
 }
 
@@ -385,18 +370,18 @@ uint32_t goemon64::renderer::RT64Context::get_display_framerate() const {
 float goemon64::renderer::RT64Context::get_resolution_scale() const {
     constexpr int ReferenceHeight = 240;
     switch (app->userConfig.resolution) {
-        case RT64::UserConfiguration::Resolution::WindowIntegerScale:
-            if (app->sharedQueueResources->swapChainHeight > 0) {
-                return std::max(float((app->sharedQueueResources->swapChainHeight + ReferenceHeight - 1) / ReferenceHeight), 1.0f);
-            }
-            else {
-                return 1.0f;
-            }
-        case RT64::UserConfiguration::Resolution::Manual:
-            return float(app->userConfig.resolutionMultiplier);
-        case RT64::UserConfiguration::Resolution::Original:
-        default:
+    case RT64::UserConfiguration::Resolution::WindowIntegerScale:
+        if (app->sharedQueueResources->swapChainHeight > 0) {
+            return std::max(float((app->sharedQueueResources->swapChainHeight + ReferenceHeight - 1) / ReferenceHeight), 1.0f);
+        }
+        else {
             return 1.0f;
+        }
+    case RT64::UserConfiguration::Resolution::Manual:
+        return float(app->userConfig.resolutionMultiplier);
+    case RT64::UserConfiguration::Resolution::Original:
+    default:
+        return 1.0f;
     }
 }
 
@@ -424,7 +409,7 @@ void goemon64::renderer::RT64Context::check_texture_pack_actions() {
             [&](TexturePackUpdateAction &) {
                 packs_changed = true;
             }
-        }, cur_action);
+            }, cur_action);
     }
 
     // If any packs were disabled, unload all packs and load all the active ones.
