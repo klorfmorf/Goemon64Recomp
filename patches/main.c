@@ -7,7 +7,7 @@ RECOMP_PATCH void func_800012FC_1EFC() {
     }
     
     gEXEnable(D_8015C5CC_15D1CC++);
-    gEXSetRDRAMExtended(D_8015C5CC_15D1CC++, 1);
+    // gEXSetRDRAMExtended(D_8015C5CC_15D1CC++, 1);
 
     u8 retraces_per_game_step = D_8008CCC0_8D8C0.retraces_per_game_step;
 
