@@ -46,7 +46,7 @@
 // This delay causes the interrupt queue to get filled up with VI interrupt messages causing any messages afterwards to get dropped.
 // If anyone of these dropped messages is an RSP complete message then the audio thread will block indefinitely because it is expecting a message that its audio task completed.
 // Since the libraries don't handle dropped messages yet this is the easiest fix.
-#define OS_SC_MAX_MESGS         64
+#define OS_SC_MAX_MESGS         8
 
 typedef struct {
     short type;
