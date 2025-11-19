@@ -43,7 +43,13 @@ endif()
 
 set(RT64_STATIC TRUE)
 set(RT64_SDL_WINDOW_VULKAN TRUE)
-set(SDL_VULKAN_ENABLED TRUE)
+
+# Because 'plume' uses CMake 3.12, it ignores normal variables.
+# We must set a CACHE variable to configure it.
+if (CMAKE_SYSTEM_NAME MATCHES "Linux" AND RT64_SDL_WINDOW_VULKAN)
+    set(SDL_VULKAN_ENABLED ON CACHE BOOL "Forcing Plume to use Vulkan on Linux" FORCE)
+endif()
+
 add_compile_definitions(HLSL_CPU)
 
 if (RECOMP_FLATPAK)
