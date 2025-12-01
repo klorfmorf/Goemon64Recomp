@@ -30,3 +30,5 @@ osViSetMode_recomp = 0x8F000064;
 osViSwapBuffer_recomp = 0x8F000068;
 osWritebackDCacheAll_recomp = 0x8F00006C;
 sprintf_recomp = 0x8F000070;
+recomp_puts = 0x8F000074;
+recomp_exit = 0x8F000078;

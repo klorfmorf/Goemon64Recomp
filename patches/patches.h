@@ -52,5 +52,5 @@ static inline void* memcpy(void* s1, const void* s2, size_t n) {
     
     return (void*)s1;
 }
-
+int recomp_printf(const char* fmt, ...);
 #endif // PATCHES_H
