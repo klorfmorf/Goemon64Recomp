@@ -351,28 +351,15 @@ gpr get_entrypoint_address();
 
 // array of supported GameEntry objects
 std::vector<recomp::GameEntry> supported_games = {
-    /*
-    {
-        .rom_hash = 0xEF18B4A9E2386169ULL,
-        .internal_name = "ZELDA MAJORA'S MASK",
-        .game_id = u8"mm.n64.us.1.0",
-        .mod_game_id = "mm",
-        .save_type = recomp::SaveType::Flashram,
-        .is_enabled = false,
-        .decompression_routine = goemon64::decompress_mm,
-        .has_compressed_code = true,
-        .entrypoint_address = get_entrypoint_address(),
-        .entrypoint = recomp_entrypoint,
-    },
-	*/
 	{
         .rom_hash = 0xDB1BC7EE0E6BEBA1ULL,
-        .decompressed_rom_hash = 0x380FC5D167CE89BAULL,
         .internal_name = "MYSTICAL NINJA",
         .game_id = u8"mnsg.us",
         .mod_game_id = "mnsg",
         .save_type = recomp::SaveType::AllowAll,
         .is_enabled = true,
+        .decompression_routine = goemon64::decompress_mnsg,
+        .has_compressed_code = true,
         .entrypoint_address = get_entrypoint_address(),
         .entrypoint = recomp_entrypoint,
 	}

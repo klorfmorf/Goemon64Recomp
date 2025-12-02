@@ -4,56 +4,6 @@
 
 #include "goemon_game.h"
 
-void naive_copy(std::span<uint8_t> dst, std::span<const uint8_t> src) {
-    for (size_t i = 0; i < src.size(); i++) {
-        dst[i] = src[i];
-    }
-}
-
-void yaz0_decompress(std::span<const uint8_t> input, std::span<uint8_t> output) {
-    int32_t layoutBitIndex;
-    uint8_t layoutBits;
-
-    size_t input_pos = 0;
-    size_t output_pos = 0;
-
-    size_t input_size = input.size();
-    size_t output_size = output.size();
-
-    while (input_pos < input_size) {
-        int32_t layoutBitIndex = 0;
-        uint8_t layoutBits = input[input_pos++];
-
-        while (layoutBitIndex < 8 && input_pos < input_size && output_pos < output_size) {
-            if (layoutBits & 0x80) {
-                output[output_pos++] = input[input_pos++];
-            } else {
-                int32_t firstByte = input[input_pos++];
-                int32_t secondByte = input[input_pos++];
-                uint32_t bytes = firstByte << 8 | secondByte;
-                uint32_t offset = (bytes & 0x0FFF) + 1;
-                uint32_t length;
-
-                // Check how the group length is encoded
-                if ((firstByte & 0xF0) == 0) {
-                    // 3 byte encoding, 0RRRNN
-                    int32_t thirdByte = input[input_pos++];
-                    length = thirdByte + 0x12;
-                } else {
-                    // 2 byte encoding, NRRR
-                    length = ((bytes & 0xF000) >> 12) + 2;
-                }
-
-                naive_copy(output.subspan(output_pos, length), output.subspan(output_pos - offset, length));
-                output_pos += length;
-            }
-
-            layoutBitIndex++;
-            layoutBits <<= 1;
-        }
-    }
-}
-
 #ifdef _MSC_VER
 inline uint32_t byteswap(uint32_t val) {
     return _byteswap_ulong(val);
@@ -64,14 +14,136 @@ constexpr uint32_t byteswap(uint32_t val) {
 }
 #endif
 
-// Produces a decompressed MM rom. This is only needed because the game has compressed code.
+constexpr uint8_t COMMAND_SLIDING_WINDOW_COPY_END = 0x7F;
+constexpr uint8_t COMMAND_SLIDING_WINDOW_COPY_LENGTH_MASK = 0x7C;
+constexpr uint8_t COMMAND_SLIDING_WINDOW_COPY_OFFSET_FIRST_BYTE_MASK = 0x03;
+constexpr uint16_t COMMAND_SLIDING_WINDOW_COPY_OFFSET_MAX_MASK = 0x3FF;
+
+constexpr uint8_t COMMAND_RAW_COPY_END = 0x9F;
+constexpr uint8_t COMMAND_RAW_COPY_LENGTH_MASK = 0x1F;
+
+constexpr uint8_t COMMAND_RLE_WRITE_SHORT_ANY_VALUE_END = 0xDF;
+constexpr uint8_t COMMAND_RLE_WRITE_SHORT_ANY_VALUE_LENGTH_MASK = 0x1F;
+
+constexpr uint8_t COMMAND_RLE_WRITE_SHORT_ZERO_END = 0xFE;
+constexpr uint8_t COMMAND_RLE_WRITE_SHORT_ZERO_LENGTH_MASK = 0x1F;
+
+constexpr uint8_t COMMAND_RLE_WRITE_LONG_ZERO = 0xFF;
+constexpr uint8_t COMMAND_RLE_WRITE_LONG_ZERO_LENGTH_MASK = 0xFF;
+
+size_t lzkn64_decompress(std::span<const uint8_t> input, std::span<uint8_t> output) {
+    size_t input_pos = 4;
+    size_t output_pos = 0;
+
+    uint32_t compressed_size = byteswap(*reinterpret_cast<const uint32_t*>(input.data()));
+    if (compressed_size > input.size()) {
+        return 0;
+    }
+
+    while (input_pos < compressed_size) {
+        uint8_t command = input[input_pos++];
+
+        if (command <= COMMAND_SLIDING_WINDOW_COPY_END) {
+            uint8_t length = (command & COMMAND_SLIDING_WINDOW_COPY_LENGTH_MASK) >> 2;
+            uint16_t offset_first_byte = (command & COMMAND_SLIDING_WINDOW_COPY_OFFSET_FIRST_BYTE_MASK) << 8;
+            uint8_t offset_second_byte = input[input_pos++];
+            uint16_t offset = (offset_first_byte | offset_second_byte) & COMMAND_SLIDING_WINDOW_COPY_OFFSET_MAX_MASK;
+
+            // Add 2 to get the actual length since 2 is the minimum length.
+            length += 2;
+
+            for (size_t i = 0; i < length; i++) {
+                output[output_pos] = output[output_pos - offset];
+                output_pos++;
+            }
+        } else if (command <= COMMAND_RAW_COPY_END) {
+            uint8_t length = command & COMMAND_RAW_COPY_LENGTH_MASK;
+
+            for (size_t i = 0; i < length; i++) {
+                output[output_pos++] = input[input_pos++];
+            }
+        } else if (command <= COMMAND_RLE_WRITE_SHORT_ANY_VALUE_END) {
+            uint8_t length = command & COMMAND_RLE_WRITE_SHORT_ANY_VALUE_LENGTH_MASK;
+            uint8_t value = input[input_pos++];
+
+            // Add 2 to get the actual length since 2 is the minimum length.
+            length += 2;
+
+            for (size_t i = 0; i < length; i++) {
+                output[output_pos++] = value;
+            }
+        } else if (command <= COMMAND_RLE_WRITE_SHORT_ZERO_END) {
+            uint8_t length = command & COMMAND_RLE_WRITE_SHORT_ZERO_LENGTH_MASK;
+
+            // Add 2 to get the actual length since 2 is the minimum length.
+            length += 2;
+
+            for (size_t i = 0; i < length; i++) {
+                output[output_pos++] = 0;
+            }
+        } else if (command == COMMAND_RLE_WRITE_LONG_ZERO) {
+            uint16_t length = input[input_pos++] & COMMAND_RLE_WRITE_LONG_ZERO_LENGTH_MASK;
+
+            // Add 2 to get the actual length since 2 is the minimum length.
+            length += 2;
+
+            for (size_t i = 0; i < length; i++) {
+                output[output_pos++] = 0;
+            }
+        } else {
+            // Invalid command.
+        }
+    }
+
+    // Return the output position as the output size.
+    return output_pos;
+}
+
+size_t lzkn64_decompress_rom(std::span<const uint8_t> input_rom, std::span<uint8_t> output_rom, size_t file_table_offset) {
+    const uint32_t* input_file_table_entry = reinterpret_cast<const uint32_t*>(input_rom.data() + file_table_offset);
+    uint32_t* output_file_table_entry = reinterpret_cast<uint32_t*>(output_rom.data() + file_table_offset);
+    uint32_t rom_offset = byteswap(input_file_table_entry[0]) & 0x7FFFFFFF;
+
+    while (input_file_table_entry[0] != 0 && input_file_table_entry[1] != 0) {
+        uint8_t file_is_compressed = (byteswap(input_file_table_entry[0]) & 0x80000000) >> 31;
+        uint32_t file_offset = byteswap(input_file_table_entry[0]) & 0x7FFFFFFF;
+        uint32_t file_size = (byteswap(input_file_table_entry[1]) & 0x7FFFFFFF) - file_offset;
+
+        if (file_is_compressed) {
+            std::span input_span = input_rom.subspan(file_offset, file_size);
+            std::span output_span = output_rom.subspan(rom_offset);
+
+            file_size = lzkn64_decompress(input_span, output_span);
+        } else {
+            memcpy(output_rom.data() + rom_offset, input_rom.data() + file_offset, file_size);
+        }
+
+        // Update the table entries for the current and the next file.
+        output_file_table_entry[0] = byteswap(rom_offset);
+        output_file_table_entry[1] = byteswap(rom_offset + ((file_size + 0xF) & ~0xF));
+
+        rom_offset += (file_size + 0xF) & ~0xF;
+
+        input_file_table_entry++;
+        output_file_table_entry++;
+    }
+
+    return rom_offset;
+}
+
+constexpr size_t MAXIMUM_ROM_SIZE = 0x4000000;
+constexpr size_t FILE_TABLE_OFFSET = 0x57FD8;
+constexpr uint32_t DECOMPRESSED_ROM_CRC_1 = 0x9CC11F4B;
+constexpr uint32_t DECOMPRESSED_ROM_CRC_2 = 0xABAA8538;
+
+// Produces a decompressed rom. This is only needed because the game has compressed code.
 // For other recomps using this repo as an example, you can omit the decompression routine and
 // set the corresponding fields in the GameEntry if the game doesn't have compressed code,
 // even if it does have compressed data.
 std::vector<uint8_t> goemon64::decompress_mnsg(std::span<const uint8_t> compressed_rom) {
     // Sanity check the rom size and header. These should already be correct from the runtime's check,
     // but it should prevent this file from accidentally being copied to another recomp.
-    if (compressed_rom.size() != 0x2000000) {
+    if (compressed_rom.size() != 0x1000000) {
         assert(false);
         return {};
     }
@@ -81,88 +153,26 @@ std::vector<uint8_t> goemon64::decompress_mnsg(std::span<const uint8_t> compress
         return {};
     }
 
-    struct DmaDataEntry {
-        uint32_t vrom_start;
-        uint32_t vrom_end;
-        uint32_t rom_start;
-        uint32_t rom_end;
-
-        void bswap() {
-            vrom_start = byteswap(vrom_start);
-            vrom_end = byteswap(vrom_end);
-            rom_start = byteswap(rom_start);
-            rom_end = byteswap(rom_end);
-        }
-    };
-
-    DmaDataEntry cur_entry{};
-    size_t cur_entry_index = 0;
-
-    constexpr size_t dma_data_rom_addr = 0x1A500;
-
     std::vector<uint8_t> ret{};
-    ret.resize(0x2F00000);
+    ret.resize(MAXIMUM_ROM_SIZE);
+    memcpy(ret.data(), compressed_rom.data(), compressed_rom.size());
 
-    size_t content_end = 0;
+    size_t final_size = lzkn64_decompress_rom(compressed_rom, ret, FILE_TABLE_OFFSET);
 
-    do {
-        // Read the entry from the compressed rom.
-        size_t cur_entry_rom_address = dma_data_rom_addr + (cur_entry_index++) * sizeof(DmaDataEntry);
-        memcpy(&cur_entry, compressed_rom.data() + cur_entry_rom_address, sizeof(DmaDataEntry));
-        // Swap the entry to native endianness after reading from the big endian data.
-        cur_entry.bswap();
+    // Align final_size to the nearest power of two.
+    final_size--;
+    final_size |= final_size >> 1;
+    final_size |= final_size >> 2;
+    final_size |= final_size >> 4;
+    final_size |= final_size >> 8;
+    final_size |= final_size >> 16;
+    final_size++;
 
-        // Rom end being 0 means the data is already uncompressed, so copy it as-is to vrom start.
-        size_t entry_decompressed_size = cur_entry.vrom_end - cur_entry.vrom_start;
-        if (cur_entry.rom_end == 0) {
-            memcpy(ret.data() + cur_entry.vrom_start, compressed_rom.data() + cur_entry.rom_start, entry_decompressed_size);
+    ret.resize(final_size);
 
-            // Edit the entry to account for it being in a new location now.
-            cur_entry.rom_start = cur_entry.vrom_start;
-        }
-        // Otherwise, decompress the input data into the output data.
-        else {
-            if (cur_entry.rom_end != cur_entry.rom_start) {
-                // Validate the presence of the yaz0 header.
-                if (compressed_rom[cur_entry.rom_start + 0] != 'Y' ||
-                    compressed_rom[cur_entry.rom_start + 1] != 'a' ||
-                    compressed_rom[cur_entry.rom_start + 2] != 'z' ||
-                    compressed_rom[cur_entry.rom_start + 3] != '0')
-                {
-                    assert(false);
-                    return {};
-                }
-                // Skip the yaz0 header.
-                size_t compressed_data_rom_start = cur_entry.rom_start + 0x10;
-                size_t entry_compressed_size = cur_entry.rom_end - compressed_data_rom_start;
-
-                std::span input_span = std::span{ compressed_rom }.subspan(compressed_data_rom_start, entry_compressed_size);
-                std::span output_span = std::span{ ret }.subspan(cur_entry.vrom_start, entry_decompressed_size);
-                yaz0_decompress(input_span, output_span);
-
-                // Edit the entry to account for it being decompressed now.
-                cur_entry.rom_start = cur_entry.vrom_start;
-                cur_entry.rom_end = 0;
-            }
-        }
-
-        if (entry_decompressed_size != 0) {
-            if (cur_entry.vrom_end > content_end) {
-                content_end = cur_entry.vrom_end;
-            }
-        }
-
-        // Swap the entry back to big endian for writing.
-        cur_entry.bswap();
-        // Write the modified entry to the decompressed rom.
-        memcpy(ret.data() + cur_entry_rom_address, &cur_entry, sizeof(DmaDataEntry));
-    } while (cur_entry.vrom_end != 0);
-
-    // Align the start of padding to the closest 0x1000 (matches decomp rom decompression behavior).
-    content_end = (content_end + 0x1000 - 1) & -0x1000;
-
-    // Write 0xFF as the padding.
-    std::fill(ret.begin() + content_end, ret.end(), 0xFF);
+    // Write the CRC values to the header of the decompressed ROM.
+    *reinterpret_cast<uint32_t*>(ret.data() + 0x10) = byteswap(DECOMPRESSED_ROM_CRC_1);
+    *reinterpret_cast<uint32_t*>(ret.data() + 0x14) = byteswap(DECOMPRESSED_ROM_CRC_2);
 
     return ret;
 }
