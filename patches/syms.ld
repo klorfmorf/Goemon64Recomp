@@ -32,3 +32,4 @@ osWritebackDCacheAll_recomp = 0x8F00006C;
 sprintf_recomp = 0x8F000070;
 recomp_puts = 0x8F000074;
 recomp_exit = 0x8F000078;
+recomp_run_ui_callbacks = 0x8F0000B8;
