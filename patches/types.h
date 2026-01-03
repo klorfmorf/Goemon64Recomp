@@ -159,13 +159,14 @@ struct MyLight {
 };
 
 typedef struct Task Task;
+typedef void (*TaskCallback)(Task*, HeapElement*);
 struct Task {
     Task *next;
     Task *previous;
-    void (*function_1)(Task *);
-    void (*function_2)(Task *);
-    void (*function_3)(Task *);
-    void (*previous_function)(Task *);
+    TaskCallback function_1;
+    TaskCallback function_2;
+    TaskCallback function_3;
+    TaskCallback previous_function;
     HeapElement *heap_element;
     HeapElement *heap_element_2;
     u16 priority;
@@ -174,8 +175,6 @@ struct Task {
     u8 unknown_26;
     u8 unknown_27;
     u16 overlay_file_id;
-    u8 unknown_2a;
-    u8 unknown_2b;
     void *overlay_vram_addr;
     u8 unknown_30;
     u8 unknown_31;

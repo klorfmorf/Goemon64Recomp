@@ -43,7 +43,7 @@
 #include "../../patches/graphics.h"
 #include "../../patches/input.h"
 #include "../../patches/sound.h"
-// #include "../../patches/misc_funcs.h"
+#include "../../patches/misc_funcs.h"
 
 // #include "mods/mm_recomp_dpad_builtin.h"
 

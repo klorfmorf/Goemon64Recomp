@@ -1,4 +1,5 @@
 #include "patches.h"
+#include "graphics.h"
 
 // @recomp
 Object *g_actor_skeleton_root_object = NULL;
@@ -232,7 +233,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
 
         case 0x20000000:
             // @recomp Fix the scissor so that RT64 can render in widescreen.
-            if (patch_api_get_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
+            if (recomp_get_target_aspect_ratio(original_aspect_ratio) != original_aspect_ratio) {
                 memcpy(&g_widescreen_camera, (Camera *)aptr, sizeof(Camera));
 
                 if (g_widescreen_camera.scissor_ulx == 8) {

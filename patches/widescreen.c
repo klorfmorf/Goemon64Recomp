@@ -1,4 +1,5 @@
 #include "patches.h"
+#include "graphics.h"
 
 static const f32 g_original_aspect_ratio = (f32)SCREEN_WIDTH / (f32)SCREEN_HEIGHT;
 
@@ -6,7 +7,7 @@ static f32 g_spinning_sun_previous_aspect_ratio = 0.0f;
 
 // @recomp Patched to accomodate the spinning sun effect for widescreen.
 RECOMP_PATCH void func_80214530_69BF30(SpinningSunTask *task, Object *object) {
-    f32 current_aspect_ratio = patch_api_get_aspect_ratio(g_original_aspect_ratio);
+    f32 current_aspect_ratio = recomp_get_target_aspect_ratio(g_original_aspect_ratio);
 
     if ((current_aspect_ratio != g_spinning_sun_previous_aspect_ratio || task->initialized == FALSE) && current_aspect_ratio != 0.0f) {
         object->scale.x = 1.0f * (current_aspect_ratio / g_original_aspect_ratio);
@@ -82,7 +83,7 @@ static f32 g_rippling_hikimaku_previous_aspect_ratio = 0.0f;
 
 // @recomp Patched to accomodate the rippling hikimaku background for widescreen.
 RECOMP_PATCH void func_801CC710_65F5C0(RipplingHikimakuTask *task, Object *object) {
-    f32 current_aspect_ratio = patch_api_get_aspect_ratio(g_original_aspect_ratio);
+    f32 current_aspect_ratio = recomp_get_target_aspect_ratio(g_original_aspect_ratio);
     RipplingBackground *rippling_background = task->rippling_background;
     s32 row, column;
     s32 grid_width = rippling_background->unknown_4 + 2;
@@ -122,7 +123,7 @@ static f32 g_rippling_karakusa_previous_aspect_ratio = 0.0f;
 
 // @recomp Patched to accomodate the rippling karakusa background for widescreen.
 RECOMP_PATCH void func_80213AC8_672A78(RipplingKarakusaTask *task, Object *object) {
-    f32 current_aspect_ratio = patch_api_get_aspect_ratio(g_original_aspect_ratio);
+    f32 current_aspect_ratio = recomp_get_target_aspect_ratio(g_original_aspect_ratio);
     RipplingBackground *rippling_background = task->rippling_background;
     s32 row, column;
     s32 grid_width = rippling_background->unknown_4 + 2;

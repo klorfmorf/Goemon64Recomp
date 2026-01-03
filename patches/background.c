@@ -547,8 +547,6 @@ extern Gfx D_8006D0F0_6DCF0[];
 #define G_CC_CUSTOM_1 0, 0, 0, TEXEL0, 0, 0, 0, PRIMITIVE
 #define G_CC_CUSTOM_2 0, 0, 0, TEXEL0, TEXEL0, 0, PRIMITIVE, 0
 
-extern int sprintf_recomp(char *s, const char *fmt, ...);
-
 RECOMP_PATCH void func_80022EC0_23AC0(BackgroundGraphicsNode *node) {
 	gSPDisplayList(D_8015C5CC_15D1CC++, &D_8006D0F0_6DCF0);
 
