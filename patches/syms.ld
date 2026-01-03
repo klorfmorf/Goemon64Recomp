@@ -24,3 +24,4 @@ recomp_get_analog_inverted_axes = 0x8F00004C;
 recomp_get_analog_cam_enabled = 0x8F000050;
 recomp_get_camera_inputs = 0x8F000054;
 recomp_set_right_analog_suppressed = 0x8F000058;
+recomp_run_ui_callbacks = 0x8F00005C;
