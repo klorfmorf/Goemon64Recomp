@@ -1,5 +1,5 @@
-#ifndef __ZELDA_RENDER_H__
-#define __ZELDA_RENDER_H__
+#ifndef __GOEMON_RENDER_H__
+#define __GOEMON_RENDER_H__
 
 #include <unordered_set>
 #include <filesystem>

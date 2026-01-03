@@ -430,6 +430,19 @@ struct DebugContext {
     bool debug_enabled = false;
 
     DebugContext() {
+        for (const auto& area : goemon64::game_warps) {
+            area_names.emplace_back(area.name);
+        }
+        update_warp_names();
+    }
+
+    void update_warp_names() {
+        scene_names.clear();
+        for (const auto& scene : goemon64::game_warps[area_index].scenes) {
+            scene_names.emplace_back(scene.name);
+        }
+        
+        entrance_names = goemon64::game_warps[area_index].scenes[scene_index].entrances;
     }
 };
 
@@ -544,6 +557,7 @@ public:
                 debug_context.area_index = event.GetParameter<int>("value", 0);
                 debug_context.scene_index = 0;
                 debug_context.entrance_index = 0;
+                debug_context.update_warp_names();
                 debug_context.model_handle.DirtyVariable("scene_index");
                 debug_context.model_handle.DirtyVariable("entrance_index");
                 debug_context.model_handle.DirtyVariable("scene_names");
@@ -554,13 +568,14 @@ public:
             [](const std::string& param, Rml::Event& event) {
                 debug_context.scene_index = event.GetParameter<int>("value", 0);
                 debug_context.entrance_index = 0;
+                debug_context.update_warp_names();
                 debug_context.model_handle.DirtyVariable("entrance_index");
                 debug_context.model_handle.DirtyVariable("entrance_names");
             });
 
         recompui::register_event(listener, "do_warp",
             [](const std::string& param, Rml::Event& event) {
-                //goemon64::do_warp(debug_context.area_index, debug_context.scene_index, debug_context.entrance_index);
+                goemon64::do_warp(debug_context.area_index, debug_context.scene_index, debug_context.entrance_index);
             });
 
         recompui::register_event(listener, "set_time",

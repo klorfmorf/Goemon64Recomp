@@ -1,5 +1,5 @@
-#ifndef __ZELDA_SUPPORT_H__
-#define __ZELDA_SUPPORT_H__
+#ifndef __GOEMON_SUPPORT_H__
+#define __GOEMON_SUPPORT_H__
 
 #include <functional>
 #include <filesystem>

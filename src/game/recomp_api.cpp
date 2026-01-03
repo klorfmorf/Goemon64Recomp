@@ -114,6 +114,13 @@ extern "C" void recomp_load_overlays(uint8_t * rdram, recomp_context * ctx) {
     load_overlays(rom, ram, size);
 }
 
+extern "C" void recomp_unload_overlays(uint8_t *rdram, recomp_context *ctx) {
+    PTR(void) vram_addr = _arg<0, PTR(void)>(rdram, ctx);
+    u32 size = _arg<1, u32>(rdram, ctx);
+
+    unload_overlays(vram_addr, size);
+}
+
 extern "C" void recomp_high_precision_fb_enabled(uint8_t * rdram, recomp_context * ctx) {
     _return(ctx, static_cast<s32>(goemon64::renderer::RT64HighPrecisionFBEnabled()));
 }

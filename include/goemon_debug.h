@@ -11,15 +11,12 @@ namespace goemon64 {
         std::vector<std::string> entrances;
     };
 
-    //! REMOVED
-    /*
     struct AreaWarps {
         std::string name;
         std::vector<SceneWarps> scenes;
     };
 
     extern std::vector<AreaWarps> game_warps;
-    */
 
     void do_warp(int area, int scene, int entrance);
     void set_time(uint8_t day, uint8_t hour, uint8_t minute);

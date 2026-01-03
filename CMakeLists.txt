@@ -130,7 +130,7 @@ endif()
 add_custom_target(PatchesBin
     COMMAND ${CMAKE_COMMAND} -E env CC=${PATCHES_C_COMPILER} LD=${PATCHES_LD} make
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/patches
-    BYPRODUCTS ${CMAKE_SOURCE_DIR}/patches/patches.elf
+    BYPRODUCTS ${CMAKE_SOURCE_DIR}/patches/build/patches.elf
 )
 
 # Generate patches_bin.c from patches.bin
@@ -148,7 +148,7 @@ add_custom_command(OUTPUT
                    # TODO: Look into why modifying patches requires two builds to take
                    COMMAND ./N64Recomp patches.toml
                    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                   DEPENDS ${CMAKE_SOURCE_DIR}/patches/patches.elf
+                   DEPENDS ${CMAKE_SOURCE_DIR}/patches/build/patches.elf
 )
 
 # Main executable
@@ -164,8 +164,8 @@ set (SOURCES
     ${CMAKE_SOURCE_DIR}/src/game/input.cpp
     ${CMAKE_SOURCE_DIR}/src/game/controls.cpp
     ${CMAKE_SOURCE_DIR}/src/game/config.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/scene_table.cpp
     ${CMAKE_SOURCE_DIR}/src/game/debug.cpp
-    ${CMAKE_SOURCE_DIR}/src/game/patch_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/quicksaving.cpp
     ${CMAKE_SOURCE_DIR}/src/game/recomp_api.cpp
     ${CMAKE_SOURCE_DIR}/src/game/recomp_actor_api.cpp
@@ -419,3 +419,10 @@ target_sources(Goemon64Recompiled PRIVATE ${GENERATED_NRM_SOURCES})
 target_sources(Goemon64Recompiled PRIVATE ${SOURCES})
 
 set_property(TARGET Goemon64Recompiled PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
+        "${CMAKE_BINARY_DIR}/compile_commands.json"
+        "${CMAKE_SOURCE_DIR}/compile_commands.json"
+    )
+endif()
