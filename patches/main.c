@@ -1,11 +1,14 @@
 #include "patches.h"
+#include "ui_funcs.h"
 
 // @recomp Patched to enable RT64's extended GBI mode and set the correct refresh rate.
 RECOMP_PATCH void func_800012FC_1EFC() {
     if ((D_8008CCC0_8D8C0.controllers[0].button_held_down & L_TRIG) && (D_8008CCC0_8D8C0.controllers[0].button_held_down & Z_TRIG) && (D_8008CCC0_8D8C0.controllers[0].button_held_down & R_JPAD)) {
         D_8008CCC0_8D8C0.mode = 10;
     }
-    
+    // @recomp Run Ui Callbacks
+    recomp_run_ui_callbacks();
+
     gEXEnable(D_8015C5CC_15D1CC++);
     // gEXSetRDRAMExtended(D_8015C5CC_15D1CC++, 1);
 
