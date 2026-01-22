@@ -18,8 +18,8 @@ CFLAGS   := -target mips -mips2 -mabi=32 -O2 -G0 \
             -Wno-missing-braces -Wno-unsupported-floating-point-opt
 
 CPPFLAGS := -nostdinc -D_LANGUAGE_C -DMIPS -DNDEBUG \
-            -I ../lib/mnsg/include/libultra \
-            -I ../lib/mnsg/include/libultra/PR \
+            -I ../lib/mnsg/libultra/include \
+            -I ../lib/mnsg/libultra/include/PR \
             -I ../lib/rt64/include
 
 ASFLAGS  := -target mips -mips2 -mabi=32 -G0 \
