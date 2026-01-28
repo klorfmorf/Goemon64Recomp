@@ -1,13 +1,11 @@
 # Config file for Mystical Ninja Starring Goemon (USA) Recompilation.
+# For use with the --dump-context flag of the N64Recomp tool.
 
 [input]
 entrypoint = 0x80000400
 output_func_path = "RecompiledFuncs"
-# elf_path = "mnsg.us.elf"
-relocatable_sections_path = "overlays.us.0.txt"
-symbols_file_path = "Goemon64RecompSyms/mnsg.us.syms.toml"
-rom_file_path = "mnsg.us.decompressed.z64"
-trace_mode = true
+elf_path = "mnsg.elf"
+relocatable_sections_path = "mnsg.overlays.txt"
 bss_section_suffix = "_bss"
 
 [patches]
