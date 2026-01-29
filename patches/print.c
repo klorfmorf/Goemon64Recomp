@@ -9,12 +9,14 @@ typedef __builtin_va_list va_list;
 // Forward declaration of _Printf function
 int _Printf(void *(*put)(void *, const char *, size_t), void *arg, const char *fmt, va_list ap);
 
-void* proutPrintf(void* dst, const char* fmt, size_t size) {
+void* proutPrintf(void* dst, const char* fmt, size_t size)
+{
     recomp_puts(fmt, size);
     return (void*)1;
 }
 
-RECOMP_EXPORT int recomp_printf(const char* fmt, ...) {
+RECOMP_EXPORT int recomp_printf(const char* fmt, ...)
+{
     va_list args;
     va_start(args, fmt);
 

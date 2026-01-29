@@ -3,6 +3,8 @@
 
 #include <ultra64.h>
 
+#include "common.h"
+
 typedef struct FileSegment FileSegment;
 struct FileSegment {
     u32 start;

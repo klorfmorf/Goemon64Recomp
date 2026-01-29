@@ -37,7 +37,8 @@ void func_80022A74_23674(BackgroundGraphicsNode *node);
 void func_80022214_22E14(BackgroundGraphicsNode *node);
 void func_80021894_22494(u8 *texture_data, u8 *palette_data, f32 start_x, f32 start_y);
 
-RECOMP_PATCH void func_80021740_22340(BackgroundGraphicsNode* node) {
+RECOMP_PATCH void func_80021740_22340(BackgroundGraphicsNode* node)
+{
 	s32 image_size;
 
 	if (!(node->flags & (1 << 13))) {
@@ -83,7 +84,8 @@ extern s32 D_8006D164_6DD64; // g_background_height
 
 void func_80021B98_22798(u8 *texture_data, f32 source_x, f32 source_y, s32 tile_width, s32 tile_height, u32 destination_x, u32 destination_y);
 
-RECOMP_PATCH void func_80021894_22494(u8 *texture_data, u8 *palette_data, f32 start_x, f32 start_y) {
+RECOMP_PATCH void func_80021894_22494(u8 *texture_data, u8 *palette_data, f32 start_x, f32 start_y)
+{
 	s32 source_x;
 	s32 source_y;
 	s32 destination_x;
@@ -266,7 +268,8 @@ RECOMP_PATCH void func_80021B98_22798(u8 *texture_data, f32 source_x, f32 source
 void func_80022EC0_23AC0(BackgroundGraphicsNode *node);
 void func_80022348_22F48(s32 destination_x, s32 destination_y, s32 source_x, s32 source_y, s32 width, s32 height, BackgroundGraphicsNode *node);
 
-RECOMP_PATCH void func_80022214_22E14(BackgroundGraphicsNode *node) {
+RECOMP_PATCH void func_80022214_22E14(BackgroundGraphicsNode *node) 
+{
 	s32 destination_x;
 	s32 destination_y_start;
 	s32 source_x;
@@ -381,7 +384,8 @@ RECOMP_PATCH void func_80022348_22F48(s32 destination_x, s32 destination_y, s32 
 	}
 }
 
-RECOMP_PATCH void func_80022500_23100(u32 destination_x, u32 destination_y, s32 source_x, s32 source_y, s32 rectangle_width, s32 rectangle_height, BackgroundGraphicsNode *node) {
+RECOMP_PATCH void func_80022500_23100(u32 destination_x, u32 destination_y, s32 source_x, s32 source_y, s32 rectangle_width, s32 rectangle_height, BackgroundGraphicsNode *node)
+{
 	s32 image_format;
 
 	if (node->flags & (1 << 0)) {
@@ -447,7 +451,8 @@ RECOMP_PATCH void func_80022500_23100(u32 destination_x, u32 destination_y, s32 
 
 void func_80022DF4_239F4(u32 destination_x, u32 destination_y, s32 source_x, s32 source_y, s32 rectangle_width, s32 rectangle_height, BackgroundGraphicsNode *node);
 
-RECOMP_PATCH void func_80022A74_23674(BackgroundGraphicsNode *node) {
+RECOMP_PATCH void func_80022A74_23674(BackgroundGraphicsNode *node)
+{
 	s32 dest_x = (s32)node->upper_left_corner_x;
 	s32 dest_y = (s32)node->upper_left_corner_y;
 	s32 src_x = (s32)node->start_x;
@@ -527,7 +532,8 @@ RECOMP_PATCH void func_80022A74_23674(BackgroundGraphicsNode *node) {
 }
 
 
-RECOMP_PATCH void func_80022DF4_239F4(u32 destination_x, u32 destination_y, s32 source_x, s32 source_y, s32 rectangle_width, s32 rectangle_height, BackgroundGraphicsNode *node) {
+RECOMP_PATCH void func_80022DF4_239F4(u32 destination_x, u32 destination_y, s32 source_x, s32 source_y, s32 rectangle_width, s32 rectangle_height, BackgroundGraphicsNode *node)
+{
 	if (source_x + rectangle_width > node->texture_width) {
 		s32 first_part_width;
 		s32 second_part_width;
@@ -547,7 +553,8 @@ extern Gfx D_8006D0F0_6DCF0[];
 #define G_CC_CUSTOM_1 0, 0, 0, TEXEL0, 0, 0, 0, PRIMITIVE
 #define G_CC_CUSTOM_2 0, 0, 0, TEXEL0, TEXEL0, 0, PRIMITIVE, 0
 
-RECOMP_PATCH void func_80022EC0_23AC0(BackgroundGraphicsNode *node) {
+RECOMP_PATCH void func_80022EC0_23AC0(BackgroundGraphicsNode *node)
+{
 	gSPDisplayList(D_8015C5CC_15D1CC++, &D_8006D0F0_6DCF0);
 
 	if (node->flags & (1 << 4)) {

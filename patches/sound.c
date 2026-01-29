@@ -184,6 +184,8 @@ RECOMP_PATCH void func_8003AFB0_3BBB0() // player_set_volume
 
         // @recomp Allow user to change the volume of the background music.
         final_volume = (recomp_get_bgm_volume() * (float) final_volume);
+    } else {
+        final_volume = (recomp_get_se_volume() * (float) final_volume);
     }
 
     if (D_801C09CF_1C15CF != 0) {

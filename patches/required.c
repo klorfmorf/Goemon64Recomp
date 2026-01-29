@@ -8,7 +8,8 @@ extern Task *D_8006D328_6DF28;
 void* func_080026B8_71FE88(void *arg);
 
 // @recomp Patched to load the overlay in the recomp runtime and to relocate TLB mapped overlays.
-RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) {
+RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) 
+{
     s32 cur_file_id;
     s32 next_file_id;
     u32 file_rom_addr;
@@ -70,7 +71,8 @@ RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) {
 }
 
 // @recomp Patched to relocate TLB mapped addresses to their proper KSEG0 addresses so that the recomp runtime can find them.
-RECOMP_PATCH void func_8001481C_1541C(Task *task) {
+RECOMP_PATCH void func_8001481C_1541C(Task *task) 
+{
     const u32 tlb_overlay_start = 0x08000000lu;
     const u32 code_overlay_mask = ~0x40000000;
 
@@ -110,7 +112,8 @@ RECOMP_PATCH void func_8001481C_1541C(Task *task) {
 }
 
 // @recomp Patch the only other place where a TLB mapped overlay function is called from the main segment.
-RECOMP_PATCH void func_8001198C_1258C(void) {
+RECOMP_PATCH void func_8001198C_1258C(void) 
+{
     func_80013B14_14714(0x3C);
     func_80001EB0_2AB0(0x3C, (u32)func_800141C4_14DC4(0x3C));
     func_080026B8_71FE88(D_8006D328_6DF28);

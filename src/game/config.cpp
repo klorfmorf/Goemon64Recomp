@@ -459,7 +459,7 @@ bool save_sound_config(const std::filesystem::path& path) {
 
     config_json["main_volume"] = goemon64::get_main_volume();
     config_json["bgm_volume"] = goemon64::get_bgm_volume();
-    config_json["low_health_beeps"] = goemon64::get_low_health_beeps_enabled();
+    config_json["se_volume"] = goemon64::get_se_volume();
 
     return save_json_with_backups(path, config_json);
 }
@@ -473,7 +473,7 @@ bool load_sound_config(const std::filesystem::path& path) {
     goemon64::reset_sound_settings();
     call_if_key_exists(goemon64::set_main_volume, config_json, "main_volume");
     call_if_key_exists(goemon64::set_bgm_volume, config_json, "bgm_volume");
-    call_if_key_exists(goemon64::set_low_health_beeps_enabled, config_json, "low_health_beeps");
+    call_if_key_exists(goemon64::set_se_volume, config_json, "se_volume");
     return true;
 }
 

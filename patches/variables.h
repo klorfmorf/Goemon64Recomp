@@ -19,8 +19,8 @@ extern MtxF *D_80168530_169130;
 extern FileSegment D_80054ACC_556CC[FILE_MAX]; // g_file_segments
 extern u32 D_800573D8_57FD8[FILE_MAX]; // g_file_rom_addrs
 extern u8 D_8015C5D4_15D1D4; // g_is_loading_file
-extern System D_8008CCC0_8D8C0; // g_system
-extern System *D_8015C5C8_15D1C8; // g_system_p
+extern SYS_W D_8008CCC0_8D8C0; // g_system
+extern SYS_W* D_8015C5C8_15D1C8; // g_system_p
 extern Gfx *D_8015C5CC_15D1CC; // g_display_list_head
 extern Gfx D_8006D4E0_6E0E0[5]; // ?
 extern Object D_8005B974_5C574;

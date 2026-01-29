@@ -10,7 +10,8 @@ u8 g_player_skip_interpolation = FALSE;
 
 Camera g_widescreen_camera;
 
-RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
+RECOMP_PATCH s32 func_80016C44_17844(Object *object)
+{
     u32 a;
     u32 *aptr;
     u32 object_type;
@@ -429,7 +430,8 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object) {
 }
 
 /* Not needed.
-RECOMP_PATCH void func_80018718_19318(Skeleton *skeleton, u32 object_type) {
+RECOMP_PATCH void func_80018718_19318(Skeleton *skeleton, u32 object_type)
+{
     u32 display_list_vram_addr;
     u32 ptr;
     Skeleton *masked_ptr;
@@ -492,7 +494,8 @@ RECOMP_PATCH void func_80018718_19318(Skeleton *skeleton, u32 object_type) {
 }
 */
 
-RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
+RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton)
+{
     u32 display_list_vram_addr;
     u32 ptr;
     Skeleton *masked_ptr;
@@ -587,7 +590,8 @@ RECOMP_PATCH void func_80018908_19508(Skeleton *skeleton) {
     }
 }
 
-RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object) {
+RECOMP_PATCH void func_80018CA0_198A0(Skeleton *skeleton, Object *object)
+{
     u32 graphics_2_vram_addr;
     Object *root_object;
     u32 display_list_vram_addr;

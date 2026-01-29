@@ -89,7 +89,8 @@ RECOMP_PATCH HeapElement *func_80036158_36D58(Task* task, HeapElement *heap_elem
 }
 */
 
-RECOMP_PATCH void func_8000A5C4_B1C4(Object *object) {
+RECOMP_PATCH void func_8000A5C4_B1C4(Object *object)
+{
     HeapElement *previous_next_element;
 
     previous_next_element = object->heap_element.next;
@@ -103,7 +104,8 @@ RECOMP_PATCH void func_8000A5C4_B1C4(Object *object) {
     TAGGING_OBJECT_SET_SKIP_INTERPOLATION(object);
 }
 
-RECOMP_PATCH void func_08002414_715384(SnowGeneratorTask* task, Object *object, u32 type) {
+RECOMP_PATCH void func_08002414_715384(SnowGeneratorTask* task, Object *object, u32 type)
+{
     s32 random_number;
     u32 is_event_set;
 
@@ -222,7 +224,8 @@ RECOMP_PATCH u32 func_801D9CE8_595BF8(PlayerTask *task) {
 */
 
 // @recomp Patches the red arrow on the file select screen to skip position interpolation.
-RECOMP_PATCH void func_801CBB94_65EA44(Task *task, Object *object) {
+RECOMP_PATCH void func_801CBB94_65EA44(Task *task, Object *object)
+{
     object->rotation.x += 64;
     object->rotation.x &= 0x3FF;
 

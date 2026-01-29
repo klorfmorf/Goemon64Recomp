@@ -41,6 +41,24 @@
 						</div>
 					</div>
 
+					<div class="config-option" data-event-mouseover="set_cur_config_index(2)">
+						<label class="config-option__title">Sound Effects Volume</label>
+						<div class="config-option__range-wrapper config-option__list">
+							<label class="config-option__range-label">{{se_volume}}%</label>
+							<input
+								data-event-blur="set_cur_config_index(-1)"
+								data-event-focus="set_cur_config_index(2)"
+								class="nav-vert"
+								id="se_volume_input"
+								type="range"
+								min="0"
+								max="100"
+								style="flex: 1; margin: 0dp; nav-up: #main_volume_input; nav-down: #lhb_on;"
+								data-value="se_volume"
+                                />
+						</div>
+					</div>
+
 				</div>
                 <!-- Descriptions -->
                 <div class="config__wrapper">
@@ -51,8 +69,8 @@
                         Controls the overall volume of background music.
                     </p>
                     <p data-if="cur_config_index == 2">
-                        Toggles whether or not the low-health beeping sound plays.
-                    </p>
+						Controls the overall volume of sound effects.
+					</p>
                 </div>
             </div>
         </form>

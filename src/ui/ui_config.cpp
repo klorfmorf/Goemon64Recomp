@@ -363,11 +363,11 @@ void goemon64::set_analog_camera_invert_mode(goemon64::CameraInvertMode mode) {
 struct SoundOptionsContext {
     std::atomic<int> main_volume; // Option to control the volume of all sound
     std::atomic<int> bgm_volume;
-    std::atomic<int> low_health_beeps_enabled; // RmlUi doesn't seem to like "true"/"false" strings for setting variants so an int is used here instead.
+    std::atomic<int> se_volume;
     void reset() {
         bgm_volume = 100;
+        se_volume = 100;
         main_volume = 100;
-        low_health_beeps_enabled = (int)true;
     }
     SoundOptionsContext() {
         reset();
@@ -401,19 +401,19 @@ void goemon64::set_bgm_volume(int volume) {
     }
 }
 
+void goemon64::set_se_volume(int volume) {
+    sound_options_context.se_volume.store(volume);
+    if (sound_options_model_handle) {
+        sound_options_model_handle.DirtyVariable("se_volume");
+    }
+}
+
 int goemon64::get_bgm_volume() {
     return sound_options_context.bgm_volume.load();
 }
 
-void goemon64::set_low_health_beeps_enabled(bool enabled) {
-    sound_options_context.low_health_beeps_enabled.store((int)enabled);
-    if (sound_options_model_handle) {
-        sound_options_model_handle.DirtyVariable("low_health_beeps_enabled");
-    }
-}
-
-bool goemon64::get_low_health_beeps_enabled() {
-    return (bool)sound_options_context.low_health_beeps_enabled.load();
+int goemon64::get_se_volume() {
+    return sound_options_context.se_volume.load();
 }
 
 struct DebugContext {
@@ -938,7 +938,7 @@ public:
 
         bind_atomic(constructor, sound_options_model_handle, "main_volume", &sound_options_context.main_volume);
         bind_atomic(constructor, sound_options_model_handle, "bgm_volume", &sound_options_context.bgm_volume);
-        bind_atomic(constructor, sound_options_model_handle, "low_health_beeps_enabled", &sound_options_context.low_health_beeps_enabled);
+        bind_atomic(constructor, sound_options_model_handle, "se_volume", &sound_options_context.se_volume);
     }
 
     void make_debug_bindings(Rml::Context* context) {

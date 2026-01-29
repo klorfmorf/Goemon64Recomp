@@ -6,9 +6,9 @@ namespace goemon64 {
     void set_main_volume(int volume);
     int get_main_volume();
     void set_bgm_volume(int volume);
+    void set_se_volume(int volume);
     int get_bgm_volume();
-    void set_low_health_beeps_enabled(bool enabled);
-    bool get_low_health_beeps_enabled();
+    int get_se_volume();
 }
 
 #endif

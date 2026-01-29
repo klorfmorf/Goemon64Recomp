@@ -20,7 +20,8 @@
  *
  * @note This function is safe to call for files with no relocations (no-op).
  */
-void overlay_apply_relocations(u32 file_id, u8 *load_addr) {
+void overlay_apply_relocations(u32 file_id, u8 *load_addr)
+{
     const OverlayRelocInfo *info;
     const OverlayReloc *relocs;
     s32 delta;

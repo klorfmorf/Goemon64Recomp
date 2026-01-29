@@ -94,8 +94,8 @@ extern "C" void recomp_get_bgm_volume(uint8_t* rdram, recomp_context* ctx) {
     _return(ctx, goemon64::get_bgm_volume() / 100.0f);
 }
 
-extern "C" void recomp_get_low_health_beeps_enabled(uint8_t* rdram, recomp_context* ctx) {
-    _return(ctx, static_cast<u32>(goemon64::get_low_health_beeps_enabled()));
+extern "C" void recomp_get_se_volume(uint8_t* rdram, recomp_context* ctx) {
+    _return(ctx, goemon64::get_se_volume() / 100.0f);
 }
 
 extern "C" void recomp_time_us(uint8_t* rdram, recomp_context* ctx) {
