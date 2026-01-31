@@ -89,18 +89,6 @@ body, .config-debug__select-wrapper select, .config-debug__select-wrapper input,
   line-height: 32dp;
 }
 
-/*
-@include trans-colors;
-*/
-/*
-@include trans-colors-opa;
-*/
-/*
-@include trans-colors-svg;
-*/
-/*
-@include trans-colors-border;
-*/
 .nav-vert, .nav-dir, .nav-all, .config-debug__select-wrapper select selectbox option, .config-debug__select-wrapper select, .config-debug__select-wrapper input, .toggle, .subtitle-title:not(:disabled, [disabled]), .menu-list-item:not(:disabled, [disabled]), .icon-button:not([disabled]), .button:not([disabled]), .button, .config-option-dropdown__select selectbox option, .config-option-dropdown__wrapper selectbox option, .config-option-textfield__select selectbox option, .config-option-textfield__wrapper selectbox option, .config-option-dropdown__select, .config-option-dropdown__wrapper, .config-option-textfield__select, .config-option-textfield__wrapper, .config-option__radio-tabs input.radio,
 .config-option__list input.radio, .config-option__radio-tabs .config-option__checkbox,
 .config-option__list .config-option__checkbox, .tab, .control-option__binding:not([disabled]) {
@@ -122,136 +110,6 @@ body, .config-debug__select-wrapper select, .config-debug__select-wrapper input,
   tab-index: auto;
 }
 
-/*
-@include set-color(COLOR);
-*/
-/* stylelint-disable color-no-hex, color-hex-length */
-h1 {
-  font-size: 68dp;
-  letter-spacing: 4.76dp;
-  line-height: 68dp;
-  font-style: normal;
-  font-weight: 700;
-}
-
-h2 {
-  font-size: 52dp;
-  letter-spacing: 3.64dp;
-  line-height: 52dp;
-  font-style: normal;
-  font-weight: 700;
-}
-
-h3, .tab {
-  font-size: 36dp;
-  letter-spacing: 2.52dp;
-  line-height: 36dp;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.label-lg, .menu-list-item__label, .button--large {
-  font-size: 36dp;
-  letter-spacing: 3.96dp;
-  line-height: 36dp;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.label-md, .config-debug-option__label, .button, .config-option__title, .config-option--hz .config-option__title, .config-group__title, .control-option__label {
-  font-size: 28dp;
-  letter-spacing: 3.08dp;
-  line-height: 28dp;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.label-sm, .config-debug__select-wrapper .config-debug__select-label, .subtitle-title__disclaimer, .config-option__range-label, .config-option-range__label, .config-option__radio-tabs .config-option__tab-label,
-.config-option__list .config-option__tab-label, .centered-page__controls > label {
-  font-size: 20dp;
-  letter-spacing: 2.8dp;
-  line-height: 20dp;
-  font-style: normal;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.config-option__details {
-  font-size: 18dp;
-  letter-spacing: 2.52dp;
-  line-height: 18dp;
-  font-style: normal;
-  font-weight: 400;
-}
-
-body, .config-debug__select-wrapper select, .config-debug__select-wrapper input, .config-description__contents, .config-option-dropdown__select, .config-option-dropdown__wrapper, .config-option-textfield__select, .config-option-textfield__wrapper, .config__wrapper p {
-  font-size: 20dp;
-  letter-spacing: 0dp;
-  line-height: 20dp;
-  font-style: normal;
-  font-weight: 400;
-}
-
-.toggle__icon {
-  font-family: promptfont;
-  font-size: 56dp;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 56dp;
-}
-
-.prompt-font {
-  font-family: promptfont;
-  font-size: 40dp;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 40dp;
-}
-
-.prompt-font-sm, .input-viz__mappings div {
-  font-family: promptfont;
-  font-size: 32dp;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 32dp;
-}
-
-/*
-@include trans-colors;
-*/
-/*
-@include trans-colors-opa;
-*/
-/*
-@include trans-colors-svg;
-*/
-/*
-@include trans-colors-border;
-*/
-.nav-vert, .nav-dir, .nav-all, .config-debug__select-wrapper select selectbox option, .config-debug__select-wrapper select, .config-debug__select-wrapper input, .toggle, .subtitle-title:not(:disabled, [disabled]), .menu-list-item:not(:disabled, [disabled]), .icon-button:not([disabled]), .button:not([disabled]), .button, .config-option-dropdown__select selectbox option, .config-option-dropdown__wrapper selectbox option, .config-option-textfield__select selectbox option, .config-option-textfield__wrapper selectbox option, .config-option-dropdown__select, .config-option-dropdown__wrapper, .config-option-textfield__select, .config-option-textfield__wrapper, .config-option__radio-tabs input.radio,
-.config-option__list input.radio, .config-option__radio-tabs .config-option__checkbox,
-.config-option__list .config-option__checkbox, .tab, .control-option__binding:not([disabled]) {
-  nav-up: auto;
-  nav-down: auto;
-}
-
-.nav-horiz, .nav-dir, .nav-all, .config-debug__select-wrapper select selectbox option, .config-debug__select-wrapper select, .config-debug__select-wrapper input, .toggle, .subtitle-title:not(:disabled, [disabled]), .menu-list-item:not(:disabled, [disabled]), .icon-button:not([disabled]), .button:not([disabled]), .button, .config-option-dropdown__select selectbox option, .config-option-dropdown__wrapper selectbox option, .config-option-textfield__select selectbox option, .config-option-textfield__wrapper selectbox option, .config-option-dropdown__select, .config-option-dropdown__wrapper, .config-option-textfield__select, .config-option-textfield__wrapper, .config-option__radio-tabs input.radio,
-.config-option__list input.radio, .config-option__radio-tabs .config-option__checkbox,
-.config-option__list .config-option__checkbox, .tab, .control-option__binding:not([disabled]) {
-  nav-right: auto;
-  nav-left: auto;
-}
-
-.nav-foc, .nav-all, .config-debug__select-wrapper select selectbox option, .config-debug__select-wrapper select, .config-debug__select-wrapper input, .toggle, .subtitle-title:not(:disabled, [disabled]), .menu-list-item:not(:disabled, [disabled]), .icon-button:not([disabled]), .button:not([disabled]), .button, .config-option-dropdown__select selectbox option, .config-option-dropdown__wrapper selectbox option, .config-option-textfield__select selectbox option, .config-option-textfield__wrapper selectbox option, .config-option-dropdown__select, .config-option-dropdown__wrapper, .config-option-textfield__select, .config-option-textfield__wrapper, .config-option__radio-tabs input.radio,
-.config-option__list input.radio, .config-option__radio-tabs .config-option__checkbox,
-.config-option__list .config-option__checkbox, .tab, .control-option__binding:not([disabled]) {
-  focus: auto;
-  tab-index: auto;
-}
-
-/*
-@include set-color(COLOR);
-*/
 /* stylelint-disable color-no-hex */
 /* stylelint-disable selector-max-id */
 * {
@@ -261,28 +119,24 @@ body, .config-debug__select-wrapper select, .config-debug__select-wrapper input,
 hr {
   display: block;
   padding: 1.5dp;
-  background: #08070D;
+  background: #0D0A07;
 }
 
 body {
   color: #fff;
-  font-family: chiaro;
+  font-family: Inter Variable;
   font-size: 20dp;
   font-style: normal;
   font-weight: normal;
 }
 
-/* div { 
-    focus:none;
-    tab-index:none;
-} */
 div#window {
   position: relative;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   border-color: rgba(255, 255, 255, 0.2);
-  background-color: #121018;
+  background-color: #181410;
 }
 
 div#content {
@@ -320,8 +174,6 @@ input.text,
 input.password,
 select,
 textarea {
-  /* color: #333; */
-  /* font-size: 13dp */
   height: auto;
 }
 
@@ -329,16 +181,13 @@ table input.text {
   box-sizing: border-box;
   width: 100%;
   height: auto;
-  /* height: 18dp; */
   margin: 0;
   border-width: 1.1dp;
   border-color: #000;
   background-color: #fff;
   font-size: 15dp;
-  /* padding: 0 5dp; */
   line-height: 1;
   decorator: none;
-  /* vertical-align: center; */
 }
 
 input.radio {
@@ -368,12 +217,12 @@ scrollbarvertical, scrollbarhorizontal {
   border: 0;
 }
 scrollbarvertical slidertrack, scrollbarhorizontal slidertrack {
-  background: #DABAF7;
+  background: #F7B5A0;
   opacity: 0.05;
 }
 scrollbarvertical sliderbar, scrollbarhorizontal sliderbar {
   border-radius: 5dp;
-  background: #DABAF7;
+  background: #F7B5A0;
   opacity: 0.1;
 }
 scrollbarvertical sliderbar:hover:not(:active), scrollbarhorizontal sliderbar:hover:not(:active) {
@@ -430,7 +279,7 @@ scrollbarhorizontal sliderbar {
   border-width: 1.1dp;
   border-radius: 16dp;
   border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(8, 7, 13, 0.9);
+  background: rgba(13, 10, 7, 0.9);
 }
 .centered-page__modal > .tabs {
   display: flex;
@@ -494,7 +343,7 @@ scrollbarhorizontal sliderbar {
 }
 .control-option:focus-visible:not(:disabled, [disabled]), .control-option:hover:not(:disabled, [disabled]) {
   color: #F2F2F2;
-  background-color: rgba(190, 184, 219, 0.1);
+  background-color: rgba(219, 190, 184, 0.1);
 }
 .control-option:focus-visible:not(:disabled, [disabled]) svg, .control-option:hover:not(:disabled, [disabled]) svg {
   image-color: #F2F2F2;
@@ -556,8 +405,8 @@ scrollbarhorizontal sliderbar {
   padding: 8dp;
   border-width: 1.1dp;
   border-radius: 8dp;
-  border-color: rgba(190, 184, 219, 0.1);
-  background-color: rgba(190, 184, 219, 0.1);
+  border-color: rgba(219, 190, 184, 0.1);
+  background-color: rgba(219, 190, 184, 0.1);
 }
 .control-option__binding svg {
   image-color: #CCCCCC;
@@ -639,13 +488,6 @@ scrollbarhorizontal sliderbar {
   image-color: #F86039;
 }
 
-/*
-    Example:
-        <tab class="tab">
-            <div>Graphics</div>
-            <div class="tab__indicator"></div>
-        </tab>
-*/
 .tabs tabs {
   display: flex;
   flex-direction: row;
@@ -737,7 +579,7 @@ scrollbarhorizontal sliderbar {
   white-space: pre-line;
 }
 .config__wrapper p b {
-  color: #B97DF2;
+  color: #F24C3D;
 }
 .config__wrapper p i {
   color: #E9CD35;
@@ -804,7 +646,7 @@ scrollbarhorizontal sliderbar {
   overflow-y: auto;
 }
 .config-group__title {
-  color: #B97DF2;
+  color: #F24C3D;
 }
 .config-group__title--hidden {
   display: none;
@@ -887,7 +729,7 @@ scrollbarhorizontal sliderbar {
   margin: 4dp 12dp 0;
   border-radius: 8dp;
   opacity: 0.5;
-  background-color: rgba(190, 184, 219, 0.1);
+  background-color: rgba(219, 190, 184, 0.1);
   cursor: pointer;
 }
 .config-option__radio-tabs .config-option__checkbox-wrapper:hover,
@@ -926,8 +768,8 @@ scrollbarhorizontal sliderbar {
 .rmlui-window:not([mouse-active]) .config-option__list input.radio:not(:disabled):focus + .config-option__tab-label {
   transition: none;
   animation: blue-pulse 0.75s infinite;
-  border-color: #17D6E8;
-  color: #17D6E8;
+  border-color: #1768E8;
+  color: #1768E8;
 }
 .config-option__radio-tabs input.radio:not(:disabled):focus + .config-option__tab-label, .config-option__radio-tabs input.radio:not(:disabled):hover + .config-option__tab-label,
 .config-option__list input.radio:not(:disabled):focus + .config-option__tab-label,
@@ -976,7 +818,7 @@ scrollbarhorizontal sliderbar {
 .config-option__radio-tabs input.range slidertrack:active + sliderbar,
 .config-option__list input.range sliderbar:active,
 .config-option__list input.range slidertrack:active + sliderbar {
-  background-color: #17D6E8;
+  background-color: #1768E8;
 }
 .config-option__radio-tabs input.range sliderarrowdec,
 .config-option__radio-tabs input.range sliderarrowinc,
@@ -988,7 +830,7 @@ scrollbarhorizontal sliderbar {
 .config-option__details {
   height: 18dp;
   margin: 14dp 12dp 0;
-  color: #B97DF2;
+  color: #F24C3D;
 }
 
 .config-option-color {
@@ -1082,7 +924,7 @@ scrollbarhorizontal sliderbar {
 }
 .config-option-range__range-input sliderbar:active,
 .config-option-range__range-input slidertrack:active + sliderbar {
-  background-color: #17D6E8;
+  background-color: #1768E8;
 }
 .config-option-range__range-input sliderarrowdec,
 .config-option-range__range-input sliderarrowinc {
@@ -1165,7 +1007,7 @@ scrollbarhorizontal sliderbar {
   margin-top: 2dp;
   padding: 4dp 0;
   border-radius: 12dp;
-  background-color: #191622;
+  background-color: #221A16;
 }
 .config-option-dropdown__select selectbox option, .config-option-dropdown__wrapper selectbox option, .config-option-textfield__select selectbox option, .config-option-textfield__wrapper selectbox option {
   transition: color 0.05s linear-in-out, background-color 0.05s linear-in-out;
@@ -1202,7 +1044,7 @@ scrollbarhorizontal sliderbar {
   white-space: pre-line;
 }
 .config-description__contents b {
-  color: #B97DF2;
+  color: #F24C3D;
 }
 .config-description__contents i {
   color: #E9CD35;
@@ -1616,7 +1458,7 @@ scrollbarhorizontal sliderbar {
   height: 136dp;
 }
 .input-viz__L svg {
-  image-color: #17D6E8;
+  image-color: #1768E8;
 }
 .input-viz__L > svg {
   width: 136dp;
@@ -1662,8 +1504,8 @@ scrollbarhorizontal sliderbar {
 }
 
 .button {
-  border-color: rgba(185, 125, 242, 0.8);
-  background-color: rgba(185, 125, 242, 0.05);
+  border-color: rgba(242, 76, 61, 0.8);
+  background-color: rgba(242, 76, 61, 0.05);
   color: #CCCCCC;
   transition: color 0.05s linear-in-out, background-color 0.05s linear-in-out;
   display: block;
@@ -1674,49 +1516,49 @@ scrollbarhorizontal sliderbar {
   border-radius: 12dp;
 }
 .button:focus, .button:hover {
-  border-color: #B97DF2;
-  background-color: rgba(185, 125, 242, 0.3);
+  border-color: #F24C3D;
+  background-color: rgba(242, 76, 61, 0.3);
   color: #F2F2F2;
 }
 .button:disabled, .button[disabled] {
   color: rgba(255, 255, 255, 0.6);
 }
 .button:active {
-  background-color: rgba(185, 125, 242, 0.2);
+  background-color: rgba(242, 76, 61, 0.2);
   color: rgb(244.6, 244.6, 244.6);
 }
 .button--primary {
-  border-color: rgba(185, 125, 242, 0.8);
-  background-color: rgba(185, 125, 242, 0.05);
+  border-color: rgba(242, 125, 125, 0.8);
+  background-color: rgba(242, 125, 125, 0.05);
   color: #CCCCCC;
 }
 .button--primary:focus, .button--primary:hover {
-  border-color: #B97DF2;
-  background-color: rgba(185, 125, 242, 0.3);
+  border-color: #F24C3D;
+  background-color: rgba(242, 125, 125, 0.3);
   color: #F2F2F2;
 }
 .button--primary:disabled, .button--primary[disabled] {
   color: rgba(255, 255, 255, 0.6);
 }
 .button--primary:active {
-  background-color: rgba(185, 125, 242, 0.2);
+  background-color: rgba(242, 125, 125, 0.2);
   color: rgb(244.6, 244.6, 244.6);
 }
 .button--secondary {
-  border-color: rgba(23, 214, 232, 0.8);
-  background-color: rgba(23, 214, 232, 0.05);
+  border-color: rgba(23, 104, 232, 0.8);
+  background-color: rgba(23, 104, 232, 0.05);
   color: #CCCCCC;
 }
 .button--secondary:focus, .button--secondary:hover {
-  border-color: #17D6E8;
-  background-color: rgba(23, 214, 232, 0.3);
+  border-color: #1768E8;
+  background-color: rgba(23, 104, 232, 0.3);
   color: #F2F2F2;
 }
 .button--secondary:disabled, .button--secondary[disabled] {
   color: rgba(255, 255, 255, 0.6);
 }
 .button--secondary:active {
-  background-color: rgba(23, 214, 232, 0.2);
+  background-color: rgba(23, 104, 232, 0.2);
   color: rgb(244.6, 244.6, 244.6);
 }
 .button--tertiary {
@@ -1798,13 +1640,6 @@ scrollbarhorizontal sliderbar {
   height: auto;
 }
 
-/*
-    <button
-        class="icon-button icon-button--error"
-    >
-        <svg src="icons/Trash.svg" />
-    </button>
-*/
 .icon-button {
   color: #CCCCCC;
   transition: color 0.05s linear-in-out, background-color 0.05s linear-in-out, opacity 0.05s linear-in-out, border-color 0.05s linear-in-out;
@@ -1857,26 +1692,26 @@ scrollbarhorizontal sliderbar {
   height: 32dp;
 }
 .icon-button--primary {
-  border-color: rgba(185, 125, 242, 0.8);
-  background-color: rgba(185, 125, 242, 0.05);
+  border-color: rgba(242, 125, 125, 0.8);
+  background-color: rgba(242, 125, 125, 0.05);
 }
 .icon-button--primary:focus, .icon-button--primary:hover {
-  border-color: #B97DF2;
-  background-color: rgba(185, 125, 242, 0.3);
+  border-color: #F24C3D;
+  background-color: rgba(242, 125, 125, 0.3);
 }
 .icon-button--primary:active {
-  background-color: rgba(185, 125, 242, 0.2);
+  background-color: rgba(242, 125, 125, 0.2);
 }
 .icon-button--secondary {
-  border-color: rgba(23, 214, 232, 0.8);
-  background-color: rgba(23, 214, 232, 0.05);
+  border-color: rgba(23, 104, 232, 0.8);
+  background-color: rgba(23, 104, 232, 0.05);
 }
 .icon-button--secondary:focus, .icon-button--secondary:hover {
-  border-color: #17D6E8;
-  background-color: rgba(23, 214, 232, 0.3);
+  border-color: #1768E8;
+  background-color: rgba(23, 104, 232, 0.3);
 }
 .icon-button--secondary:active {
-  background-color: rgba(23, 214, 232, 0.2);
+  background-color: rgba(23, 104, 232, 0.2);
 }
 .icon-button--tertiary {
   border-color: rgba(242, 242, 242, 0.8);
@@ -1930,7 +1765,7 @@ scrollbarhorizontal sliderbar {
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background-color: #08070D;
+  background-color: #0D0A07;
 }
 
 .launcher__vertical-split {
@@ -2014,18 +1849,6 @@ scrollbarhorizontal sliderbar {
   padding: 32dp;
 }
 
-/*
-    Example layout:
-        <button class="menu-list-item menu-list-item--right">
-            <div class="menu-list-item__bullet">•</div>
-            <div class="menu-list-item__label">Setup controls</div>
-        </button>
-    - Variants:
-        .menu-list-item--right (align to right side)
-    - Optional:
-        - <div class="subtitle-title__disclaimer">Coming Soon™</div>
-
-*/
 .menu-list-item {
   color: #CCCCCC;
   display: flex;
@@ -2050,14 +1873,14 @@ scrollbarhorizontal sliderbar {
   opacity: 1;
 }
 .menu-list-item--right.menu-list-item:focus:not(:disabled, [disabled]), .menu-list-item--right.menu-list-item:hover:not(:disabled, [disabled]) {
-  decorator: horizontal-gradient(#7A2AC600 #DABAF714);
+  decorator: horizontal-gradient(#C63A2A00 #F7B5A014);
 }
 .menu-list-item:focus:not(:disabled, [disabled]), .menu-list-item:hover:not(:disabled, [disabled]) {
-  color: #B97DF2;
-  decorator: horizontal-gradient(#7A2AC614 #DABAF700);
+  color: #F24C3D;
+  decorator: horizontal-gradient(#C63A2A14 #F7B5A000);
 }
 .menu-list-item:focus:not(:disabled, [disabled]) svg, .menu-list-item:hover:not(:disabled, [disabled]) svg {
-  image-color: #B97DF2;
+  image-color: #F24C3D;
 }
 .menu-list-item:focus:not(:disabled, [disabled]) .menu-list-item__bullet, .menu-list-item:hover:not(:disabled, [disabled]) .menu-list-item__bullet {
   opacity: 1;
@@ -2073,20 +1896,6 @@ scrollbarhorizontal sliderbar {
   opacity: 0;
 }
 
-/*
-    Example layout:
-
-        <button class="subtitle-title" disabled>
-            <h3>Zelda 64: Recompiled</h3>
-            <h1>Ocarina of Time</h1>
-            <div class="subtitle-title__disclaimer">Coming Soon™</div>
-        </button>
-    - Variants:
-        .subtitle-title--right (align to right side)
-    - Optional:
-        - <div class="subtitle-title__disclaimer">Coming Soon™</div>
-
-*/
 .subtitle-title {
   display: block;
   position: relative;
@@ -2112,7 +1921,7 @@ scrollbarhorizontal sliderbar {
   cursor: default;
 }
 .subtitle-title:focus:not(:disabled, [disabled]), .subtitle-title:hover:not(:disabled, [disabled], [selected]) {
-  color: #B97DF2;
+  color: #F24C3D;
 }
 .subtitle-title:disabled, .subtitle-title[disabled] {
   opacity: 0.5;
@@ -2145,11 +1954,11 @@ scrollbarhorizontal sliderbar {
 }
 .toggle:hover, .toggle:focus-visible, .toggle:focus {
   opacity: 1;
-  background-color: rgba(23, 214, 232, 0.3);
+  background-color: rgba(23, 104, 232, 0.3);
 }
 .toggle:active {
   opacity: 1;
-  background-color: rgba(23, 214, 232, 0.05);
+  background-color: rgba(23, 104, 232, 0.05);
 }
 .toggle .toggle__border {
   position: absolute;
@@ -2158,7 +1967,7 @@ scrollbarhorizontal sliderbar {
   bottom: 1.1dp;
   left: 1.1dp;
   border-width: 1.1dp;
-  border-color: #A2EFF6;
+  border-color: #A2BEF6;
   display: block;
   border-radius: 36dp;
 }
@@ -2170,14 +1979,14 @@ scrollbarhorizontal sliderbar {
   height: 64dp;
   transform: translateY(-50%);
   border-radius: 32dp;
-  background: #25A1AD;
+  background: #255BAD;
 }
 .toggle--checked .toggle__floater {
   left: 78dp;
 }
 .toggle--checked .toggle__icon.toggle__icon--left {
   opacity: 0.9;
-  color: #A2EFF6;
+  color: #A2BEF6;
 }
 .toggle--checked .toggle__icon.toggle__icon--right {
   opacity: 1;
@@ -2207,7 +2016,7 @@ scrollbarhorizontal sliderbar {
 }
 .toggle__icon--right {
   opacity: 1;
-  color: #A2EFF6;
+  color: #A2BEF6;
 }
 
 .bottom-left {
@@ -2224,7 +2033,7 @@ scrollbarhorizontal sliderbar {
 }
 
 .prompt__overlay {
-  background-color: rgba(190, 184, 219, 0.1);
+  background-color: rgba(219, 190, 184, 0.1);
   pointer-events: auto;
 }
 .prompt__overlay, .prompt__content-wrapper {
@@ -2256,7 +2065,7 @@ scrollbarhorizontal sliderbar {
   border-width: 1.1dp;
   border-radius: 16dp;
   border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(8, 7, 13, 0.9);
+  background: rgba(13, 10, 7, 0.9);
 }
 .prompt__content h3, .prompt__content p {
   margin: 24dp;
@@ -2317,7 +2126,7 @@ scrollbarhorizontal sliderbar {
 }
 .config-debug-option:focus:not(:disabled, [disabled]), .config-debug-option:focus-visible:not(:disabled, [disabled]), .config-debug-option:hover:not(:disabled, [disabled]) {
   color: #F2F2F2;
-  background-color: rgba(190, 184, 219, 0.1);
+  background-color: rgba(219, 190, 184, 0.1);
 }
 .config-debug-option:focus:not(:disabled, [disabled]) svg, .config-debug-option:focus-visible:not(:disabled, [disabled]) svg, .config-debug-option:hover:not(:disabled, [disabled]) svg {
   image-color: #F2F2F2;
@@ -2427,7 +2236,7 @@ scrollbarhorizontal sliderbar {
 .config-debug__select-wrapper select selectbox {
   border-width: 1.1dp;
   border-color: rgba(255, 255, 255, 0.8);
-  background-color: #191622;
+  background-color: #221A16;
   padding: 4dp 0;
   margin-top: 2dp;
   border-radius: 12dp;
@@ -2453,7 +2262,7 @@ scrollbarhorizontal sliderbar {
 body {
   box-sizing: border-box;
   color: #F2F2F2;
-  font-family: chiaro;
+  font-family: Inter Variable;
 }
 
 .rmlui-window {
@@ -2471,42 +2280,42 @@ body {
 }
 
 button {
-  background-color: #7A2AC6;
+  background-color: #C63A2A;
 }
 
 @keyframes blue-pulse {
   0% {
-    color: #17D6E8;
+    color: #1768E8;
   }
   50% {
-    color: #A2EFF6;
+    color: #A2BEF6;
   }
   100% {
-    color: #17D6E8;
+    color: #1768E8;
   }
 }
 @keyframes blue-pulse-with-border {
   0% {
-    border-color: #17D6E8;
-    color: #17D6E8;
+    border-color: #1768E8;
+    color: #1768E8;
   }
   50% {
-    border-color: #A2EFF6;
-    color: #A2EFF6;
+    border-color: #A2BEF6;
+    color: #A2BEF6;
   }
   100% {
-    border-color: #17D6E8;
-    color: #17D6E8;
+    border-color: #1768E8;
+    color: #1768E8;
   }
 }
 @keyframes blue-pulse-background {
   0% {
-    background-color: #17D6E8;
+    background-color: #1768E8;
   }
   50% {
-    background-color: #A2EFF6;
+    background-color: #A2BEF6;
   }
   100% {
-    background-color: #17D6E8;
+    background-color: #1768E8;
   }
 }

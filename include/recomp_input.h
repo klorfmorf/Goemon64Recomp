@@ -18,31 +18,31 @@ namespace recomp {
     // First parameter is the enum name, second parameter is the bit field for the input (or 0 if there is no associated one), third is the readable name.
     // TODO refactor this to allow projects to rename these, or get rid of the readable name and leave that up to individual projects to map.
     #define DEFINE_N64_BUTTON_INPUTS() \
-        DEFINE_INPUT(A, 0x8000, "A") \
-        DEFINE_INPUT(B, 0x4000, "B") \
-        DEFINE_INPUT(Z, 0x2000, "Z") \
-        DEFINE_INPUT(L, 0x0020, "L") \
-        DEFINE_INPUT(R, 0x0010, "R") \
-        DEFINE_INPUT(START, 0x1000, "Start") \
-        DEFINE_INPUT(C_UP, 0x0008, "C Up") \
-        DEFINE_INPUT(C_DOWN, 0x0004, "C Down") \
-        DEFINE_INPUT(C_LEFT, 0x0002, "C Left") \
-        DEFINE_INPUT(C_RIGHT, 0x0001, "C Right") \
-        DEFINE_INPUT(DPAD_UP, 0x0800, "D-Pad Up") \
-        DEFINE_INPUT(DPAD_DOWN, 0x0400, "D-Pad Down") \
-        DEFINE_INPUT(DPAD_LEFT, 0x0200, "D-Pad Left") \
-        DEFINE_INPUT(DPAD_RIGHT, 0x0100, "D-Pad Right")
+        DEFINE_INPUT(A, 0x8000, "A", "Used to jump, interact with people/things, swim slowly while underwater, select options in menus and attack with right arm while controlling Impact.") \
+        DEFINE_INPUT(B, 0x4000, "B", "Used to attack, pick up and throw objects, dash while underwater, go back in menus and attack with the left arm while controlling Impact.") \
+        DEFINE_INPUT(Z, 0x2000, "Z", "Used to crawl on the ground and to shoot bullets while controlling Impact.") \
+        DEFINE_INPUT(L, 0x0020, "L", "Unused. Mods may use it for additional features.") \
+        DEFINE_INPUT(R, 0x0010, "R", "Used to activate camera control. Hold and press any of the C-Buttons to control the camera.") \
+        DEFINE_INPUT(START, 0x1000, "Start", "Used to pause and start the game.") \
+        DEFINE_INPUT(C_UP, 0x0008, "C Up", "Used for activating the current character's magic ability. When camera control is activated it will zoom in closer. In the closest zoom stage it will allow you to look around in 360 degrees.") \
+        DEFINE_INPUT(C_DOWN, 0x0004, "C Down", "Used for changing the current character. When camera control is activated it will zoom out further.") \
+        DEFINE_INPUT(C_LEFT, 0x0002, "C Left", "Used to change the character's current weapon/item. When camera control is activated it will rotate the camera left.") \
+        DEFINE_INPUT(C_RIGHT, 0x0001, "C Right", "Used to activate the minimap. When camera control is activated it will rotate the right left.") \
+        DEFINE_INPUT(DPAD_UP, 0x0800, "D-Pad Up", "Unused. Mods may use it for additional features.") \
+        DEFINE_INPUT(DPAD_DOWN, 0x0400, "D-Pad Down", "Unused. Mods may use it for additional features.") \
+        DEFINE_INPUT(DPAD_LEFT, 0x0200, "D-Pad Left", "Unused. Mods may use it for additional features.") \
+        DEFINE_INPUT(DPAD_RIGHT, 0x0100, "D-Pad Right", "Unused. Mods may use it for additional features.")
 
     #define DEFINE_N64_AXIS_INPUTS() \
-        DEFINE_INPUT(Y_AXIS_POS, 0, "Up") \
-        DEFINE_INPUT(Y_AXIS_NEG, 0, "Down") \
-        DEFINE_INPUT(X_AXIS_NEG, 0, "Left") \
-        DEFINE_INPUT(X_AXIS_POS, 0, "Right") \
+        DEFINE_INPUT(Y_AXIS_POS, 0, "Up", "Used to move and for steering while swimming. Used to control the cursor in the cockpit while controlling Impact.") \
+        DEFINE_INPUT(Y_AXIS_NEG, 0, "Down", "Used to move and for steering while swimming. Used to control the cursor in the cockpit while controlling Impact.") \
+        DEFINE_INPUT(X_AXIS_NEG, 0, "Left", "Used to move and for steering while swimming. Used to control the cursor in the cockpit while controlling Impact.") \
+        DEFINE_INPUT(X_AXIS_POS, 0, "Right", "Used to move and for steering while swimming. Used to control the cursor in the cockpit while controlling Impact.") \
 
     #define DEFINE_RECOMP_UI_INPUTS() \
-        DEFINE_INPUT(TOGGLE_MENU, 0, "Toggle Menu") \
-        DEFINE_INPUT(ACCEPT_MENU, 0, "Accept (Menu)") \
-        DEFINE_INPUT(APPLY_MENU, 0, "Apply (Menu)")
+        DEFINE_INPUT(TOGGLE_MENU, 0, "Toggle Menu", "Open or close this configuration menu from in game.") \
+        DEFINE_INPUT(ACCEPT_MENU, 0, "Accept (Menu)", "In the recomp interface, performs the action for the currently highlighted item. Like pressing a button, or toggling a switch.") \
+        DEFINE_INPUT(APPLY_MENU, 0, "Apply (Menu)", "In the recomp interface, if changes are made to a configuration that requires applying your settings, this will apply the current changes.")
 
     #define DEFINE_ALL_INPUTS() \
         DEFINE_N64_AXIS_INPUTS() \
@@ -50,7 +50,7 @@ namespace recomp {
         DEFINE_RECOMP_UI_INPUTS()
 
     // Enum containing every recomp input.
-    #define DEFINE_INPUT(name, value, readable) name,
+    #define DEFINE_INPUT(name, value, readable, description) name,
     enum class GameInput {
         DEFINE_ALL_INPUTS()
 
@@ -156,6 +156,7 @@ namespace recomp {
     size_t get_num_inputs();
     const std::string& get_input_name(GameInput input);
     const std::string& get_input_enum_name(GameInput input);
+    const std::string& get_input_description(GameInput input);
     GameInput get_input_from_enum_name(const std::string_view name);
     InputField& get_input_binding(GameInput input, size_t binding_index, InputDevice device);
     void set_input_binding(GameInput input, size_t binding_index, InputDevice device, InputField value);

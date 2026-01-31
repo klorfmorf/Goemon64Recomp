@@ -1,0 +1,32 @@
+Interpolation issue when flickering in invincibility
+Interpolation issue of sakura leaves and smoke in Gourmet Submarine Castle
+Interpolation issue in background of fight against Kashiwagi
+Bottom of skybox visibly not rendered for a little bit, obscured by scissor on Nintendo 64
+Turn texture rectangles into triangles
+HUD adjustments for widescreen (minimap)
+Billboarded objects are not being interpolated
+Fix scissoring issue in Impact battles
+Goemon's head in C-Up mode is not being interpolated
+Camera transitions in cutscenes do not skip interpolation for one frame so the transition is not exactly one frame but interpolated
+Background at the end of I Am Impact cutscene is broken in widescreen
+Interpolation issue in background mesh in Bomber sections
+Overlay at the end of Impact fight victory cutscene broken in widescreen
+Issue in opening cutscene where Goemon and Ebisumaru can still be seen running in widescreen
+Issue in Wiseman's home cutscene where Baron visibly appears in widescreen
+Scissoring issue in Impact Bomber Runner sections
+Crash in Impact Bomber Runner section when shooting nasal bullets with Z-Button.
+Items in shops need skip interpolation for one frame when the item gets unselected and lerps back to the table.
+Billiard ball and billiard ball arrow should skip interpolation when they hit a wall (billiard ball) or are moved to the next billiard ball (arrow)
+Interpolation issue when going Sudden Impact in the blast effect
+Interpolation issue when using a Fire Ryo (trails)
+Interpolation issue when using Yae Bazooka (smoke)
+Interpolation issue when using Sasuke Super Jump (smoke)
+Waterfall in Waterfall of Kegon and Festival Temple Castle Kite Room
+Razor blades in Gorgeous Musical Castle Part 1 not interpolated?
+Rotating blocks in Gorgeus Musical Castle Part 2 not interpolated?
+Fade to Earth in ending cutscene broken widescreen
+
+RELOC RELATED
+Fix crash after Impact Bomber section in the credits sequence
+~~Fix crash after talking to Ushiwaka and agreeing to fish (fishes spawning)~~ ~~Crash after getting 5 Yellow Fish from Duck Creek and upon return to Ushiwaka Room~~ Achilees' Heel not displaying when given the item
+No Impact cutscene after beating Kashiwagi (might be because of using save point after game restart? check with real game)

@@ -36,27 +36,27 @@
 					</div>
 					<div class="launcher__content-quadrant">
 						<button data-if="!mm_rom_valid" onclick="select_rom" class="menu-list-item menu-list-item--right" autofocus>
-							<div class="menu-list-item__bullet">•</div>
+							<div class="menu-list-item__bullet"></div>
 							<div class="menu-list-item__label">Select ROM</div>
 						</button>
 						<button data-if="mm_rom_valid" onclick="start_game" class="menu-list-item menu-list-item--right" autofocus>
-							<div class="menu-list-item__bullet">•</div>
-							<div class="menu-list-item__label">Start game</div>
+							<div class="menu-list-item__bullet"></div>
+							<div class="menu-list-item__label">Start Game</div>
 						</button>
 						<button onclick="open_controls" class="menu-list-item menu-list-item--right">
-							<div class="menu-list-item__bullet">•</div>
-							<div class="menu-list-item__label">Setup controls</div>
+							<div class="menu-list-item__bullet"></div>
+							<div class="menu-list-item__label">Controls</div>
 						</button>
 						<button onclick="open_settings" class="menu-list-item menu-list-item--right">
-							<div class="menu-list-item__bullet">•</div>
+							<div class="menu-list-item__bullet"></div>
 							<div class="menu-list-item__label">Settings</div>
 						</button>
 						<button onclick="open_mods" class="menu-list-item menu-list-item--right">
-							<div class="menu-list-item__bullet">•</div>
+							<div class="menu-list-item__bullet"></div>
 							<div class="menu-list-item__label">Mods</div>
 						</button>
 						<button onclick="exit_game" class="menu-list-item menu-list-item--right">
-							<div class="menu-list-item__bullet">•</div>
+							<div class="menu-list-item__bullet"></div>
 							<div class="menu-list-item__label">Exit</div>
 						</button>
 					</div>

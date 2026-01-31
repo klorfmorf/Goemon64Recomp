@@ -11,22 +11,28 @@ static input_mapping_array keyboard_input_mappings{};
 static input_mapping_array controller_input_mappings{};
 
 // Make the button value array, which maps a button index to its bit field.
-#define DEFINE_INPUT(name, value, readable) uint16_t(value##u),
+#define DEFINE_INPUT(name, value, readable, description) uint16_t(value##u),
 static const std::array n64_button_values = {
     DEFINE_N64_BUTTON_INPUTS()
 };
 #undef DEFINE_INPUT
 
 // Make the input name array.
-#define DEFINE_INPUT(name, value, readable) readable,
+#define DEFINE_INPUT(name, value, readable, description) readable,
 static const std::vector<std::string> input_names = {
     DEFINE_ALL_INPUTS()
 };
 #undef DEFINE_INPUT
 
 // Make the input enum name array.
-#define DEFINE_INPUT(name, value, readable) #name,
+#define DEFINE_INPUT(name, value, readable, description) #name,
 static const std::vector<std::string> input_enum_names = {
+    DEFINE_ALL_INPUTS()
+};
+#undef DEFINE_INPUT
+
+#define DEFINE_INPUT(name, value, readable, description) description,
+static const std::vector<std::string> input_descriptions = {
     DEFINE_ALL_INPUTS()
 };
 #undef DEFINE_INPUT
@@ -41,6 +47,10 @@ const std::string& recomp::get_input_name(GameInput input) {
 
 const std::string& recomp::get_input_enum_name(GameInput input) {
     return input_enum_names.at(static_cast<size_t>(input));
+}
+
+const std::string& recomp::get_input_description(GameInput input) {
+    return input_descriptions.at(static_cast<size_t>(input));
 }
 
 recomp::GameInput recomp::get_input_from_enum_name(const std::string_view enum_name) {

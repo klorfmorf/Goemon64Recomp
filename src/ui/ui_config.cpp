@@ -720,6 +720,22 @@ public:
             return Rml::Variant{recomp::get_input_enum_name(static_cast<recomp::GameInput>(inputs.at(0).Get<size_t>()))};
         });
 
+        constructor.RegisterTransformFunc("get_input_description", [](const Rml::VariantList& inputs) {
+            if (inputs.empty()) {
+                return Rml::Variant{""};
+            }
+
+            // Get as int first to properly handle -1
+            int index = inputs.at(0).Get<int>();
+
+            // Bounds check before casting to enum
+            if (index < 0 || index >= static_cast<int>(recomp::GameInput::COUNT)) {
+                return Rml::Variant{""};
+            }
+
+            return Rml::Variant{recomp::get_input_description(static_cast<recomp::GameInput>(index))};
+        });
+
         constructor.BindEventCallback("set_input_binding",
             [](Rml::DataModelHandle model_handle, Rml::Event& event, const Rml::VariantList& inputs) {
                 scanned_input_index = inputs.at(0).Get<size_t>();
@@ -770,6 +786,7 @@ public:
                 }
                 focused_input_index = input_index;
                 model_handle.DirtyVariable("cur_input_row");
+                model_handle.DirtyVariable("cur_input_index");
             });
 
         // Rml variable definition for an individual InputField.
@@ -863,6 +880,8 @@ public:
         });
 
         constructor.Bind<int>("active_binding_slot", &scanned_binding_index);
+
+        constructor.Bind<int>("cur_input_index", &focused_input_index);
 
         controls_model_handle = constructor.GetModelHandle();
     }
