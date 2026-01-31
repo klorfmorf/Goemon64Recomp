@@ -77,7 +77,7 @@ RECOMP_PATCH s32 func_80016C44_17844(Object *object)
         D_8016852D_16912D = (a & 1) == 0;
         D_8016852C_16912C = a & 1;
 
-        gEXMatrixGroupDecomposedSkipAll(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
+        gEXMatrixGroupSkipAll(D_8015C5CC_15D1CC++, (u32)object, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
 
         switch (object_type) {
         case 0x00000000:
