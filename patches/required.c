@@ -3,9 +3,23 @@
 
 extern void overlay_apply_relocations(u32 file_id, u8 *load_addr);
 extern void *func_80014840_15440(void *, u32 file_id);
-void *func_80013B14_14714(unsigned short file_id);
+extern void *func_80013B14_14714(unsigned short file_id);
 extern Task *D_8006D328_6DF28;
-void* func_080026B8_71FE88(void *arg);
+extern void* func_080026B8_71FE88(void *arg);
+extern void func_800004AC_10AC(void *);
+extern OSThread D_80080020_80C20;
+extern u8 D_800841D0_84DD0[];
+
+RECOMP_DECLARE_EVENT(recomp_on_init());
+
+RECOMP_PATCH void func_80000450_1050(void) {
+    // @recomp_event recomp_on_init(): Allow mods to initialize themselves once.
+    recomp_on_init();
+
+    osInitialize();
+    osCreateThread(&D_80080020_80C20, 1, func_800004AC_10AC, NULL, &D_800841D0_84DD0, 9);
+    osStartThread(&D_80080020_80C20);
+}
 
 // @recomp Patched to load the overlay in the recomp runtime and to relocate TLB mapped overlays.
 RECOMP_PATCH u8 *func_80001C00_2800(u32 file_id, u8 *buf_start) 

@@ -1,6 +1,6 @@
 Interpolation issue when flickering in invincibility
 Interpolation issue of sakura leaves and smoke in Gourmet Submarine Castle
-Interpolation issue in background of fight against Kashiwagi
+Interpolation issue in background of fight against Kashiwagi (func_801D0B34_5FBF14)
 Bottom of skybox visibly not rendered for a little bit, obscured by scissor on Nintendo 64
 Turn texture rectangles into triangles
 HUD adjustments for widescreen (minimap)

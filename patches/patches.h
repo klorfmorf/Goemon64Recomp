@@ -1,8 +1,10 @@
 #ifndef PATCHES_H
 #define PATCHES_H
 
+#define osInitialize osInitialize_recomp
 #define osCreateMesgQueue osCreateMesgQueue_recomp
 #define osCreateThread osCreateThread_recomp
+#define osStartThread osStartThread_recomp
 #define osCreateViManager osCreateViManager_recomp
 #define osDpSetNextBuffer osDpSetNextBuffer_recomp
 #define osGetTime osGetTime_recomp
