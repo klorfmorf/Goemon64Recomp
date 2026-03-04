@@ -269,8 +269,6 @@ goemon64::renderer::RT64Context::RT64Context(uint8_t* rdram, ultramodern::render
     app->enhancementConfig.f3dex.forceBranch = true;
     // Scale LODs based on the output resolution.
     app->enhancementConfig.textureLOD.scale = true;
-    // Do not copy with GPU as it breaks effects in menus and the quality loss is negligible.
-    app->emulatorConfig.framebuffer.copyWithGPU = false;
     // Pick an API if the user has set an override.
     switch (cur_config.api_option) {
     case ultramodern::renderer::GraphicsApi::D3D12:
