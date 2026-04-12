@@ -6,9 +6,11 @@ RECOMP_PATCH void func_800012FC_1EFC()
 {
     u8 retraces_per_game_step = D_8008CCC0_8D8C0.retraces_per_game_step;
 
+#if 0
     if ((D_8008CCC0_8D8C0.controller[0].button_held_down & L_TRIG) && (D_8008CCC0_8D8C0.controller[0].button_held_down & Z_TRIG) && (D_8008CCC0_8D8C0.controller[0].button_held_down & R_JPAD)) {
         D_8008CCC0_8D8C0.stepw = 10;
     }
+#endif
 
     // @recomp Run Ui Callbacks
     recomp_run_ui_callbacks();
