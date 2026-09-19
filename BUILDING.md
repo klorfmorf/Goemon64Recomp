@@ -40,7 +40,7 @@ You will need to decompress the NTSC-U Mystical Ninja Starring Goemon ROM (sha1:
 
 Follow the build instructions for the [Mystical Ninja Starring Goemon Decompilation Project](https://github.com/klorfmorf/mnsg) in order to generate a decompressed ROM.
 
-Copy the decompressed ROM with the name `baserom.us.decompressed.z64` from the root of the decompilation project to the root of the Goemon64Recomp repository and rename it to `mnsg.us.decompressed.z64`.
+Copy the decompressed ROM with the name `baserom.us.decompressed.z64` from the root of the decompilation project to the root of the Goemon64Recomp repository and rename it to `mnsg.z64`.
 
 ## 4. Generating the C code
 
@@ -48,8 +48,8 @@ Now that you have the required files, you must build [N64Recomp](https://github.
 
 After that, go back to the repository root, and run the following commands:
 ```bash
-./N64Recomp mnsg.us.toml
-./RSPRecomp aspMain.us.toml
+./N64Recomp mnsg.toml
+./RSPRecomp aspMain.toml
 ```
 
 ## 5. Building the Project
